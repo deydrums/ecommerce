@@ -22,8 +22,8 @@ app.use(cors());
 app.use(express.json());
 
 //Rutas
-app.use('/api', require('./routes/Client'));
-
+app.use('/api/client', require('./routes/Client'));
+app.use('/api/admin', require('./routes/Admin'));
 
 //Escuchar peticiones
 app.listen(process.env.PORT ,()=>{
