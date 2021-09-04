@@ -26,8 +26,8 @@ const registerAdmin = async(req,res = response)=>{
     
         res.status(201).json({
             ok: true,
-            message: 'Registro exitoso',
-            admin
+            message: 'Registro de usuario administrador exitoso',
+            data:admin
         });
 
     } catch (error) {

@@ -26,8 +26,8 @@ const registerClient = async(req,res = response)=>{
     
         res.status(201).json({
             ok: true,
-            message: 'Registro exitoso',
-            client
+            message: 'Registro de cliente exitoso',
+            data:client
         });
 
     } catch (error) {
@@ -38,6 +38,51 @@ const registerClient = async(req,res = response)=>{
         })
     }
 }
+
+
+const loginClient = async(req,res = response)=>{
+    const {email, password} = req.body
+
+    try {
+        const client = await Client.findOne({email: email});
+        if(!client){
+            return res.status(404).json({
+                ok: false,
+                message: 'Cliente no encontrado'
+            });
+        };
+
+        //Confirmar password
+        const validPassword = bcrypt.compareSync(password, client.password);
+        if(!validPassword){
+            return res.status(400).json({
+                ok: false,
+                message: 'Password incorrecto'
+            });
+        };
+
+        //Generar nuestro JWT
+        //const token = await generateJWT(client.id, client.name);
+
+        res.status(200).json({
+            ok: true,
+            message: 'Login correcto',
+            data:client
+            //token
+        });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        });
+    }
+}
+
+
 module.exports = {
     registerClient,
+    loginClient
 };
