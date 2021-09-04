@@ -1,3 +1,5 @@
+'use strict'
+
 const {Schema, model} = require('mongoose');
 
 var ClientSchema = Schema({

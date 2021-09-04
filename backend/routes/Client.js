@@ -4,6 +4,8 @@
  * host + /api/auth
  *  
  * */ 
+ 'use strict'
+ 
 
  const {Router} = require('express');
  const { check } = require('express-validator');
