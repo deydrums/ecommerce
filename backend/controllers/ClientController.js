@@ -4,6 +4,13 @@ const {response} = require('express');
 const Client = require('../models/Client');
 var bcrypt = require('bcryptjs');
 
+
+/*________________________________________________________
+ * 
+ *  ----------------CLIENT REGISTER-----------------------
+ * _______________________________________________________
+ */
+
 const registerClient = async(req,res = response)=>{
     const {email, password} = req.body;
     try {
@@ -38,6 +45,12 @@ const registerClient = async(req,res = response)=>{
         })
     }
 }
+
+/*________________________________________________________
+ * 
+ *  ----------------CLIENT LOGIN -------------------------
+ * _______________________________________________________
+ */
 
 
 const loginClient = async(req,res = response)=>{

@@ -13,6 +13,14 @@
  const { registerClient, loginClient } = require('../controllers/ClientController');
  const { paramsValidator } = require('../middlewares/params-validator');
 
+
+ /*________________________________________________________
+ * 
+ *  ----------------CLIENT REGISTER-----------------------
+ * _______________________________________________________
+ */
+
+ 
  router.post(
         '/register',
         [
@@ -24,6 +32,13 @@
         ],
         registerClient
 );
+
+/*________________________________________________________
+ * 
+ *  ----------------CLIENT LOGIN -------------------------
+ * _______________________________________________________
+ */
+
 
 router.post(
     '/login',
