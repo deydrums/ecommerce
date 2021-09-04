@@ -1,0 +1,16 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.principal{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(11, 11, 41);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.principal>img{
+    width: 200px;
+}
