@@ -21,6 +21,9 @@ app.use(cors());
 //Lectura y parseo del body
 app.use(express.json());
 
+//Rutas
+app.use('/api', require('./routes/Client'));
+
 
 //Escuchar peticiones
 app.listen(process.env.PORT ,()=>{
