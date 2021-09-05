@@ -3,6 +3,7 @@
 const {response} = require('express');
 const Admin = require('../models/Admin');
 var bcrypt = require('bcryptjs');
+const { generateJWT } = require('../helpers/jwt');
 
 /*________________________________________________________
  * 
@@ -26,6 +27,7 @@ const registerAdmin = async(req,res = response)=>{
         admin.password = bcrypt.hashSync(password,salt);
 
         await admin.save();
+
         //Generar nuestro JWT
         //const token = await generateJWT(user.id, user.name);
 
@@ -73,13 +75,13 @@ const loginAdmin = async(req,res = response)=>{
         };
 
         //Generar nuestro JWT
-        //const token = await generateJWT(admin.id, admin.name);
+        const token = await generateJWT(admin);
 
         res.status(200).json({
             ok: true,
             message: 'Login correcto',
-            data:admin
-            //token
+            data:admin,
+            token
         });
 
 
