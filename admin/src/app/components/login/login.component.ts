@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 declare var jQuery:any;
 declare var $:any;
+declare var iziToast:any;
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,14 @@ export class LoginComponent implements OnInit {
       console.log(this.user);
       alert('Si es valido')
     }else{
-      alert('No es valido')
+      iziToast.show({
+        title: 'Error',
+        titleColor: '#ff0000',
+        color: '#fff',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'Los datos del formulario no son validos'
+      })
     }
   }
 
