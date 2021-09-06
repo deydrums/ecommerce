@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   public user:any = {};
 
-  constructor() { 
+  constructor( private _adminService: AdminService) { 
   }
 
   ngOnInit(): void {
@@ -21,8 +22,14 @@ export class LoginComponent implements OnInit {
 
   login(loginForm:any){
     if(loginForm.valid){
-      console.log(this.user);
-      alert('Si es valido')
+      this._adminService.loginAdmin(this.user).subscribe(
+        response =>{
+            console.log(response);
+        },
+        error =>{
+           console.log(<any>error);
+        }
+      );
     }else{
       iziToast.show({
         title: 'Error',
