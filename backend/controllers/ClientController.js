@@ -104,12 +104,41 @@ const loginClient = async(req,res = response)=>{
 
 const getClientsFilterAdmin = async(req,res = response)=>{
 
-    Client.find().exec((err,clients)=>{
-        if(err || !clients){
-            return res.status(404).send({status: 'error', message: 'No se han encontrado usuarios.'});
+    let type = req.params['type']; 
+    let filter = req.params['filter'];
+
+    if(type == null || type == 'null'){
+
+        Client.find().exec((err,data)=>{
+            if(err || !data){
+                return res.status(404).send({status: 'error', message: 'No se han encontrado clientes.'});
+            }
+            return res.status(200).send({status: 'success', data:data});
+        });
+
+    }else{
+        if(type == 'surname'){
+
+            Client.find({surname: new RegExp(filter,'i')}).exec((err,data)=>{
+                if(err || !data ){
+                    return res.status(404).send({status: 'error', message: 'No se han encontrado clientes.'});
+                }
+                return res.status(200).send({status: 'success', data:data});
+            });
+
+        }else if (type == 'email'){
+
+            Client.find({email: new RegExp(filter,'i')}).exec((err,data)=>{
+                if(err || !data ){
+                    return res.status(404).send({status: 'error', message: 'No se han encontrado clientes.'});
+                }
+                return res.status(200).send({status: 'success', data:data});
+            });
         }
-        return res.status(200).send({status: 'success', data:clients});
-    });
+    }
+    
+
+
 
 }
 

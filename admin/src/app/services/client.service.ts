@@ -14,9 +14,9 @@ export class ClientService {
     this.url = global.url;
   }
 
-  getClientsFilterAdmin():Observable<any>{
+  getClientsFilterAdmin(type:any, filter:any):Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this._http.get(this.url+'client/getClientsFilterAdmin',{headers:headers});
+    return this._http.get(this.url+'client/getClientsFilterAdmin/'+type+'/'+filter,{headers:headers});
   }
 
 }

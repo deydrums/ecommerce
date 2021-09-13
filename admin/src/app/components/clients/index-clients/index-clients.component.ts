@@ -17,7 +17,7 @@ export class IndexClientsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._clientService.getClientsFilterAdmin().subscribe(
+    this._clientService.getClientsFilterAdmin(null,null).subscribe(
       response=>{
         this.clients = response.data;
       },
@@ -28,9 +28,26 @@ export class IndexClientsComponent implements OnInit {
   }
 
   filter(type:any){
-    console.log(type);
-    console.log(this.filterSurname);
-    console.log(this.filterEmail);
+    if(type == 'surname'){
+      this._clientService.getClientsFilterAdmin(type,this.filterSurname).subscribe(
+        response=>{
+          this.clients = response.data;
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      )
+    }else if(type == 'email'){
+      this._clientService.getClientsFilterAdmin(type,this.filterEmail).subscribe(
+        response=>{
+          this.clients = response.data;
+        },
+        error=>{
+          console.log(<any>error);
+        }
+      )
+    }
+
   }
 
 }

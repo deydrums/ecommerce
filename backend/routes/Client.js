@@ -56,7 +56,7 @@ router.post(
  */
 
 router.get(
-    '/getClientsFilterAdmin',
+    '/getClientsFilterAdmin/:type/:filter?',
     getClientsFilterAdmin
 )
  
