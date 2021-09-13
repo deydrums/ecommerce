@@ -104,6 +104,11 @@ const loginClient = async(req,res = response)=>{
 
 const getClientsFilterAdmin = async(req,res = response)=>{
 
+    //Si no existe un usuario y si no es admin
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
     let type = req.params['type']; 
     let filter = req.params['filter'];
 
@@ -137,9 +142,6 @@ const getClientsFilterAdmin = async(req,res = response)=>{
         }
     }
     
-
-
-
 }
 
 

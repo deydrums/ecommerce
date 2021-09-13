@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -13,13 +14,17 @@ export class IndexClientsComponent implements OnInit {
   public filterEmail = "";
   public page = 1;
   public pageSize = 1;
+  public token;
 
   constructor(
     private _clientService : ClientService,
-  ) { }
+    private _adminService: AdminService
+  ) {
+    this.token = _adminService.getToken();
+   }
 
   ngOnInit(): void {
-    this._clientService.getClientsFilterAdmin(null,null).subscribe(
+    this._clientService.getClientsFilterAdmin(null,null,this.token).subscribe(
       response=>{
         this.clients = response.data;
       },
@@ -31,7 +36,7 @@ export class IndexClientsComponent implements OnInit {
 
   filter(type:any){
     if(type == 'surname'){
-      this._clientService.getClientsFilterAdmin(type,this.filterSurname).subscribe(
+      this._clientService.getClientsFilterAdmin(type,this.filterSurname,this.token).subscribe(
         response=>{
           this.clients = response.data;
         },
@@ -40,7 +45,7 @@ export class IndexClientsComponent implements OnInit {
         }
       )
     }else if(type == 'email'){
-      this._clientService.getClientsFilterAdmin(type,this.filterEmail).subscribe(
+      this._clientService.getClientsFilterAdmin(type,this.filterEmail, this.token).subscribe(
         response=>{
           this.clients = response.data;
         },
