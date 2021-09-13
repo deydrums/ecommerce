@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { global } from './global';
 
@@ -25,5 +26,28 @@ export class AdminService {
     return localStorage.getItem('token');
   }
 
+  public isAuthenticated(allowRoles : string[]):boolean{
 
+    const token = localStorage.getItem('token');
+
+    if(!token){
+      return false;
+    }
+    
+    try {
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken(<any>token);
+      if(!decodedToken){
+        //console.log('No es valido');
+        localStorage.removeItem('token');
+        return false;
+      }
+    } catch (error) {
+      localStorage.removeItem('token');
+      return false;
+    }
+
+
+    return true;
+  }
 }
