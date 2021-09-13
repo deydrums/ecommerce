@@ -10,7 +10,7 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { registerClient, loginClient } = require('../controllers/ClientController');
+ const { registerClient, loginClient, getClientsFilterAdmin } = require('../controllers/ClientController');
  const { paramsValidator } = require('../middlewares/params-validator');
 
 
@@ -49,6 +49,15 @@ router.post(
     ],
     loginClient
 );
+/*________________________________________________________
+ * 
+ *  -----------LISTAR CLIENTES FILTRO ADMIN---------------
+ * _______________________________________________________
+ */
 
+router.get(
+    '/getClientsFilterAdmin',
+    getClientsFilterAdmin
+)
  
  module.exports = router;

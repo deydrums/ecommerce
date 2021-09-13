@@ -96,8 +96,26 @@ const loginClient = async(req,res = response)=>{
     }
 }
 
+/*________________________________________________________
+ * 
+ *  -----------LISTAR CLIENTES FILTRO ADMIN---------------
+ * _______________________________________________________
+ */
+
+const getClientsFilterAdmin = async(req,res = response)=>{
+
+    Client.find().exec((err,clients)=>{
+        if(err || !clients){
+            return res.status(404).send({status: 'error', message: 'No se han encontrado usuarios.'});
+        }
+        return res.status(200).send({status: 'success', data:clients});
+    });
+
+}
+
 
 module.exports = {
     registerClient,
-    loginClient
+    loginClient,
+    getClientsFilterAdmin
 };
