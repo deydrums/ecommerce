@@ -18,16 +18,14 @@
   <div class="card-header">
     <form class="form-inline pt-2">
       <label class="sr-only" for="inline-form-input-name">Apellidos</label>
-      <input class="form-control mb-3 mr-sm-4" type="text" id="inline-form-input-name" placeholder="John Doe">
+      <input class="form-control mb-3 mr-sm-4" (keyup)="filter('surname')" name = "filterSurname" [(ngModel)]="filterSurname" type="text" id="inline-form-input-name" placeholder="Apellidos">
       <label class="sr-only" for="inline-form-input-username">Correo</label>
       <div class="input-group mb-3 mr-sm-4">
         <div class="input-group-prepend">
           <div class="input-group-text">@</div>
         </div>
-        <input class="form-control" type="text" id="inline-form-input-username" placeholder="Username">
+        <input class="form-control" (keyup)="filter('email')" name = "filterEmail" [(ngModel)]="filterEmail"  type="text" id="inline-form-input-username" placeholder="Correo">
       </div>
-
-      <button class="btn btn-primary mb-3" type="submit">Buscar cliente</button>
     </form>
   </div>
   <div class="card-body">
@@ -49,18 +47,17 @@
               <td>{{client.surname}}</td>
               <td>{{client.email}}</td>
               <td>
-                <!-- Dropdown -->
-                <div class="btn-group dropdown">
-                  <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
+
+                <div class="dropdown">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Opciones
                   </button>
-                  <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">Action</a>
-                    <a href="#" class="dropdown-item">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Something else here</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button" href="#" >Editar cliente</button>
+                    <button class="dropdown-item" type="button" href="#" >Eliminar cliente</button>
                   </div>
                 </div>
+
               </td>
             </tr>
           </tbody>

@@ -9,6 +9,8 @@ import { ClientService } from 'src/app/services/client.service';
 export class IndexClientsComponent implements OnInit {
 
   public clients : Array<any> = [];
+  public filterSurname = "";
+  public filterEmail = "";
 
   constructor(
     private _clientService : ClientService,
@@ -23,6 +25,12 @@ export class IndexClientsComponent implements OnInit {
         console.log(<any>error);
       }
     )
+  }
+
+  filter(type:any){
+    console.log(type);
+    console.log(this.filterSurname);
+    console.log(this.filterEmail);
   }
 
 }
