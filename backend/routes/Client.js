@@ -12,7 +12,7 @@
  const router = Router();
  const { registerClient, loginClient, getClientsFilterAdmin } = require('../controllers/ClientController');
  const { paramsValidator } = require('../middlewares/params-validator');
-
+ const auth = require('../middlewares/authenticated');
 
  /*________________________________________________________
  * 
@@ -57,6 +57,7 @@ router.post(
 
 router.get(
     '/getClientsFilterAdmin/:type/:filter?',
+    auth.authenticated,
     getClientsFilterAdmin
 )
  
