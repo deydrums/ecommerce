@@ -11,6 +11,8 @@ export class IndexClientsComponent implements OnInit {
   public clients : Array<any> = [];
   public filterSurname = "";
   public filterEmail = "";
+  public page = 1;
+  public pageSize = 1;
 
   constructor(
     private _clientService : ClientService,

@@ -10,6 +10,8 @@ import { IndexComponent } from './components/index/index.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
 import { IndexClientsComponent } from './components/clients/index-clients/index-clients.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { IndexClientsComponent } from './components/clients/index-clients/index-
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    routing
+    routing,
+    NgbPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

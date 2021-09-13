@@ -22,7 +22,7 @@
       <label class="sr-only" for="inline-form-input-username">Correo</label>
       <div class="input-group mb-3 mr-sm-4">
         <div class="input-group-prepend">
-          <div class="input-group-text">@</div>
+          <div class="input-group-text">Email</div>
         </div>
         <input class="form-control" (keyup)="filter('email')" name = "filterEmail" [(ngModel)]="filterEmail"  type="text" id="inline-form-input-username" placeholder="Correo">
       </div>
@@ -40,7 +40,7 @@
             <th>Opciones</th>
           </tr>
           </thead>
-          <tbody *ngFor="let client of clients; let i = index">
+          <tbody *ngFor="let client of clients| slice: (page-1)*pageSize: (page-1)*pageSize + pageSize; let i = index">
             <tr>
               <td>{{i+1}}</td>
               <td>{{client.name}}</td>
@@ -65,36 +65,12 @@
     </div>
   </div>
   <div class="card-footer">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a href="#" class="page-link">Prev</a>
-        </li>
-        <li class="page-item d-sm-none">
-          <span class="page-link page-link-static">2 / 5</span>
-        </li>
-        <li class="page-item d-none d-sm-block">
-          <a href="#" class="page-link">1</a>
-        </li>
-        <li class="page-item active d-none d-sm-block" aria-current="page">
-          <span class="page-link">
-            2
-            <span class="sr-only">(current)</span>
-          </span>
-        </li>
-        <li class="page-item d-none d-sm-block">
-          <a href="#" class="page-link">3</a>
-        </li>
-        <li class="page-item d-none d-sm-block">
-          <a href="#" class="page-link">4</a>
-        </li>
-        <li class="page-item d-none d-sm-block">
-          <a href="#" class="page-link">5</a>
-        </li>
-        <li class="page-item">
-          <a href="#" class="page-link">Next</a>
-        </li>
-      </ul>
-    </nav>
+    <ngb-pagination
+      [(page)]='page'
+      [pageSize]='pageSize'
+      [collectionSize] ='clients.length'
+    >
+
+    </ngb-pagination>
   </div>
 </div>
