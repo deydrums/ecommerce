@@ -15,7 +15,8 @@ const generateJWT = (user) => {
             sub:user._id, 
             name:user.name,
             surname:user.surname,
-            email:user.email
+            email:user.email,
+            role:user.rol,
         };
         console.log(payload);
         jwt.sign(payload,process.env.SECRET_JWT_SEED,{
