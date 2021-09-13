@@ -9,13 +9,15 @@ import { routing } from './app.routing';
 import { IndexComponent } from './components/index/index.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
+import { IndexClientsComponent } from './components/clients/index-clients/index-clients.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
     SidebarComponent,
-    LoginComponent
+    LoginComponent,
+    IndexClientsComponent
   ],
   imports: [
     BrowserModule,
