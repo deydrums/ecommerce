@@ -144,9 +144,52 @@ const getClientsFilterAdmin = async(req,res = response)=>{
     
 }
 
+/*________________________________________________________
+ * 
+ *  -------------CLIENT REGISTER ADMIN--------------------
+ * _______________________________________________________
+ */
 
+const registerClientAdmin = async(req,res = response)=>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    const data = req.body;
+    try {
+        let client = await Client.findOne({email: data.email});
+        if(client){
+            return res.status(400).json({
+                ok: false,
+                message: 'El correo ya fue registrado anteriormente'
+            });
+        };
+        client = new Client(data);
+        //Encriptar contraseña
+        const salt = bcrypt.genSaltSync();
+        client.password = bcrypt.hashSync('123456789',salt);
+
+        await client.save();
+    
+        res.status(201).json({
+            ok: true,
+            message: 'Registro de cliente exitoso',
+            data:client
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
 module.exports = {
     registerClient,
     loginClient,
-    getClientsFilterAdmin
+    getClientsFilterAdmin,
+    registerClientAdmin
 };

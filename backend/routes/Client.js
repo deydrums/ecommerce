@@ -10,7 +10,7 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { registerClient, loginClient, getClientsFilterAdmin } = require('../controllers/ClientController');
+ const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin } = require('../controllers/ClientController');
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
 
@@ -49,6 +49,7 @@ router.post(
     ],
     loginClient
 );
+
 /*________________________________________________________
  * 
  *  -----------LISTAR CLIENTES FILTRO ADMIN---------------
@@ -60,5 +61,27 @@ router.get(
     auth.authenticated,
     getClientsFilterAdmin
 )
- 
+
+ /*________________________________________________________
+ * 
+ *  -------------CLIENT REGISTER ADMIN--------------------
+ * _______________________________________________________
+ */
+
+router.post(
+    '/registerClientAdmin',
+    [   
+        auth.authenticated,
+        check('name', 'El nombre no es valido').not().isEmpty(),
+        check('surname', 'El apellido no es valido').not().isEmpty(),
+        check('email', 'El email no es valido').isEmail(),
+        check('telephone', 'El telefono no es valido').isLength({min: 7}), 
+        check('birthday', 'La fecha de nacimiento no es valida').not().isEmpty(),
+        check('dni', 'Del DNI no es valido').not().isEmpty(),
+        check('gender', 'El genero no es valido').not().isEmpty(),
+        paramsValidator
+    ],
+    registerClientAdmin
+)
+
  module.exports = router;

@@ -19,4 +19,9 @@ export class ClientService {
     return this._http.get(this.url+'client/getClientsFilterAdmin/'+type+'/'+filter,{headers:headers});
   }
 
+  registerClientAdmin(data: any, token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.post(this.url+'client/registerClientAdmin',data,{headers:headers});
+  }
+  
 }

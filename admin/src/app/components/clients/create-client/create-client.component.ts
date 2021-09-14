@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
+import { ClientService } from 'src/app/services/client.service';
 declare var iziToast:any;
 
 @Component({
@@ -12,14 +14,35 @@ export class CreateClientComponent implements OnInit {
     gender: ''
   };
 
-  constructor() { }
+  public token;
+
+  constructor(
+    private _clientService : ClientService,
+    private _adminService : AdminService,
+  ) {
+    this.token = this._adminService.getToken();
+   }
 
   ngOnInit(): void {
   }
 
   register(registerForm : any){
     if(registerForm.valid){
-      console.log(this.client);
+      this._clientService.registerClientAdmin(this.client,this.token).subscribe(
+        response=>{
+          console.log(response);
+        },
+        error=>{
+          iziToast.show({
+            title: 'Error',
+            titleColor: '#ff0000',
+            color: '#fff',
+            class: 'text-danger',
+            position: 'topRight',
+            message: error.error.message
+          })
+        }
+      );
     }else{
       iziToast.show({
         title: 'Error',
