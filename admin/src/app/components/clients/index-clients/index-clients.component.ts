@@ -18,6 +18,7 @@ export class IndexClientsComponent implements OnInit {
   public page = 1;
   public pageSize = 4;
   public token;
+  public loading = true;
 
   constructor(
     private _clientService : ClientService,
@@ -27,9 +28,14 @@ export class IndexClientsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.initData();
+  }
+
+  initData() {
     this._clientService.getClientsFilterAdmin(null,null,this.token).subscribe(
       response=>{
         this.clients = response.data;
+        this.loading = false;
       },
       error=>{
         console.log(<any>error);
@@ -38,10 +44,12 @@ export class IndexClientsComponent implements OnInit {
   }
 
   filter(type:any){
+    this.loading = true;
     if(type == 'surname'){
       this._clientService.getClientsFilterAdmin(type,this.filterSurname,this.token).subscribe(
         response=>{
           this.clients = response.data;
+          this.loading = false;
         },
         error=>{
           console.log(<any>error);
@@ -51,6 +59,7 @@ export class IndexClientsComponent implements OnInit {
       this._clientService.getClientsFilterAdmin(type,this.filterEmail, this.token).subscribe(
         response=>{
           this.clients = response.data;
+          this.loading = false;
         },
         error=>{
           console.log(<any>error);
@@ -74,7 +83,7 @@ export class IndexClientsComponent implements OnInit {
         });
         $('#delete-'+id).modal('hide');
         $('.modal-backdrop').removeClass('show');
-        this.ngOnInit();
+        this.initData();
       },
       error=>{
         iziToast.show({
