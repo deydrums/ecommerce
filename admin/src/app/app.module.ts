@@ -13,6 +13,7 @@ import { IndexClientsComponent } from './components/clients/index-clients/index-
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateClientComponent } from './components/clients/create-client/create-client.component';
 import { EditClientComponent } from './components/clients/edit-client/edit-client.component';
+import { CreateProductComponent } from './components/products/create-product/create-product.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { EditClientComponent } from './components/clients/edit-client/edit-clien
     LoginComponent,
     IndexClientsComponent,
     CreateClientComponent,
-    EditClientComponent
+    EditClientComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,
