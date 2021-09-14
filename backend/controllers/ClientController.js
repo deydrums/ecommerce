@@ -213,10 +213,73 @@ const getClientByIdAdmin = async(req,res = response) =>{
 
 }
 
+/*________________________________________________________
+ * 
+ *  ------------- UPDATE CLIENT ADMIN ----------S----------
+ * _______________________________________________________
+ */
+
+const updateClientAdmin = async(req,res = response)=>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    const id = req.params['id'];
+    const params = req.body;
+
+    try {
+            
+        Client.findById(id).exec((err,data)=>{
+            if(err || !data){
+                return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
+            }
+    
+            Client.findOne({email: params.email.toLowerCase()},(err, data)=>{
+                if(err) {
+                    return res.status(500).send({message: 'Error al intentar actualizar datos'});
+                }
+        
+                if(data && data.email == params.email && data._id != id) {            
+                    return res.status(400).send({message: 'El email ya esta registrado.'});
+                }else{
+        
+                    Client.findByIdAndUpdate({_id: id},params,{new:true},(err,data)=>{
+                        if(err){
+                            return res.status(500).send({status: 'error', message: "Error al actualizar usuario"}); 
+                        }
+                        if(!data){
+                            return res.status(500).send({status: 'error', message: "El usuario no existe"}); 
+                        }
+                        //Devolver respuesta
+                        return res.status(200).send({status: 'success', message: 'Usuario actualizado', data:data});
+                    });
+                }
+            });
+        });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+
+
+
+
+}
+
+
+
 module.exports = {
     registerClient,
     loginClient,
     getClientsFilterAdmin,
     registerClientAdmin,
-    getClientByIdAdmin
+    getClientByIdAdmin,
+    updateClientAdmin
 };
