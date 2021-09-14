@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { ClientService } from 'src/app/services/client.service';
+
 declare var iziToast:any;
 
 @Component({
@@ -19,6 +21,7 @@ export class CreateClientComponent implements OnInit {
   constructor(
     private _clientService : ClientService,
     private _adminService : AdminService,
+    private _router : Router,
   ) {
     this.token = this._adminService.getToken();
    }
@@ -30,7 +33,17 @@ export class CreateClientComponent implements OnInit {
     if(registerForm.valid){
       this._clientService.registerClientAdmin(this.client,this.token).subscribe(
         response=>{
-          console.log(response);
+          iziToast.show({
+            title: 'Hecho',
+            titleColor: '#1dc74c',
+            color: '#fff',
+            class: 'text-success',
+            position: 'topRight',
+            message: response.message
+          });
+          this.client = {};
+
+          this._router.navigate(['/panel/clients']);
         },
         error=>{
           iziToast.show({

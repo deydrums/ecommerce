@@ -13,7 +13,7 @@ export class IndexClientsComponent implements OnInit {
   public filterSurname = "";
   public filterEmail = "";
   public page = 1;
-  public pageSize = 1;
+  public pageSize = 4;
   public token;
 
   constructor(
