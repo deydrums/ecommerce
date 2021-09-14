@@ -215,7 +215,7 @@ const getClientByIdAdmin = async(req,res = response) =>{
 
 /*________________________________________________________
  * 
- *  ------------- UPDATE CLIENT ADMIN ----------S----------
+ *  ------------- UPDATE CLIENT ADMIN --------------------
  * _______________________________________________________
  */
 
@@ -231,11 +231,12 @@ const updateClientAdmin = async(req,res = response)=>{
 
     try {
             
+        //Buscar si existe el cliente
         Client.findById(id).exec((err,data)=>{
             if(err || !data){
                 return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
             }
-    
+            //Si existe el cliente, buscar que el email sea unico o que sea el mismo (No se actualizo)
             Client.findOne({email: params.email.toLowerCase()},(err, data)=>{
                 if(err) {
                     return res.status(500).send({message: 'Error al intentar actualizar datos'});
@@ -244,13 +245,10 @@ const updateClientAdmin = async(req,res = response)=>{
                 if(data && data.email == params.email && data._id != id) {            
                     return res.status(400).send({message: 'El email ya esta registrado.'});
                 }else{
-        
+                    //Si el email es unico o es el mismo, actualizar el cliente
                     Client.findByIdAndUpdate({_id: id},params,{new:true},(err,data)=>{
-                        if(err){
+                        if(err || !data){
                             return res.status(500).send({status: 'error', message: "Error al actualizar usuario"}); 
-                        }
-                        if(!data){
-                            return res.status(500).send({status: 'error', message: "El usuario no existe"}); 
                         }
                         //Devolver respuesta
                         return res.status(200).send({status: 'success', message: 'Usuario actualizado', data:data});
@@ -259,7 +257,6 @@ const updateClientAdmin = async(req,res = response)=>{
             });
         });
 
-
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -267,10 +264,6 @@ const updateClientAdmin = async(req,res = response)=>{
             message: 'Ha ocurrido un error, intenta de nuevo'
         })
     }
-
-
-
-
 }
 
 
