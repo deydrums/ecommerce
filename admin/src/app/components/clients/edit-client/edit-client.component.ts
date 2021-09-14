@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { ClientService } from 'src/app/services/client.service';
-
+declare var iziToast:any;
 @Component({
   selector: 'app-edit-client',
   templateUrl: './edit-client.component.html',
@@ -31,7 +31,14 @@ export class EditClientComponent implements OnInit {
             this.client = response.data;
           },
           error =>{
-            console.log(<any> error);
+            iziToast.show({
+              title: 'Error',
+              titleColor: '#ff0000',
+              color: '#fff',
+              class: 'text-danger',
+              position: 'topRight',
+              message: error.error.message
+            })
           }
         )      
       }
