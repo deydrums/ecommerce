@@ -8,7 +8,9 @@ declare var iziToast:any;
 })
 export class CreateClientComponent implements OnInit {
 
-  public client : any = {};
+  public client : any = {
+    gender: ''
+  };
 
   constructor() { }
 

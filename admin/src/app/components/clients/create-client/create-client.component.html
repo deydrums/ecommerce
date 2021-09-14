@@ -50,6 +50,7 @@
         <div class="col-md-4">
           <label for="validationCustom01" class="form-label">Genero</label>
           <select class="form-control custom-select" name="gender" [(ngModel)]="client.gender" required>
+            <option value="" disabled selected>Seleccionar</option>
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
           </select>
