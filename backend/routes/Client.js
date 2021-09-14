@@ -10,7 +10,7 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin } = require('../controllers/ClientController');
+ const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin, getClientByIdAdmin } = require('../controllers/ClientController');
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
 
@@ -83,5 +83,19 @@ router.post(
     ],
     registerClientAdmin
 )
+
+
+/*________________________________________________________
+ * 
+ *  ------------- GET CLIENT ADMIN -----------------------
+ * _______________________________________________________
+ */
+
+router.get(
+    '/getClientByIdAdmin/:id',
+    auth.authenticated,
+    getClientByIdAdmin
+)
+
 
  module.exports = router;

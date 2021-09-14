@@ -187,9 +187,36 @@ const registerClientAdmin = async(req,res = response)=>{
         })
     }
 }
+
+
+/*________________________________________________________
+ * 
+ *  ------------- GET CLIENT ADMIN -----------------------
+ * _______________________________________________________
+ */
+
+const getClientByIdAdmin = async(req,res = response) =>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    let id = req.params['id']; 
+    
+    Client.findById(id).exec((err,data)=>{
+        if(err || !data){
+            return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
+        }
+        return res.status(200).send({status: 'success', data:data});
+    });
+
+}
+
 module.exports = {
     registerClient,
     loginClient,
     getClientsFilterAdmin,
-    registerClientAdmin
+    registerClientAdmin,
+    getClientByIdAdmin
 };

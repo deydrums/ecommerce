@@ -24,4 +24,9 @@ export class ClientService {
     return this._http.post(this.url+'client/registerClientAdmin',data,{headers:headers});
   }
   
+  getClientByIdAdmin(id: any, token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.get(this.url+'client/getClientByIdAdmin/'+id,{headers:headers});
+  }
+
 }
