@@ -13,6 +13,8 @@ export class EditClientComponent implements OnInit {
   public client : any = {};
   public id: any;
   public token;
+  public loading_btn = false;
+  public loading = true;
 
   constructor(
     private _route : ActivatedRoute,
@@ -31,6 +33,7 @@ export class EditClientComponent implements OnInit {
         this._clientService.getClientByIdAdmin(this.id,this.token).subscribe(
           response=>{
             this.client = response.data;
+            this.loading = false;
           },
           error =>{
             iziToast.show({
@@ -48,6 +51,7 @@ export class EditClientComponent implements OnInit {
   }
 
   update(updateForm: any){
+    this.loading_btn = true;
     if(updateForm.valid){
       this._clientService.updateClientAdmin(this.client,this.id,this.token).subscribe(
         response=>{
@@ -60,7 +64,7 @@ export class EditClientComponent implements OnInit {
             message: response.message
           });
           this.client = {};
-
+          this.loading_btn = false;
           this._router.navigate(['/panel/clients']);
         },
         error=>{
