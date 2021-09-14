@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { ClientService } from 'src/app/services/client.service';
+declare var iziToast:any;
+declare var jQuery:any;
+declare var $:any;
 
 @Component({
   selector: 'app-index-clients',
@@ -55,6 +58,36 @@ export class IndexClientsComponent implements OnInit {
       )
     }
 
+  }
+
+
+  delete(id:any){
+    this._clientService.deleteClientAdmin(id, this.token).subscribe(
+      response=>{
+        iziToast.show({
+          title: 'Hecho',
+          titleColor: '#1dc74c',
+          color: '#fff',
+          class: 'text-success',
+          position: 'topRight',
+          message: response.message
+        });
+        $('#delete-'+id).modal('hide');
+        $('.modal-backdrop').removeClass('show');
+        this.ngOnInit();
+      },
+      error=>{
+        iziToast.show({
+          title: 'Error',
+          titleColor: '#ff0000',
+          color: '#fff',
+          class: 'text-danger',
+          position: 'topRight',
+          message: error.error.message
+        });
+        
+      }
+    );
   }
 
 }

@@ -44,6 +44,11 @@ var ClientSchema = Schema({
     dni: {
         type: String,
         required: false,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required:true
     }
 
 });

@@ -266,7 +266,38 @@ const updateClientAdmin = async(req,res = response)=>{
     }
 }
 
+/*________________________________________________________
+ * 
+ *  ------------- UPDATE CLIENT ADMIN --------------------
+ * _______________________________________________________
+ */
 
+const deleteClientAdmin = async(req,res = response)=>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    const id = req.params['id'];
+
+    try {
+        Client.findByIdAndDelete({_id: id},{new:true},(err,data)=>{
+            if(err || !data){
+                return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
+            }else{
+                return res.status(200).send({status: 'success', message: 'Usuario eliminado', data:data});
+            }
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
 
 module.exports = {
     registerClient,
@@ -274,5 +305,6 @@ module.exports = {
     getClientsFilterAdmin,
     registerClientAdmin,
     getClientByIdAdmin,
-    updateClientAdmin
+    updateClientAdmin,
+    deleteClientAdmin
 };

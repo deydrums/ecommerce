@@ -54,9 +54,31 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                     <button class="dropdown-item" type="button" [routerLink] ="['/panel/clients/',client._id]" >Editar cliente</button>
-                    <button class="dropdown-item" type="button" href="#" >Eliminar cliente</button>
+                    <button class="dropdown-item" type="button" data-toggle="modal" [attr.data-target]="'#delete-'+client._id" >Eliminar cliente</button>
                   </div>
                 </div>
+
+                <!-- Launch vertically centered modal -->
+                <div class="modal fade" id="delete-{{client._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Eliminar cliente</h4>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+                         
+
+                      </div>
+                      <div class="modal-body">
+                        <p class="fs-sm">Deseas eliminar al cliente {{client.name}} {{client.surname}} permanentemente?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-primary btn-sm" (click)="delete(client._id)" type="button">Confirmar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
 
               </td>
             </tr>

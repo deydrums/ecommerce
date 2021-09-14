@@ -35,4 +35,8 @@ export class ClientService {
     return this._http.put(this.url+'client/updateClientAdmin/'+id,data,{headers:headers});
   }
 
+  deleteClientAdmin(id:any, token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.delete(this.url+'client/deleteClientAdmin/'+id,{headers:headers});
+  }
 }
