@@ -12,6 +12,7 @@ import { LoginComponent } from './components/login/login.component';
 import { IndexClientsComponent } from './components/clients/index-clients/index-clients.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateClientComponent } from './components/clients/create-client/create-client.component';
+import { EditClientComponent } from './components/clients/edit-client/edit-client.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CreateClientComponent } from './components/clients/create-client/create
     SidebarComponent,
     LoginComponent,
     IndexClientsComponent,
-    CreateClientComponent
+    CreateClientComponent,
+    EditClientComponent
   ],
   imports: [
     BrowserModule,
