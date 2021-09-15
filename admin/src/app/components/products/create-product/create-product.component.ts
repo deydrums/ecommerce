@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 declare var iziToast:any;
-
+declare var jQuery:any;
+declare var $:any;
 
 @Component({
   selector: 'app-create-product',
@@ -51,6 +52,9 @@ export class CreateProductComponent implements OnInit {
         position: 'topRight',
         message: 'No hay una imagen valida'
       });
+      $('#input-img').text('Seleccionar imagen');
+      this.imgSelect = 'assets/img/default.jpg';
+      this.file = undefined;
     }
 
     if(file?.size <= 4000000){
@@ -58,6 +62,7 @@ export class CreateProductComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = e => this.imgSelect = reader.result;
         reader.readAsDataURL(file);
+        $('#input-img').text(file.name);
         this.file = file;
       }else{
         iziToast.show({
@@ -68,6 +73,7 @@ export class CreateProductComponent implements OnInit {
           position: 'topRight',
           message: 'El formato debe de ser jpg, webp, jpg o jpeg'
         });
+        $('#input-img').text('Seleccionar imagen');
         this.imgSelect = 'assets/img/default.jpg';
         this.file = undefined;
       }
@@ -80,6 +86,7 @@ export class CreateProductComponent implements OnInit {
         position: 'topRight',
         message: 'La imagen no puede ser mayor a 4mb'
       });
+      $('#input-img').text('Seleccionar imagen');
       this.imgSelect = 'assets/img/default.jpg';
       this.file = undefined;
     }
