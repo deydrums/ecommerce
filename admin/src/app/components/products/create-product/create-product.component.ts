@@ -17,8 +17,13 @@ export class CreateProductComponent implements OnInit {
 
   public file : any | File = undefined;
   public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
+  public config: any = {};
 
-  constructor() { }
+  constructor() { 
+    this.config = {
+      height: 500
+    }
+  }
 
   ngOnInit(): void {
   }
@@ -26,7 +31,7 @@ export class CreateProductComponent implements OnInit {
   create(createForm : any){
     if(createForm.valid){
       console.log(this.product);
-      
+      console.log(this.file);
     }else{
       iziToast.show({
         title: 'Error',

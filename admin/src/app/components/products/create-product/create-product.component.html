@@ -47,7 +47,7 @@
               </div>
     
               <div class="col-lg-12 form-group">
-                <textarea class="form-control" required name = "content" [(ngModel)]="product.content"  rows="15"></textarea>
+                <tinymce [config] = "config" name = "content" [(ngModel)]="product.content" required></tinymce>
               </div>
     
             </div>
