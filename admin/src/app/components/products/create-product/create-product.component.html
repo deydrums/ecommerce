@@ -47,7 +47,28 @@
               </div>
     
               <div class="col-lg-12 form-group">
-                <tinymce [config] = "config" name = "content" [(ngModel)]="product.content" required></tinymce>
+                <!-- <tinymce [config] = "config" name = "content" [(ngModel)]="product.content" required></tinymce> -->
+
+                <editor 
+                name = "content" 
+                [(ngModel)]="product.content"
+                required
+                apiKey="986sznhjlvor0m6on9m2kfae6elch4ej3geg4piwedz3862u" 
+                [init]="{
+                  height: 300,
+                  menubar: true,
+                  plugins: [
+                    'advlist autolink lists link image charmap print preview anchor',
+                    'searchreplace visualblocks code fullscreen',
+                    'insertdatetime media table paste code help wordcount'
+                  ],
+                  toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help'
+                }" ></editor>
+
+                
               </div>
     
             </div>
