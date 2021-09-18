@@ -24,6 +24,7 @@ app.use(express.json());
 //Rutas
 app.use('/api/client', require('./routes/Client'));
 app.use('/api/admin', require('./routes/Admin'));
+app.use('/api/product', require('./routes/Product'));
 
 //Escuchar peticiones
 app.listen(process.env.PORT ,()=>{
