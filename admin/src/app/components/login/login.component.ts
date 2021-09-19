@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   constructor( 
     private _adminService: AdminService,
     private _router: Router,
+    private _iziToastService: IziToastService
     ) { 
       this.token = this._adminService.getToken();
   }
@@ -41,26 +43,19 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('_id', response.data._id);
           this._router.navigate(['/']);
         },
-        error =>{          
-          iziToast.show({
-            title: 'Error',
-            titleColor: '#ff0000',
-            color: '#fff',
-            class: 'text-danger',
-            position: 'topRight',
-            message: error.error.message
-          })
+        error =>{    
+          const errors = error.error.errors;
+          if(errors){
+            for (const error in errors) {
+              this._iziToastService.showMsg(errors[error].msg, "error");
+            }
+          }else{
+            this._iziToastService.showMsg(error.error.message, "error");
+          } 
         }
       );
     }else{
-      iziToast.show({
-        title: 'Error',
-        titleColor: '#ff0000',
-        color: '#fff',
-        class: 'text-danger',
-        position: 'topRight',
-        message: 'Los datos del formulario no son validos'
-      })
+      this._iziToastService.showMsg("Los datos del formulario no son validos", "error");  
     }
   }
 

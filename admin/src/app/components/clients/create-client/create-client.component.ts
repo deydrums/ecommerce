@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { ClientService } from 'src/app/services/client.service';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 
 declare var iziToast:any;
 
@@ -23,6 +24,7 @@ export class CreateClientComponent implements OnInit {
     private _clientService : ClientService,
     private _adminService : AdminService,
     private _router : Router,
+    private _iziToastService: IziToastService
   ) {
     this.token = this._adminService.getToken();
    }
@@ -35,38 +37,26 @@ export class CreateClientComponent implements OnInit {
       this.loading_btn = true;
       this._clientService.registerClientAdmin(this.client,this.token).subscribe(
         response=>{
-          iziToast.show({
-            title: 'Hecho',
-            titleColor: '#1dc74c',
-            color: '#fff',
-            class: 'text-success',
-            position: 'topRight',
-            message: response.message
-          });
+          this._iziToastService.showMsg(response.message, "success");
           this.client = {};
           this.loading_btn = false;
           this._router.navigate(['/panel/clients']);
         },
         error=>{
-          iziToast.show({
-            title: 'Error',
-            titleColor: '#ff0000',
-            color: '#fff',
-            class: 'text-danger',
-            position: 'topRight',
-            message: error.error.message
-          })
+          const errors = error.error.errors;
+          if(errors){
+            for (const error in errors) {
+              this._iziToastService.showMsg(errors[error].msg, "error");
+            }
+          }else{
+            this._iziToastService.showMsg(error.error.message, "error");
+          }
+          this.loading_btn = false;
         }
       );
     }else{
-      iziToast.show({
-        title: 'Error',
-        titleColor: '#ff0000',
-        color: '#fff',
-        class: 'text-danger',
-        position: 'topRight',
-        message: 'Los datos del formulario no son validos'
-      })
+      this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
+      this.loading_btn = false;
     }
   }
 

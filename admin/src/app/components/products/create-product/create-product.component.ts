@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
 
 declare var iziToast:any;
@@ -29,7 +30,8 @@ export class CreateProductComponent implements OnInit {
 
   constructor(
     private _productService: ProductService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _iziToastService: IziToastService,
   ) { 
     this.config = {
       height: 500
@@ -44,40 +46,19 @@ export class CreateProductComponent implements OnInit {
     if(createForm.valid){
       this._productService.register(this.product, this.file, this.token).subscribe(
         response => {
-          iziToast.show({
-            title: 'Hecho',
-            titleColor: '#1dc74c',
-            color: '#fff',
-            class: 'text-success',
-            position: 'topRight',
-            message: response.message
-          });
+          this._iziToastService.showMsg(response.message, "success");
         },
         error=>{
           const errors = error.error.errors;
           if(errors){
             for (const error in errors) {
-              iziToast.show({
-                title: 'Error',
-                titleColor: '#ff0000',
-                color: '#fff',
-                class: 'text-danger',
-                position: 'topRight',
-                message: errors[error].msg
-              });
+              this._iziToastService.showMsg(errors[error].msg, "error");
             }
           }
         }
       );
     }else{
-      iziToast.show({
-        title: 'Error',
-        titleColor: '#ff0000',
-        color: '#fff',
-        class: 'text-danger',
-        position: 'topRight',
-        message: 'Los datos del formulario no son validos'
-      });
+      this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
     }
   }
 
@@ -86,14 +67,8 @@ export class CreateProductComponent implements OnInit {
     if(event.target.files && event.target.files[0]){
       file = <File>event.target.files[0];
     }else{
-      iziToast.show({
-        title: 'Error',
-        titleColor: '#ff0000',
-        color: '#fff',
-        class: 'text-danger',
-        position: 'topRight',
-        message: 'No hay una imagen valida'
-      });
+      this._iziToastService.showMsg("No hay una imagen valida", "error");
+
       $('#input-img').text('Seleccionar imagen');
       this.imgSelect = 'assets/img/default.jpg';
       this.file = undefined;
@@ -107,27 +82,15 @@ export class CreateProductComponent implements OnInit {
         $('#input-img').text(file.name);
         this.file = file;
       }else{
-        iziToast.show({
-          title: 'Error',
-          titleColor: '#ff0000',
-          color: '#fff',
-          class: 'text-danger',
-          position: 'topRight',
-          message: 'El formato debe de ser jpg, webp, jpg o jpeg'
-        });
+        this._iziToastService.showMsg("El formato debe de ser jpg, webp, jpg o jpeg", "error");
+
         $('#input-img').text('Seleccionar imagen');
         this.imgSelect = 'assets/img/default.jpg';
         this.file = undefined;
       }
     }else{
-      iziToast.show({
-        title: 'Error',
-        titleColor: '#ff0000',
-        color: '#fff',
-        class: 'text-danger',
-        position: 'topRight',
-        message: 'La imagen no puede ser mayor a 4mb'
-      });
+      this._iziToastService.showMsg("La imagen no puede ser mayor a 4mb", "error");
+      
       $('#input-img').text('Seleccionar imagen');
       this.imgSelect = 'assets/img/default.jpg';
       this.file = undefined;
