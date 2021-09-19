@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
+import { ProductService } from 'src/app/services/product.service';
 
 declare var iziToast:any;
 declare var jQuery:any;
@@ -12,17 +14,27 @@ declare var $:any;
 export class CreateProductComponent implements OnInit {
 
   public product : any = {
-
+    title : 'Create Product',
+    stock: 10,
+    price: 110,
+    category: 'Categoria 1',
+    content: 'Create Product',
+    description: 'Description'
   }
+  public token;
 
   public file : any | File = undefined;
   public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
   public config: any = {};
 
-  constructor() { 
+  constructor(
+    private _productService: ProductService,
+    private _adminService: AdminService
+  ) { 
     this.config = {
       height: 500
     }
+    this.token = this._adminService.getToken();
   }
 
   ngOnInit(): void {
@@ -30,8 +42,29 @@ export class CreateProductComponent implements OnInit {
 
   create(createForm : any){
     if(createForm.valid){
-      console.log(this.product);
-      console.log(this.file);
+      this._productService.register(this.product, this.file, this.token).subscribe(
+        response => {
+          iziToast.show({
+            title: 'Hecho',
+            titleColor: '#1dc74c',
+            color: '#fff',
+            class: 'text-success',
+            position: 'topRight',
+            message: response.message
+          });
+        },
+        error=>{
+          console.log(error)
+          iziToast.show({
+            title: 'Error',
+            titleColor: '#ff0000',
+            color: '#fff',
+            class: 'text-danger',
+            position: 'topRight',
+            message: error.error.message,
+          });
+        }
+      );
     }else{
       iziToast.show({
         title: 'Error',
