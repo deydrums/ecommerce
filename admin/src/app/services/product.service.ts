@@ -20,7 +20,6 @@ export class ProductService {
     fd.append('title', data.title);
     
 
-    console.log(fd.getAll)
     return this._http.post(this.url+'product/register',fd,{headers:headers});
   }
   

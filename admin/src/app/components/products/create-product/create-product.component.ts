@@ -54,15 +54,19 @@ export class CreateProductComponent implements OnInit {
           });
         },
         error=>{
-          console.log(error)
-          iziToast.show({
-            title: 'Error',
-            titleColor: '#ff0000',
-            color: '#fff',
-            class: 'text-danger',
-            position: 'topRight',
-            message: error.error.message,
-          });
+          const errors = error.error.errors;
+          if(errors){
+            for (const error in errors) {
+              iziToast.show({
+                title: 'Error',
+                titleColor: '#ff0000',
+                color: '#fff',
+                class: 'text-danger',
+                position: 'topRight',
+                message: errors[error].msg
+              });
+            }
+          }
         }
       );
     }else{
