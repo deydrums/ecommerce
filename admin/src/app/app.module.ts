@@ -16,6 +16,7 @@ import { EditClientComponent } from './components/clients/edit-client/edit-clien
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { IndexProductComponent } from './components/products/index-product/index-product.component';
+import { UpdateProductComponent } from './components/products/update-product/update-product.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { IndexProductComponent } from './components/products/index-product/index
     CreateClientComponent,
     EditClientComponent,
     CreateProductComponent,
-    IndexProductComponent
+    IndexProductComponent,
+    UpdateProductComponent
   ],
   imports: [
     BrowserModule,
