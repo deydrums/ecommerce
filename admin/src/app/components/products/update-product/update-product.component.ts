@@ -26,6 +26,7 @@ export class UpdateProductComponent implements OnInit {
   public url;
   public id;
 
+
   constructor(
     private _productService: ProductService,
     private _adminService: AdminService,
@@ -41,12 +42,18 @@ export class UpdateProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getdata()
+  }
+  
+  getdata(){
+    this.loading = true;
     this._route.params.subscribe(
       params=>{
         this.id = params['id'];  
         this._productService.getProductByIdAdmin(this.id,this.token).subscribe(
           response=>{
             this.product = response.data;
+            this.imgSelect = this.url +'product/getBanner/' + response.data.banner;
             this.loading = false;
           },
           error =>{
@@ -58,15 +65,15 @@ export class UpdateProductComponent implements OnInit {
       }
     )
   }
-
   updateProduct(updateForm:any){
     if(updateForm.valid){
       this._productService.update(this.product, this.file, this.id , this.token).subscribe(
         response => {
-          console.log(response)
+          this.getdata()
+          this._iziToastService.showMsg(response.message, "success");
         },
         error => {
-          console.log(error)
+          this._iziToastService.showMsg(error.error.message, "error");
         }
       )
     }else{
