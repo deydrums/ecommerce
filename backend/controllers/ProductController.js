@@ -126,7 +126,7 @@ const getProductByIdAdmin = async(req,res = response) =>{
     
         Product.findById(id).exec((err,data)=>{
             if(err || !data){
-                return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
+                return res.status(404).send({status: 'error', message: 'No se ha encontrado el producto.'});
             }
             return res.status(200).send({status: 'success', data:data});
         });

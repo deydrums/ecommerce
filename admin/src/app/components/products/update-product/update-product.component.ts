@@ -15,7 +15,7 @@ declare var $:any;
 })
 export class UpdateProductComponent implements OnInit {
 
-  public product: any = {};
+  public product: any = null;
   public token;
 
   public file : any | File = undefined;
@@ -53,6 +53,7 @@ export class UpdateProductComponent implements OnInit {
           error =>{
             this._iziToastService.showMsg(error.error.message, "error");
             this.loading = false;
+            this._router.navigate(['/panel/products'])
           }
         )      
       }

@@ -10,7 +10,7 @@
 </div>
 
 
-<form (ngSubmit)="updateProduct(updateForm)" #updateForm="ngForm">
+<form (ngSubmit)="updateProduct(updateForm)" #updateForm="ngForm" *ngIf ="product">
     <div class="card box-shadow-sm">
       <div class="card-header">
         <h5 style="margin-bottom: 0px;">Actualizar de producto</h5>
