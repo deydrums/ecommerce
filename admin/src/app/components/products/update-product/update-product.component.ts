@@ -48,7 +48,6 @@ export class UpdateProductComponent implements OnInit {
           response=>{
             this.product = response.data;
             this.loading = false;
-            console.log(this.product)
           },
           error =>{
             this._iziToastService.showMsg(error.error.message, "error");
@@ -61,7 +60,10 @@ export class UpdateProductComponent implements OnInit {
   }
 
   updateProduct(updateForm:any){
-
+    if(updateForm.valid){
+      console.log(this.product)
+      console.log(this.file)
+    }
   }
 
 
