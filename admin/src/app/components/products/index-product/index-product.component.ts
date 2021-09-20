@@ -3,7 +3,8 @@ import { AdminService } from 'src/app/services/admin.service';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
 import { global } from '../../../services/global';
-
+declare var jQuery:any;
+declare var $:any;
 @Component({
   selector: 'app-index-product',
   templateUrl: './index-product.component.html',
@@ -51,4 +52,11 @@ export class IndexProductComponent implements OnInit {
       }
     )
   }
+
+  delete(id:any){
+    console.log(id)
+    $('#delete-'+id).modal('hide');
+    $('.modal-backdrop').removeClass('show');
+  }
 }
+

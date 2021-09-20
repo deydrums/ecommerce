@@ -71,6 +71,28 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                       <button class="dropdown-item" type="button" [routerLink] ="['/panel/product/',product._id]" >Editar producto</button>
+                      <button class="dropdown-item" type="button" data-toggle="modal" [attr.data-target]="'#delete-'+product._id" >Eliminar Producto</button>
+                    </div>
+                  </div>
+  
+                  <!-- Launch vertically centered modal -->
+                  <div class="modal fade" id="delete-{{product._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Eliminar producto</h4>
+                          <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+                           
+  
+                        </div>
+                        <div class="modal-body">
+                          <p class="fs-sm">Deseas eliminar al producto {{product.title}} permanentemente?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                          <button class="btn btn-primary btn-sm" (click)="delete(product._id)" type="button">Confirmar</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
