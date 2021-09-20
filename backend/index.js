@@ -4,7 +4,7 @@ const express = require('express');
 const { dbConnection } = require('./database/config');
 require('dotenv').config();
 const cors = require('cors');
-var bodyParser = require('body-parser');
+// var bodyParser = require('body-parser')
 
 //Ejecutar express
 const app = express();
@@ -19,8 +19,10 @@ app.use(express.static('public'));
 app.use(cors());
 
 //Lectura y parseo del body
-// app.use(bodyParser.urlencoded({extended:true}));
+// app.use(bodyParser.urlencoded({ extended: true }));
+
 // app.use(bodyParser.json());
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 

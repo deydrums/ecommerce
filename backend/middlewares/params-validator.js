@@ -14,7 +14,6 @@ const paramsValidator = (req, res = response, next) => {
             errors: errors.mapped()
         });
     };
-    
     next();
 };
 
