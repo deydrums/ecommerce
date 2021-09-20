@@ -7,6 +7,7 @@ import { IndexComponent } from "./components/index/index.component";
 import { LoginComponent } from './components/login/login.component';
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
 import { IndexProductComponent } from './components/products/index-product/index-product.component';
+import { InventoryProductComponent } from './components/products/inventory-product/inventory-product.component';
 import { UpdateProductComponent } from './components/products/update-product/update-product.component';
 import { AdminGuard } from './guards/admin.guard';
 
@@ -21,6 +22,7 @@ const appRoute: Routes = [
         {path: 'products/create', component: CreateProductComponent, canActivate:[AdminGuard]},
         {path: 'products', component: IndexProductComponent, canActivate:[AdminGuard]},
         {path: 'product/:id', component: UpdateProductComponent, canActivate:[AdminGuard]},
+        {path: 'product/inventory/:id', component: InventoryProductComponent, canActivate:[AdminGuard]},
     ]},
     {path: 'login', component: LoginComponent},
 ];
