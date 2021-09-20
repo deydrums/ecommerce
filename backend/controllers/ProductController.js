@@ -197,10 +197,54 @@ const updateProduct = async(req,res = response)=>{
     }
 }
 
+/*________________________________________________________
+ * 
+ *  ----------------PRODUCT UPDATE----------------------
+ * _______________________________________________________
+ */
+
+const deleteProduct = async(req,res = response)=>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    try {
+        let id = req.params['id']; 
+        Product.findById(id).exec((err,product)=>{
+            if(err || !product ){
+                return res.status(404).send({status: 'error', message: 'Producto no encontrado.'});
+            }else{
+
+                if(product.banner !== undefined && product.banner !== 'undefined'){
+                    fs.unlinkSync('uploads/products/'+product.banner)
+                }
+
+                Product.findByIdAndDelete({_id: id},{new:true},(err,data)=>{
+                    if(err || !data){
+                        return res.status(404).send({status: 'error', message: "Ha ocurrido un error"}); 
+                    }
+                    //Devolver respuesta
+                    return res.status(200).send({status: 'success', message: 'Producto eliminado', data:data});
+                });
+            }
+        });
+
+    } catch (error) {
+        if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     registerProduct,
     getProductsAdmin,
     getBanner,
     getProductByIdAdmin,
-    updateProduct
+    updateProduct,
+    deleteProduct
 };

@@ -13,7 +13,7 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
- const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct } = require('../controllers/ProductController');
+ const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct, deleteProduct } = require('../controllers/ProductController');
  
  const multiparty = require('connect-multiparty');
 const { filedata } = require('../middlewares/filedata');
@@ -103,5 +103,18 @@ router.get(
     updateProduct
 );
 
+ /*________________________________________________________
+ * 
+ *  ----------------PRODUCT DELETE-----------------------
+ * _______________________________________________________
+ */
 
+ 
+ router.delete(
+    '/delete/:id',
+    [
+        auth.authenticated,
+    ],
+    deleteProduct
+);
  module.exports = router;
