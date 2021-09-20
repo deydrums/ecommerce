@@ -15,12 +15,16 @@ export class ProductService {
   }
 
   register(data: any, file: any, token:any):Observable<any>{
-    let headers = new HttpHeaders({'Authorization':token});
-    data = {
-      ...data,
-      banner: file
-    }
-    return this._http.post(this.url+'product/register',data,{headers:headers});
+    const headers = new HttpHeaders({'Authorization':token});
+    const formData = new FormData();
+    formData.append("title",data.title);
+    formData.append("stock", data.stock);
+    formData.append("price", data.price);
+    formData.append("category", data.category);
+    formData.append("content", data.content);
+    formData.append("description", data.description);
+    formData.append("banner", file);
+    return this._http.post(this.url+'product/register',formData,{headers});
   }
   
 }
