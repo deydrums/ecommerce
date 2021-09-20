@@ -19,6 +19,7 @@ export class IndexProductComponent implements OnInit {
   public url: string;
   public page = 1;
   public pageSize = 4;
+  public loading_btn: boolean = false;
 
   constructor(
     private _productService: ProductService,
@@ -54,15 +55,20 @@ export class IndexProductComponent implements OnInit {
   }
 
   delete(id:any){
+    this.loading_btn = true;
     this._productService.delete(id, this.token).subscribe(
       response => {
         this._iziToastService.showMsg(response.message, "success");
         $('#delete-'+id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.getProducts();
+        this.loading_btn = false;
+
       },
       error => {
         this._iziToastService.showMsg(error.error.message, "error");
+        this.loading_btn = false;
+
       }
     )
 

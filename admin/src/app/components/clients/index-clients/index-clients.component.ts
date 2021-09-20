@@ -20,6 +20,8 @@ export class IndexClientsComponent implements OnInit {
   public pageSize = 4;
   public token;
   public loading = true;
+  public loading_btn: boolean = false;
+
 
   constructor(
     private _clientService : ClientService,
@@ -73,15 +75,18 @@ export class IndexClientsComponent implements OnInit {
 
 
   delete(id:any){
+    this.loading_btn = true;
     this._clientService.deleteClientAdmin(id, this.token).subscribe(
       response=>{
         this._iziToastService.showMsg(response.message, "success");
         $('#delete-'+id).modal('hide');
         $('.modal-backdrop').removeClass('show');
         this.initData();
+        this.loading_btn = false;
       },
       error=>{
         this._iziToastService.showMsg(error.error.message, "error");
+        this.loading_btn = false;
       }
     );
   }

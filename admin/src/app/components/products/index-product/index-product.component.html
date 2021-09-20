@@ -90,7 +90,12 @@
                         </div>
                         <div class="modal-footer">
                           <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
-                          <button class="btn btn-primary btn-sm" (click)="delete(product._id)" type="button">Confirmar</button>
+                          <button *ngIf="!loading_btn" class="btn btn-primary btn-sm" (click)="delete(product._id)" type="button">Confirmar</button>
+                          <button *ngIf="loading_btn" type="button" class="btn btn-secondary btn-sm" disabled>
+                            <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                            Eliminando...
+                          </button>
+
                         </div>
                       </div>
                     </div>
