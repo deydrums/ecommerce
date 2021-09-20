@@ -32,7 +32,7 @@
       <table class="table table-bordered">
         <thead class="thead-dark">
           <tr>
-            <th>#</th>
+            <th>Imagen</th>
             <th>Titulo</th>
             <th>Stock</th>
             <th>Precio</th>
@@ -54,7 +54,9 @@
           <ng-container *ngIf="!loading">
             <tbody *ngFor="let product of products; let i = index">
               <tr>
-                <td>{{i+1}}</td>
+                <td>
+                  <img style = "width: 100px" [src] = "url + 'product/getBanner/' + product.banner"  alt="Square image">
+                </td>
                 <td>{{product.title}}</td>
                 <td>{{product.stock}}</td>
                 <td>{{product.price}}</td>

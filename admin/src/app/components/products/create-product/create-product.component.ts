@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -27,16 +28,19 @@ export class CreateProductComponent implements OnInit {
   public file : any | File = undefined;
   public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
   public config: any = {};
+  public loading_btn:boolean;
 
   constructor(
     private _productService: ProductService,
     private _adminService: AdminService,
     private _iziToastService: IziToastService,
+    private _router: Router,
   ) { 
     this.config = {
       height: 500
     }
     this.token = this._adminService.getToken();
+    this.loading_btn = false;
   }
 
   ngOnInit(): void {
@@ -44,9 +48,12 @@ export class CreateProductComponent implements OnInit {
 
   create(createForm : any){
     if(createForm.valid){
+      this.loading_btn = true;
       this._productService.register(this.product, this.file, this.token).subscribe(
         response => {
           this._iziToastService.showMsg(response.message, "success");
+          this._router.navigate(['/panel/products']);
+          this.loading_btn = false;
         },
         error=>{
           const errors = error.error.errors;
@@ -57,10 +64,12 @@ export class CreateProductComponent implements OnInit {
           }else{
             this._iziToastService.showMsg(error.error.message, "error");
           }
+          this.loading_btn = false;
         }
       );
     }else{
       this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
+      this.loading_btn = false;
     }
   }
 

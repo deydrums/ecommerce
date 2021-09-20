@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { ProductService } from 'src/app/services/product.service';
+import { global } from '../../../services/global';
 
 @Component({
   selector: 'app-index-product',
@@ -13,14 +14,16 @@ export class IndexProductComponent implements OnInit {
   public filter : string;
   public token;
   public products: Array<any> = [];
+  public url: string;
 
   constructor(
     private _productService: ProductService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
   ) {
     this.loading = true;
     this.filter = '';
     this.token = _adminService.getToken();
+    this.url = global.url;
    }
 
   ngOnInit(): void {
