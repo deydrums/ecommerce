@@ -17,14 +17,14 @@
   </div>
 
   <div class="card-header">
-    <div class="row">
-      <div class="col-8">
-        <div class="input-group">
-          <input class="form-control" type="text" placeholder="Titulo del producto">
-          <button class="btn btn-primary" type="button">Filtrar</button>
+    <form class="form-inline pt-2">
+      <div class="input-group mb-3 mr-sm-4">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Titulo</div>
         </div>
+        <input class="form-control" (keyup)="filterProduct()" name = "filter" [(ngModel)]="filter" type="text" id="inline-form-input-name" placeholder="Escribe un titulo...">
       </div>
-    </div>
+    </form>
   </div>
 
   <div class="card-body">

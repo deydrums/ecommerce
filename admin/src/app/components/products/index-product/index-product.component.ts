@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
 import { global } from '../../../services/global';
 
@@ -19,6 +20,7 @@ export class IndexProductComponent implements OnInit {
   constructor(
     private _productService: ProductService,
     private _adminService: AdminService,
+    private _iziToastService: IziToastService
   ) {
     this.loading = true;
     this.filter = '';
@@ -27,6 +29,7 @@ export class IndexProductComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.loading = true;
     this._productService.getProductsAdmin(this.filter,this.token).subscribe(
       response => {
         this.products = response.data;
@@ -34,8 +37,23 @@ export class IndexProductComponent implements OnInit {
       },
       error => {
         console.log(error)
+        this.loading = false;
       }
     )
   }
 
+
+  filterProduct(){
+    this.loading = true;
+      this._productService.getProductsAdmin(this.filter,this.token).subscribe(
+        response => {
+          this.products = response.data;
+          this.loading = false;
+        },
+        error => {
+          console.log(error)
+          this.loading = false;
+        }
+      )
+  }
 }
