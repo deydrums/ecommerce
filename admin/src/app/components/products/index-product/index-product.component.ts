@@ -54,9 +54,18 @@ export class IndexProductComponent implements OnInit {
   }
 
   delete(id:any){
-    console.log(id)
-    $('#delete-'+id).modal('hide');
-    $('.modal-backdrop').removeClass('show');
+    this._productService.delete(id, this.token).subscribe(
+      response => {
+        this._iziToastService.showMsg(response.message, "success");
+        $('#delete-'+id).modal('hide');
+        $('.modal-backdrop').removeClass('show');
+        this.getProducts();
+      },
+      error => {
+        this._iziToastService.showMsg(error.error.message, "error");
+      }
+    )
+
   }
 }
 

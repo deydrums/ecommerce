@@ -53,4 +53,8 @@ export class ProductService {
     return this._http.put(this.url+'product/update/'+id,formData,{headers});
   }
   
+  delete(id:any, token:any):Observable<any>{
+    const headers = new HttpHeaders({'Authorization':token});
+    return this._http.delete(this.url+'product/delete/'+id,{headers});
+  }
 }
