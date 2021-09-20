@@ -54,6 +54,8 @@ export class CreateProductComponent implements OnInit {
             for (const error in errors) {
               this._iziToastService.showMsg(errors[error].msg, "error");
             }
+          }else{
+            this._iziToastService.showMsg(error.error.message, "error");
           }
         }
       );
