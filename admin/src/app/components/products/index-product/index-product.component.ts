@@ -29,6 +29,14 @@ export class IndexProductComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.getProducts()
+  }
+
+  filterProduct(){
+    this.getProducts()
+  }
+
+  getProducts() {
     this.loading = true;
     this._productService.getProductsAdmin(this.filter,this.token).subscribe(
       response => {
@@ -40,20 +48,5 @@ export class IndexProductComponent implements OnInit {
         this.loading = false;
       }
     )
-  }
-
-
-  filterProduct(){
-    this.loading = true;
-      this._productService.getProductsAdmin(this.filter,this.token).subscribe(
-        response => {
-          this.products = response.data;
-          this.loading = false;
-        },
-        error => {
-          console.log(error)
-          this.loading = false;
-        }
-      )
   }
 }
