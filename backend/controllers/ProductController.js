@@ -139,10 +139,75 @@ const getProductByIdAdmin = async(req,res = response) =>{
 
 }
 
+/*________________________________________________________
+ * 
+ *  ----------------PRODUCT UPDATE----------------------
+ * _______________________________________________________
+ */
+
+const updateProduct = async(req,res = response)=>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    try {
+        let data = req.body;
+        let id = req.params['id']; 
+        if(req.files.banner){
+            var file_path = req.files.banner.path;
+            var file_split = file_path.split('\\');
+            var file_name = file_split[2];
+            var ext_split = file_name.split('\.');
+            var file_ext = ext_split[1];
+        }
+
+        Product.findById(id).exec((err,product)=>{
+            if(err || !data ){
+                fs.unlinkSync(file_path)
+                return res.status(404).send({status: 'error', message: 'Producto no encontrado.'});
+            }else{
+ 
+                if(file_ext != 'png' && file_ext != 'jpg' && file_ext != 'jpeg' && file_ext != 'webp'){
+                    fs.unlinkSync(file_path)
+                }else{
+                    if(product.banner){
+                        fs.unlinkSync('uploads/products/'+product.banner)
+                    }
+                    data = {
+                        ...data,
+                        banner: file_name,
+                    }
+                }
+                
+                
+                Product.findByIdAndUpdate({_id: id},data,{new:true},(err,data)=>{
+                    if(err || !data){
+                        fs.unlinkSync(file_path)
+
+                        return res.status(404).send({status: 'error', message: "Ha ocurrido un error"}); 
+                    }
+                    //Devolver respuesta
+                    return res.status(200).send({status: 'success', message: 'Producto actualizado', data:data});
+                });
+            }
+        });
+
+    } catch (error) {
+        fs.unlinkSync(file_path)
+
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
 
 module.exports = {
     registerProduct,
     getProductsAdmin,
     getBanner,
-    getProductByIdAdmin
+    getProductByIdAdmin,
+    updateProduct
 };
