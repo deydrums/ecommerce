@@ -19,7 +19,9 @@ const registerProduct = async(req,res = response)=>{
     
     try {
         const data = req.body;
-        console.log(req.body, 'hola')
+        console.log(req.body)
+        var file_path = req.files;
+        console.log(file_path)
         res.status(201).json({
             ok: true,
             message: 'Registro de producto exitoso',
