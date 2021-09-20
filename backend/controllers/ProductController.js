@@ -108,8 +108,41 @@ const registerProduct = async(req,res = response)=>{
 
     }
 
+ /*________________________________________________________
+ * 
+ *  ------------- GET PRODUCT ADMIN -----------------------
+ * _______________________________________________________
+ */
+
+const getProductByIdAdmin = async(req,res = response) =>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    try {
+        let id = req.params['id']; 
+    
+        Product.findById(id).exec((err,data)=>{
+            if(err || !data){
+                return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
+            }
+            return res.status(200).send({status: 'success', data:data});
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+
+}
+
+
 module.exports = {
     registerProduct,
     getProductsAdmin,
-    getBanner
+    getBanner,
+    getProductByIdAdmin
 };

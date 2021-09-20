@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
@@ -22,20 +22,41 @@ export class UpdateProductComponent implements OnInit {
   public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
   public config: any = {};
   public loading_btn:boolean;
+  public loading: boolean;
   public url;
+  public id;
 
   constructor(
     private _productService: ProductService,
     private _adminService: AdminService,
     private _iziToastService: IziToastService,
     private _router: Router,
+    private _route: ActivatedRoute
   ) { 
     this.token = this._adminService.getToken();
     this.loading_btn = false;
     this.url = global.url;
+    this.id = '';
+    this.loading = true;
   }
 
   ngOnInit(): void {
+    this._route.params.subscribe(
+      params=>{
+        this.id = params['id'];  
+        this._productService.getProductByIdAdmin(this.id,this.token).subscribe(
+          response=>{
+            this.product = response.data;
+            this.loading = false;
+            console.log(this.product)
+          },
+          error =>{
+            this._iziToastService.showMsg(error.error.message, "error");
+            this.loading = false;
+          }
+        )      
+      }
+    )
   }
 
   updateProduct(updateForm:any){

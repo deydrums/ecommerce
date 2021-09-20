@@ -31,5 +31,10 @@ export class ProductService {
     let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
     return this._http.get(this.url+'product/getProductsAdmin/'+filter,{headers});
   }
+
+  getProductByIdAdmin(id:any, token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.get(this.url+'product/getProductByIdAdmin/'+id,{headers});
+  }
   
 }
