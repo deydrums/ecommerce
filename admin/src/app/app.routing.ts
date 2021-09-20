@@ -6,6 +6,7 @@ import { IndexClientsComponent } from './components/clients/index-clients/index-
 import { IndexComponent } from "./components/index/index.component";
 import { LoginComponent } from './components/login/login.component';
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
+import { IndexProductComponent } from './components/products/index-product/index-product.component';
 import { AdminGuard } from './guards/admin.guard';
 
 const appRoute: Routes = [
@@ -17,6 +18,7 @@ const appRoute: Routes = [
         {path: 'clients/:id', component: EditClientComponent, canActivate:[AdminGuard]},
 
         {path: 'products/create', component: CreateProductComponent, canActivate:[AdminGuard]},
+        {path: 'products', component: IndexProductComponent, canActivate:[AdminGuard]},
     ]},
     {path: 'login', component: LoginComponent},
 ];
