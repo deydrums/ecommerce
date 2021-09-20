@@ -165,7 +165,6 @@ const updateProduct = async(req,res = response)=>{
                     if(req.file.file_ext != 'png' && req.file.file_ext != 'jpg' && req.file.file_ext != 'jpeg' && req.file.file_ext != 'webp'){
                         if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
                     }else{
-                        console.log(product.banner)
                         if(product.banner !== undefined && product.banner !== 'undefined'){
                             fs.unlinkSync('uploads/products/'+product.banner)
                         }

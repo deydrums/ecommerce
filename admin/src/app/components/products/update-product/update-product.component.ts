@@ -66,14 +66,17 @@ export class UpdateProductComponent implements OnInit {
     )
   }
   updateProduct(updateForm:any){
+    this.loading_btn = true;
     if(updateForm.valid){
       this._productService.update(this.product, this.file, this.id , this.token).subscribe(
         response => {
-          this.getdata()
+          this.product = response.data;
           this._iziToastService.showMsg(response.message, "success");
+          this.loading_btn = false;
         },
         error => {
           this._iziToastService.showMsg(error.error.message, "error");
+          this.loading_btn = false;
         }
       )
     }else{
@@ -107,14 +110,14 @@ export class UpdateProductComponent implements OnInit {
         this._iziToastService.showMsg("El formato debe de ser jpg, webp, jpg o jpeg", "error");
 
         $('#input-img').text('Seleccionar imagen');
-        this.imgSelect = 'assets/img/default.jpg';
+        this.imgSelect = this.url +'product/getBanner/' + this.product.banner;
         this.file = undefined;
       }
     }else{
       this._iziToastService.showMsg("La imagen no puede ser mayor a 4mb", "error");
       
       $('#input-img').text('Seleccionar imagen');
-      this.imgSelect = 'assets/img/default.jpg';
+      this.imgSelect = this.url +'product/getBanner/' + this.product.banner;
       this.file = undefined;
     }
     
