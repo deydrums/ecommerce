@@ -95,7 +95,7 @@ const registerProduct = async(req,res = response)=>{
                 if(exists){
                     return res.sendFile(path.resolve(pathFile));
                 }else{
-                    return res.status(404).send({status: 'error', message: 'La imagen no existe.'});
+                    return res.sendFile(path.resolve('./uploads/default.jpg'));
                 }
             });
 
