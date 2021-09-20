@@ -52,7 +52,7 @@
             </tr>
           </tbody>
           <ng-container *ngIf="!loading">
-            <tbody *ngFor="let product of products; let i = index">
+            <tbody *ngFor="let product of products| slice: (page-1)*pageSize: (page-1)*pageSize + pageSize; let i = index">
               <tr>
                 <td>
                   <img style = "width: 100px" [src] = "url + 'product/getBanner/' + product.banner"  alt="Square image">
@@ -82,12 +82,12 @@
     </div>
   </div>
   <div class="card-footer">
-    <!-- <ngb-pagination
+    <ngb-pagination
       [(page)]='page'
       [pageSize]='pageSize'
-      [collectionSize] ='clients.length'
+      [collectionSize] ='products.length'
     >
 
-    </ngb-pagination> -->
+    </ngb-pagination>
   </div>
 </div>
