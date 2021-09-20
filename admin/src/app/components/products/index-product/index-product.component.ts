@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-index-product',
@@ -8,12 +10,29 @@ import { Component, OnInit } from '@angular/core';
 export class IndexProductComponent implements OnInit {
   
   public loading: boolean;
+  public filter : string;
+  public token;
+  public products: Array<any> = [];
 
-  constructor() {
+  constructor(
+    private _productService: ProductService,
+    private _adminService: AdminService
+  ) {
     this.loading = true;
+    this.filter = '';
+    this.token = _adminService.getToken();
    }
 
   ngOnInit(): void {
+    this._productService.getProductsAdmin(this.filter,this.token).subscribe(
+      response => {
+        this.products = response.data;
+        this.loading = false;
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
 }

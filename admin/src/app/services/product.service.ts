@@ -26,5 +26,10 @@ export class ProductService {
     formData.append("banner", file);
     return this._http.post(this.url+'product/register',formData,{headers});
   }
+
+  getProductsAdmin(filter:any, token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.get(this.url+'product/getProductsAdmin/'+filter,{headers});
+  }
   
 }

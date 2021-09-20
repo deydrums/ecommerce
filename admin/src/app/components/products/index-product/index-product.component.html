@@ -52,7 +52,29 @@
             </tr>
           </tbody>
           <ng-container *ngIf="!loading">
+            <tbody *ngFor="let product of products; let i = index">
+              <tr>
+                <td>{{i+1}}</td>
+                <td>{{product.title}}</td>
+                <td>{{product.stock}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.nsales}}</td>
 
+                <td>
+
+                  <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Opciones
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <button class="dropdown-item" type="button" [routerLink] ="['/panel/product/',product._id]" >Editar producto</button>
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+            </tbody>
           </ng-container>
       </table>
     </div>

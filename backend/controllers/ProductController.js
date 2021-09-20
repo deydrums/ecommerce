@@ -63,6 +63,28 @@ const registerProduct = async(req,res = response)=>{
     }
 }
 
+    const getProductsAdmin = async(req,res = response)=>{
+        if(!req.user ||req.user.role !== 'admin'){
+            return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+        }
+
+        try {
+            let filter = req.params['filter'];
+            Product.find({title: new RegExp(filter,'i')}).exec((err,data)=>{
+                if(err || !data ){
+                    return res.status(404).send({status: 'error', message: 'No se han encontrado productos.'});
+                }
+                return res.status(200).send({status: 'success', data:data});
+            });
+            
+        } catch (error) {
+            res.status(500).json({
+                ok: false,
+                message: 'Ha ocurrido un error, intenta de nuevo'
+            })
+        }
+    }
 module.exports = {
-    registerProduct
+    registerProduct,
+    getProductsAdmin
 };

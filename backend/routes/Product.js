@@ -13,14 +13,14 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
- const { registerProduct } = require('../controllers/ProductController');
+ const { registerProduct, getProductsAdmin } = require('../controllers/ProductController');
  
  const multiparty = require('connect-multiparty')
  const path = multiparty({uploadDir: './uploads/products'});
 
  /*________________________________________________________
  * 
- *  ----------------CLIENT REGISTER-----------------------
+ *  ----------------PRODUCT REGISTER-----------------------
  * _______________________________________________________
  */
 
@@ -41,17 +41,17 @@
     registerProduct
 );
 
-// router.post(
-//     '/register',
-//     // username must be an email
-//     body('title', 'El titulo no es valido').not().isEmpty(),
-//     (req, res) => {
-//       // Finds the validation errors in this request and wraps them in an object with handy functions
-//       console.log(req.body)
-//       const errors = validationResult(req);
-//       if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array() });
-//       }
-//     },
-//   );
+
+/*________________________________________________________
+ * 
+ *  -----------LISTAR PRODUCTOS FILTRO ADMIN--------------
+ * _______________________________________________________
+ */
+
+router.get(
+    '/getProductsAdmin/:filter?',
+    auth.authenticated,
+    getProductsAdmin
+)
+
  module.exports = router;
