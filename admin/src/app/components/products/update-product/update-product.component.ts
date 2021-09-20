@@ -61,8 +61,17 @@ export class UpdateProductComponent implements OnInit {
 
   updateProduct(updateForm:any){
     if(updateForm.valid){
-      console.log(this.product)
-      console.log(this.file)
+      this._productService.update(this.product, this.file, this.id , this.token).subscribe(
+        response => {
+          console.log(response)
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }else{
+      this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
+      this.loading_btn = false;
     }
   }
 
