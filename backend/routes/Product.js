@@ -13,7 +13,7 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
- const { registerProduct, getProductsAdmin } = require('../controllers/ProductController');
+ const { registerProduct, getProductsAdmin, getBanner } = require('../controllers/ProductController');
  
  const multiparty = require('connect-multiparty')
  const path = multiparty({uploadDir: './uploads/products'});
@@ -53,5 +53,17 @@ router.get(
     auth.authenticated,
     getProductsAdmin
 )
+
+/*________________________________________________________
+ * 
+ *  -----------OBTENER BANNER ADMIN ----------------------
+ * _______________________________________________________
+ */
+
+router.get(
+    '/getBanner/:filename',
+    getBanner
+)
+
 
  module.exports = router;

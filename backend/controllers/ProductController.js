@@ -84,7 +84,32 @@ const registerProduct = async(req,res = response)=>{
             })
         }
     }
+
+
+    const getBanner = async(req,res = response)=>{
+        try {
+            const filename = req.params.filename
+            const pathFile = './uploads/products/'+filename; 
+
+            fs.exists(pathFile, (exists)=>{
+                if(exists){
+                    return res.sendFile(path.resolve(pathFile));
+                }else{
+                    return res.status(404).send({status: 'error', message: 'La imagen no existe.'});
+                }
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                ok: false,
+                message: 'Ha ocurrido un error, intenta de nuevo'
+            })
+        }
+
+    }
+
 module.exports = {
     registerProduct,
-    getProductsAdmin
+    getProductsAdmin,
+    getBanner
 };
