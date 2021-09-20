@@ -15,7 +15,8 @@
  const auth = require('../middlewares/authenticated');
  const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct } = require('../controllers/ProductController');
  
- const multiparty = require('connect-multiparty')
+ const multiparty = require('connect-multiparty');
+const { filedata } = require('../middlewares/filedata');
  const path = multiparty({uploadDir: './uploads/products'});
 
  /*________________________________________________________
@@ -90,6 +91,7 @@ router.get(
     [
         auth.authenticated,
         path,
+        filedata,
         check('title', 'El titulo no es valido').not().isEmpty(),
         check('stock', 'El stock no es valido').not().isEmpty(),
         check('price', 'El precio no es valido').not().isEmpty(),

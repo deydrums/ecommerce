@@ -155,36 +155,30 @@ const updateProduct = async(req,res = response)=>{
     try {
         let data = req.body;
         let id = req.params['id']; 
-        if(req.files.banner){
-            var file_path = req.files.banner.path;
-            var file_split = file_path.split('\\');
-            var file_name = file_split[2];
-            var ext_split = file_name.split('\.');
-            var file_ext = ext_split[1];
-        }
-
         Product.findById(id).exec((err,product)=>{
             if(err || !data ){
-                fs.unlinkSync(file_path)
+                if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
                 return res.status(404).send({status: 'error', message: 'Producto no encontrado.'});
             }else{
  
-                if(file_ext != 'png' && file_ext != 'jpg' && file_ext != 'jpeg' && file_ext != 'webp'){
-                    fs.unlinkSync(file_path)
-                }else{
-                    if(product.banner){
-                        fs.unlinkSync('uploads/products/'+product.banner)
-                    }
-                    data = {
-                        ...data,
-                        banner: file_name,
+                if(req.file.file_path){
+                    if(req.file.file_ext != 'png' && req.file.file_ext != 'jpg' && req.file.file_ext != 'jpeg' && req.file.file_ext != 'webp'){
+                        if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
+                    }else{
+                        if(product.banner){
+                            fs.unlinkSync('uploads/products/'+product.banner)
+                        }
+                        data = {
+                            ...data,
+                            banner: req.file.file_name,
+                        }
                     }
                 }
                 
                 
                 Product.findByIdAndUpdate({_id: id},data,{new:true},(err,data)=>{
                     if(err || !data){
-                        fs.unlinkSync(file_path)
+                        if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
 
                         return res.status(404).send({status: 'error', message: "Ha ocurrido un error"}); 
                     }
@@ -195,7 +189,7 @@ const updateProduct = async(req,res = response)=>{
         });
 
     } catch (error) {
-        fs.unlinkSync(file_path)
+        if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
 
         res.status(500).json({
             ok: false,
