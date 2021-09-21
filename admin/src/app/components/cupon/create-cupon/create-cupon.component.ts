@@ -42,6 +42,7 @@ export class CreateCuponComponent implements OnInit {
         response => {
           this._iziToastService.showMsg(response.message, "success");
           this.loading_btn = false;
+          this._router.navigate(['/panel/cupon']);
         },
         error => {
           this._iziToastService.showMsg(error.error.message, "error");

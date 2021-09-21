@@ -15,7 +15,7 @@ export class IndexCuponComponent implements OnInit {
   public loading:boolean;
   public loading_btn: boolean;
   public cupons : Array<any> ;
-
+  public filter : String;
 
   constructor(
     private _adminService : AdminService,
@@ -25,6 +25,7 @@ export class IndexCuponComponent implements OnInit {
     this.loading_btn = false;
     this.token = this._adminService.getToken();
     this.cupons = [];
+    this.filter = '';
    }
 
   ngOnInit(): void {
@@ -33,17 +34,20 @@ export class IndexCuponComponent implements OnInit {
 
   getData(): void{
     this.loading = true;
-    this._cuponService.getCupons(this.token).subscribe(
+    this._cuponService.getCupons(this.filter,this.token).subscribe(
       response=>{
         this.cupons = response.data;
         this.loading = false;
-        console.log(this.cupons)
       },
       error=>{
         console.log(error)
         this.loading = false;
       }
     )
+  }
+
+  filterCupon(){
+    this.getData();
   }
 
 }

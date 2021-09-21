@@ -41,7 +41,7 @@ router.post(
  */
  
 router.get(
-    '/',
+    '/:filter?',
     auth.authenticated,
     getCupons
 )

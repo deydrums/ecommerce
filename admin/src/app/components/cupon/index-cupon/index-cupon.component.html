@@ -16,7 +16,14 @@
     <h5 style="margin-bottom: 0px;">Filtro de cupones</h5>
   </div>
   <div class="card-header">
-
+    <form class="form-inline pt-2">
+      <div class="input-group mb-3 mr-sm-4">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Codigo</div>
+        </div>
+        <input class="form-control" (keyup)="filterCupon()" name = "filter" [(ngModel)]="filter" type="text" id="inline-form-input-name" placeholder="Escribe un codigo...">
+      </div>
+    </form>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -45,6 +52,7 @@
               <tr>
                 <td>{{i+1}}</td>
                 <td>{{cupon.code}}</td>
+                <td>{{cupon.type}}</td>
                 <td>{{cupon.value}}</td>
                 <td>{{cupon.limit}}</td>
               </tr>

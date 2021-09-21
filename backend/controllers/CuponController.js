@@ -46,12 +46,13 @@ const getCupons = async(req,res = response)=>{
         return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
     }
     try {
-        const cupons = await Cupon.find();
-        res.status(201).json({
-            ok: true,
-            message: 'Cupon creado',
-            data:cupons
-        })
+        let filter = req.params['filter'];
+        Cupon.find({code: new RegExp(filter,'i')}).sort({createdAt:-1}).exec((err,data)=>{
+            if(err || !data ){
+                return res.status(404).send({status: 'error', message: 'No se han encontrado cupones.'});
+            }
+            return res.status(200).send({status: 'success', data:data});
+        });
     } catch (error) {
         res.status(500).json({
             ok: false,

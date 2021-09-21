@@ -19,8 +19,8 @@ export class CuponService {
     return this._http.post(this.url+'cupon/register',data,{headers:headers});
   }
 
-  getCupons(token:any):Observable<any>{
+  getCupons(filter:any,token:any):Observable<any>{
     let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
-    return this._http.get(this.url+'cupon/',{headers:headers});
+    return this._http.get(this.url+'cupon/'+filter,{headers:headers});
   }
 }
