@@ -55,6 +55,7 @@ export class UpdateCuponComponent implements OnInit {
           error =>{
             this._iziToastService.showMsg(error.error.message, "error");
             this.loading = false;
+            this._router.navigate(['/panel/cupon']);
           }
         )      
       }
