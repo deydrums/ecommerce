@@ -17,11 +17,11 @@ export class InventoryProductComponent implements OnInit {
 
   public file : any | File = undefined;
   public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
-  public config: any = {};
   public loading_btn:boolean;
   public loading: boolean;
   public url;
   public id;
+  public inventory: Array<any> = [];
 
 
   constructor(
@@ -41,6 +41,7 @@ export class InventoryProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getdata()
+
   }
   
   getdata(){
@@ -53,6 +54,14 @@ export class InventoryProductComponent implements OnInit {
             this.product = response.data;
             this.imgSelect = this.url +'product/getBanner/' + response.data.banner;
             this.loading = false;
+            this._productService.getInventoryAdmin(this.product._id, this.token).subscribe(
+              response => {
+                this.inventory = response.data;
+              },
+              error => {
+                console.log(error)
+              }
+            )
           },
           error =>{
             this._iziToastService.showMsg(error.error.message, "error");

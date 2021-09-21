@@ -2,6 +2,8 @@
 
 const {response} = require('express');
 const Product = require('../models/Product');
+const Inventory = require('../models/Inventory');
+
 var fs = require('fs');
 var path = require('path');
 
@@ -45,10 +47,20 @@ const registerProduct = async(req,res = response)=>{
         let product = new Product(data);
         await product.save();
 
+        let inventary  = new Inventory({
+            admin: req.user.sub,
+            amount: data.stock,
+            supplier: 'Primer Registro',
+            product: product._id
+        });
+
+        await inventary.save();
+
         res.status(201).json({
             ok: true,
             message: 'Registro de producto exitoso',
-            data:product
+            data:product,
+            inventary
         });
 
     } catch (error) {
@@ -240,11 +252,37 @@ const deleteProduct = async(req,res = response)=>{
     }
 }
 
+
+/*________________________________________________________
+ * 
+ *  ----------------GET INVENTORY ADMIN-------------------
+ * _______________________________________________________
+ */
+
+const getInventoryAdmin = async(req,res = response)=>{
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+    try {
+        let id = req.params['id']; 
+        const inventory = await Inventory.find({product: id}).populate('admin');
+        return res.status(201).send({status: 'success', data:inventory});
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+
+}
 module.exports = {
     registerProduct,
     getProductsAdmin,
     getBanner,
     getProductByIdAdmin,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getInventoryAdmin
 };

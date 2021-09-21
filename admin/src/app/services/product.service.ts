@@ -57,4 +57,10 @@ export class ProductService {
     const headers = new HttpHeaders({'Authorization':token});
     return this._http.delete(this.url+'product/delete/'+id,{headers});
   }
+
+  getInventoryAdmin(id:any, token:any):Observable<any>{
+    const headers = new HttpHeaders({'Authorization':token});
+    return this._http.get(this.url+'product/getInventoryAdmin/'+id,{headers});
+  }
+  
 }

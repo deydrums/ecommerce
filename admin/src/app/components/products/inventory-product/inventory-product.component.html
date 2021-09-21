@@ -1,10 +1,10 @@
 <app-sidebar></app-sidebar>
 
 <!-- Page title-->
-<div class="border-bottom pt-5 mt-2 mb-5">
+<div class="border-bottom pt-5 mt-2 mb-5" *ngIf ="product">
   <h1 class="mt-2 mt-md-4 mb-3 pt-5">Productos</h1>
   <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
-    <p class="text-muted">Este módulo lista el inventario del producto.</p>
+    <p class="text-muted">Este módulo lista el inventario de {{product.title}}.</p>
     <p class="font-size-sm font-weight-medium pl-md-4">
       <a class="text-nowrap" [routerLink]="['/panel/products']">Regresar<i class="cxi-angle-right font-size-base align-middle ml-1"></i></a>
     </p>
@@ -33,7 +33,24 @@
             <th>Op.</th>
           </tr>
           </thead>
+          <ng-container *ngIf="inventory.length == 0 ">
+            <tbody>
+              <tr>
+                <td colspan="4" class = "text-center">
+                  <span class="text-muted">No hay registros de inventario</span>
+                </td>
+              </tr>
+            </tbody>
+          </ng-container>
+          <ng-container>
+            <tbody *ngFor="let item of inventory">
+              <tr>
+                <td>
 
+                </td>
+              </tr>
+            </tbody>
+          </ng-container>
       </table>
     </div>
   </div>
