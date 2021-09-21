@@ -291,7 +291,6 @@ const deleteClientAdmin = async(req,res = response)=>{
         });
 
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             ok: false,
             message: 'Ha ocurrido un error, intenta de nuevo'

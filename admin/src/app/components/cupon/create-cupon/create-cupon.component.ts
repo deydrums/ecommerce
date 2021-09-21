@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { CuponService } from 'src/app/services/cupon.service';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class CreateCuponComponent implements OnInit {
   constructor(
     private _adminService : AdminService,
     private _router : Router,
-    private _iziToastService: IziToastService
+    private _iziToastService: IziToastService,
+    private _cuponService: CuponService
   ) {
     this.token = this._adminService.getToken();
     this.loading_btn = false;
@@ -36,8 +38,17 @@ export class CreateCuponComponent implements OnInit {
   register(registerForm : any){
     if(registerForm.valid){
       this.loading_btn = true;
-      this.loading_btn = false;
-      console.log(this.cupon)
+      this._cuponService.register(this.cupon, this.token).subscribe(
+        response => {
+          this._iziToastService.showMsg(response.message, "success");
+          this.loading_btn = false;
+        },
+        error => {
+          this._iziToastService.showMsg(error.error.message, "error");
+          this.loading_btn = false;
+        }
+      )
+      
     }else{
       this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
       this.loading_btn = false;

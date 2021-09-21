@@ -25,6 +25,11 @@ router.post(
     '/register',
     [
         auth.authenticated,
+        check('code', 'El codigo no es valido').not().isEmpty(),
+        check('type', 'El tipo no es valido').not().isEmpty(),
+        check('value', 'El valor no es valido').isInt().not().isEmpty(),
+        check('limit', 'El limite no es valido').isInt().not().isEmpty(), 
+        paramsValidator
     ],
     registerCupon
 );
