@@ -265,9 +265,13 @@ const getInventoryAdmin = async(req,res = response)=>{
     }
     try {
         let id = req.params['id']; 
-        const inventory = await Inventory.find({product: id}).populate('admin');
-        return res.status(201).send({status: 'success', data:inventory});
-
+        Inventory.find({product: id}).populate('admin').exec((err,data)=>{
+            if(err || !data ){
+                return res.status(404).send({status: 'error', message: 'Producto no encontrado.'});
+            }else{
+                return res.status(201).send({status: 'success', data:data});
+            }
+        });
     } catch (error) {
         console.log(error)
         res.status(500).json({

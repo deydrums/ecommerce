@@ -41,7 +41,6 @@ export class InventoryProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getdata()
-
   }
   
   getdata(){
@@ -53,13 +52,14 @@ export class InventoryProductComponent implements OnInit {
           response=>{
             this.product = response.data;
             this.imgSelect = this.url +'product/getBanner/' + response.data.banner;
-            this.loading = false;
             this._productService.getInventoryAdmin(this.product._id, this.token).subscribe(
               response => {
                 this.inventory = response.data;
+                this.loading = false;
               },
               error => {
-                console.log(error)
+                console.log(error);
+                this.loading = false;
               }
             )
           },

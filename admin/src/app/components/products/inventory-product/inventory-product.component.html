@@ -33,23 +33,40 @@
             <th>Op.</th>
           </tr>
           </thead>
-          <ng-container *ngIf="inventory.length == 0 ">
-            <tbody>
-              <tr>
-                <td colspan="4" class = "text-center">
-                  <span class="text-muted">No hay registros de inventario</span>
-                </td>
-              </tr>
-            </tbody>
+          <ng-container *ngIf="!loading">
+            <ng-container *ngIf="inventory.length == 0 ">
+              <tbody>
+                <tr>
+                  <td colspan="4" class = "text-center">
+                    <span class="text-muted">No hay registros de inventario</span>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-container>
+            <ng-container >
+              <tbody *ngFor="let item of inventory">
+                <tr>
+                  <td>{{item.admin.name}} {{item.admin.surname}}</td>
+                  <td>{{item.amount}}</td>
+                  <td>{{item.supplier}}</td>
+  
+                </tr>
+              </tbody>
+            </ng-container>
           </ng-container>
-          <ng-container>
-            <tbody *ngFor="let item of inventory">
-              <tr>
-                <td>
 
-                </td>
-              </tr>
-            </tbody>
+
+          <ng-container *ngIf="loading">
+              <tbody>
+                <tr>
+                  <td class="text-center" colspan="4">
+                    <!-- Custom size border spinner -->
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                      <span class="visually-hidden"></span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
           </ng-container>
       </table>
     </div>
