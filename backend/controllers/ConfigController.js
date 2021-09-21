@@ -2,6 +2,8 @@
 
 const {response} = require('express');
 const Config = require('../models/Config');
+var fs = require('fs');
+var path = require('path');
 
 /*________________________________________________________
  * 
@@ -18,15 +20,28 @@ const updateConfig = async(req,res = response)=>{
 
     try {
 
-        const data = req.body;
-        const newdata = {
-            categories: data.categories,
-            title: data.title,
-            serie: data.serie,
-            correlative: data.correlative
-        };
+        let data = req.body;
+        let config = await Config.findById({_id: process.env.CONFIG_ID});
 
-        Config.findByIdAndUpdate({_id: '614a5e9084a1f888c440ec5e'},newdata,{new:true}).exec((err,data)=>{
+        if(req.file.file_path){
+            if(req.file.file_ext != 'png' && req.file.file_ext != 'jpg' && req.file.file_ext != 'jpeg' && req.file.file_ext != 'webp'){
+                if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
+            }else{
+                if(config.banner !== undefined && config.banner !== 'undefined'){
+                    fs.stat('uploads/config/'+config.banner,(err)=>{
+                        if(!err){
+                            fs.unlinkSync('uploads/config/'+config.banner);
+                        }
+                    })
+                }
+                data = {
+                    ...data,
+                    banner: req.file.file_name,
+                }
+            }
+        }
+
+        Config.findByIdAndUpdate({_id: process.env.CONFIG_ID},data,{new:true}).exec((err,data)=>{
             if(err || !data ){
                 return res.status(404).send({status: 'error', message: 'No se ha podido actualizar la configuracion.'});
             }else{
@@ -37,7 +52,7 @@ const updateConfig = async(req,res = response)=>{
         // await Config.create({
         //     categories: [],
         //     title: 'Createx',
-        //     logo: 'logo.png',
+        //     banner: 'logo.png',
         //     serie: '0001',
         //     correlative: '000001'
         // });

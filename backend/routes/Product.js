@@ -16,7 +16,7 @@
  const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct, deleteProduct, getInventoryAdmin, deleteInventoryAdmin, registerInventoryAdmin } = require('../controllers/ProductController');
  
  const multiparty = require('connect-multiparty');
-const { filedata } = require('../middlewares/filedata');
+ const { filedata } = require('../middlewares/filedata');
  const path = multiparty({uploadDir: './uploads/products'});
 
  /*________________________________________________________
