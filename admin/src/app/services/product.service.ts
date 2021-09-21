@@ -69,4 +69,9 @@ export class ProductService {
     return this._http.delete(this.url+'product/deleteInventoryAdmin/'+id,{headers});
   }
   
+  registerInventoryAdmin(data:any, token:any):Observable<any>{
+    const headers = new HttpHeaders({'Authorization':token});
+    return this._http.post(this.url+'product/registerInventoryAdmin',data,{headers});
+  }
+
 }

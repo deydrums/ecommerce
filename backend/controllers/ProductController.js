@@ -265,7 +265,7 @@ const getInventoryAdmin = async(req,res = response)=>{
     }
     try {
         let id = req.params['id']; 
-        Inventory.find({product: id}).populate('admin').exec((err,data)=>{
+        Inventory.find({product: id}).populate('admin').sort({createdAt:-1}).exec((err,data)=>{
             if(err || !data ){
                 return res.status(404).send({status: 'error', message: 'Producto no encontrado.'});
             }else{
@@ -315,6 +315,44 @@ const deleteInventoryAdmin = async(req,res = response)=>{
     }
 }
 
+
+/*________________________________________________________
+ * 
+ *  ----------------REGISTER INVENTORY ADMIN--------------
+ * _______________________________________________________
+ */
+
+const registerInventoryAdmin = async(req,res = response)=>{
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+    try {
+        let data = req.body;
+        data = {
+            ...data,
+            admin: req.user.sub
+        }
+        let inventory = await Inventory.create(data);
+
+        let product = await Product.findById({_id:data.product});
+        let new_stock = parseInt(product.stock ) + parseInt(data.amount);
+        await Product.findByIdAndUpdate({_id:inventory.product},{
+            stock: new_stock,
+        });
+
+        res.status(201).json({
+            ok: true,
+            message: "Inventario agregado",
+            data:inventory
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
 module.exports = {
     registerProduct,
     getProductsAdmin,
@@ -323,5 +361,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     getInventoryAdmin,
-    deleteInventoryAdmin
+    deleteInventoryAdmin,
+    registerInventoryAdmin
 };

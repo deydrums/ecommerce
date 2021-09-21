@@ -23,7 +23,7 @@ export class InventoryProductComponent implements OnInit {
   public url;
   public id;
   public inventory: any = null;
-
+  public newInventory: any = {};
 
   constructor(
     private _productService: ProductService,
@@ -92,5 +92,37 @@ export class InventoryProductComponent implements OnInit {
     )
   }
 
+
+  registerInventory(inventoryForm:any){
+    if(inventoryForm.valid){
+      this.loading_btn = true;
+      this.newInventory = {
+        ...this.newInventory,
+        product: this.product._id
+      }
+      this._productService.registerInventoryAdmin(this.newInventory,this.token).subscribe(
+        response =>{
+          this._iziToastService.showMsg(response.message, "success");
+          this.getdata();
+          this.loading_btn = false;
+        },
+        error=>{
+          const errors = error.error.errors;
+          if(errors){
+            for (const error in errors) {
+              this._iziToastService.showMsg(errors[error].msg, "error");
+            }
+          }else{
+            this._iziToastService.showMsg(error.error.message, "error");
+          }
+          this.loading_btn = false;
+        }
+      )
+
+    }else{
+      this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
+      this.loading_btn = false;
+    }
+  }
 }
 

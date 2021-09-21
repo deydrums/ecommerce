@@ -13,7 +13,7 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
- const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct, deleteProduct, getInventoryAdmin, deleteInventoryAdmin } = require('../controllers/ProductController');
+ const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct, deleteProduct, getInventoryAdmin, deleteInventoryAdmin, registerInventoryAdmin } = require('../controllers/ProductController');
  
  const multiparty = require('connect-multiparty');
 const { filedata } = require('../middlewares/filedata');
@@ -145,6 +145,24 @@ router.delete(
         auth.authenticated,
     ],
     deleteInventoryAdmin
+);
+
+/*________________________________________________________
+ * 
+ *  ----------------REGISTER INVENTORY ADMIN--------------
+ * _______________________________________________________
+ */
+ 
+router.post(
+    '/registerInventoryAdmin',
+    [
+        auth.authenticated,
+        check('amount', 'La cantidad no es valida').isInt().not().isEmpty(),
+        check('supplier', 'El proveedor no es valido').not().isEmpty(),
+        check('product', 'El proveedor no es valido').not().isEmpty(),
+        paramsValidator,
+    ],
+    registerInventoryAdmin
 );
 
  module.exports = router;
