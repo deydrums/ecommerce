@@ -13,11 +13,11 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
-const { registerCupon } = require('../controllers/CuponController');
+const { registerCupon, getCupons } = require('../controllers/CuponController');
 
 /*________________________________________________________
  * 
- *  ----------------REGISTER INVENTORY ADMIN--------------
+ *  ----------------REGISTER CUPON ADMIN------------------
  * _______________________________________________________
  */
  
@@ -33,5 +33,17 @@ router.post(
     ],
     registerCupon
 );
+
+/*________________________________________________________
+ * 
+ *  ----------------REGISTER CUPON ADMIN------------------
+ * _______________________________________________________
+ */
+ 
+router.get(
+    '/',
+    auth.authenticated,
+    getCupons
+)
 
  module.exports = router;

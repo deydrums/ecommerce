@@ -1,0 +1,65 @@
+<app-sidebar></app-sidebar>
+
+<!-- Page title-->
+<div class="border-bottom pt-5 mt-2 mb-5">
+  <h1 class="mt-2 mt-md-4 mb-3 pt-5">Clientes</h1>
+  <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+    <p class="text-muted">Este módulo lista todos los cupones de la tienda.</p>
+    <p class="font-size-sm font-weight-medium pl-md-4">
+      <a class="text-nowrap" [routerLink]="['/panel/cupon/create']">Registrar nuevo<i class="cxi-angle-right font-size-base align-middle ml-1"></i></a>
+    </p>
+  </div>
+</div>
+
+<div class="card box-shadow-sm">
+  <div class="card-header">
+    <h5 style="margin-bottom: 0px;">Filtro de cupones</h5>
+  </div>
+  <div class="card-header">
+
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>Codigo</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Limite</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="loading">
+            <tr>
+              <td class="text-center" colspan="5">
+                <!-- Custom size border spinner -->
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                  <span class="visually-hidden"></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <ng-container *ngIf="!loading">
+            <tbody *ngFor="let cupon of cupons| slice: (page-1)*pageSize: (page-1)*pageSize + pageSize; let i = index">
+              <tr>
+                <td>{{i+1}}</td>
+                <td>{{cupon.code}}</td>
+                <td>{{cupon.value}}</td>
+                <td>{{cupon.limit}}</td>
+              </tr>
+            </tbody>
+          </ng-container>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <ngb-pagination
+      [(page)]='page'
+      [pageSize]='pageSize'
+      [collectionSize] ='cupons.length'
+    >
+
+    </ngb-pagination>
+  </div>
+</div>
