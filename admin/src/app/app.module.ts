@@ -18,6 +18,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { IndexProductComponent } from './components/products/index-product/index-product.component';
 import { UpdateProductComponent } from './components/products/update-product/update-product.component';
 import { InventoryProductComponent } from './components/products/inventory-product/inventory-product.component';
+import { CreateCuponComponent } from './components/cupon/create-cupon/create-cupon.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { InventoryProductComponent } from './components/products/inventory-produ
     CreateProductComponent,
     IndexProductComponent,
     UpdateProductComponent,
-    InventoryProductComponent
+    InventoryProductComponent,
+    CreateCuponComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,60 @@
+<app-sidebar></app-sidebar>
+
+<!-- Page title-->
+<div class="border-bottom pt-5 mt-2 mb-5">
+  <h1 class="mt-2 mt-md-4 mb-3 pt-5">Clientes</h1>
+  <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+    <p class="text-muted">Este módulo lista todos los clientes de la tienda.</p>
+
+  </div>
+</div>
+
+<form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+  <div class="card box-shadow-sm">
+    <div class="card-header">
+      <h5 style="margin-bottom: 0px;">Registro de cupon</h5>
+    </div>
+    <div class="card-body">
+
+      <div class="row">
+        <div class="col-lg-3 col-md-6 form-group">
+          <label for="validationCustom01" class="form-label">Codigo</label>
+          <input class="form-control" type="text" placeholder="Codigo del cupon" name="code" [(ngModel)]="cupon.code"
+            required>
+        </div>
+       
+
+        <div class="col-lg-3 col-md-6">
+          <label for="validationCustom01" class="form-label">Tipo</label>
+          <select class="form-control custom-select" name="type" [(ngModel)]="cupon.type" required>
+            <option value="" disabled selected>Seleccionar</option>
+            <option value="percentage">Porcentaje</option>
+            <option value="value">Valor Fijo</option>
+          </select>
+        </div>
+
+        <div class="col-lg-3 col-md-6 form-group">
+            <label for="validationCustom01" class="form-label">Valor</label>
+            <input class="form-control" type="number" placeholder="Valor del descuento" name="value" [(ngModel)]="cupon.value"
+              required>
+        </div>
+
+        <div class="col-lg-3 col-md-6 form-group">
+            <label for="validationCustom01" class="form-label">Limite</label>
+            <input class="form-control" type="number" placeholder="Limite maximo" name="limit" [(ngModel)]="cupon.limit"
+              required>
+        </div>
+
+      </div>
+    </div>
+    <div class="card-footer">
+      <button *ngIf="!loading_btn" class="btn btn-primary mr-3" type="submit">Crear cliente</button>
+      <button *ngIf="loading_btn" type="button" class="btn btn-secondary mr-3" disabled>
+        <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+        Guardando...
+      </button>
+
+      <a class="btn btn-warning" [routerLink]="['/panel/clients']">Regresar</a>
+    </div>
+  </div>
+</form>
