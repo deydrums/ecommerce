@@ -33,5 +33,10 @@ export class CuponService {
     let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
     return this._http.get(this.url+'cupon/get/'+id,{headers:headers});
   }
+
+  updateCupon(id:any, data:any, token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.put(this.url+'cupon/'+id,data,{headers:headers});
+  }
   
 }

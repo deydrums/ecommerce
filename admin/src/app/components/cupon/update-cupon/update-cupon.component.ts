@@ -38,7 +38,30 @@ export class UpdateCuponComponent implements OnInit {
   }
 
   update(updatedForm:any){
-
+    this.loading_btn = true;
+    if(updatedForm.valid){
+      this._cuponService.updateCupon(this.id, this.cupon, this.token).subscribe(
+        response=>{
+          this._iziToastService.showMsg(response.message, "success");
+          this.loading_btn = false;
+          this.getCupon();
+        },
+        error=>{
+          const errors = error.error.errors;
+          if(errors){
+            for (const error in errors) {
+              this._iziToastService.showMsg(errors[error].msg, "error");
+            }
+          }else{
+            this._iziToastService.showMsg(error.error.message, "error");
+          }
+          this.loading_btn = false;
+        }
+      );
+    }else{
+      this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
+      this.loading_btn = false;
+    }
   }
 
   getCupon(): void{

@@ -13,7 +13,7 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
-const { registerCupon, getCupons, deleteCupon, getCupon } = require('../controllers/CuponController');
+const { registerCupon, getCupons, deleteCupon, getCupon, updateCupon } = require('../controllers/CuponController');
 
 /*________________________________________________________
  * 
@@ -69,5 +69,25 @@ router.get(
     auth.authenticated,
     getCupon
 )
+
+/*________________________________________________________
+ * 
+ *  ----------------UPDATE CUPON ADMIN--------------------
+ * _______________________________________________________
+ */
+ 
+router.put(
+    '/:id',
+    [
+        auth.authenticated,
+        check('code', 'El codigo no es valido').not().isEmpty(),
+        check('type', 'El tipo no es valido').not().isEmpty(),
+        check('value', 'El valor no es valido').isInt().not().isEmpty(),
+        check('limit', 'El limite no es valido').isInt().not().isEmpty(), 
+        paramsValidator
+    ],
+    updateCupon
+);
+
 
  module.exports = router;
