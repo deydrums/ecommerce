@@ -13,7 +13,7 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
-const { registerCupon, getCupons, deleteCupon } = require('../controllers/CuponController');
+const { registerCupon, getCupons, deleteCupon, getCupon } = require('../controllers/CuponController');
 
 /*________________________________________________________
  * 
@@ -56,6 +56,18 @@ router.delete(
     '/:id',
     auth.authenticated,
     deleteCupon
+)
+
+/*________________________________________________________
+ * 
+ *  ---------------------GET CUPON ADMIN------------------
+ * _______________________________________________________
+ */
+
+router.get(
+    '/get/:id',
+    auth.authenticated,
+    getCupon
 )
 
  module.exports = router;

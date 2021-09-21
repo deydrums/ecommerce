@@ -36,7 +36,7 @@ const registerCupon = async(req,res = response)=>{
 
 /*________________________________________________________
  * 
- *  -----------------CUPON GET ---------------------------
+ *  -----------------CUPONS GET ---------------------------
  * _______________________________________________________
  */
 
@@ -95,9 +95,38 @@ const deleteCupon = async(req,res = response)=>{
     }
 }
 
+/*________________________________________________________
+ * 
+ *  -----------------CUPON GET ---------------------------
+ * _______________________________________________________
+ */
+
+const getCupon = async(req,res = response)=>{
+
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+    try {
+        let id = req.params['id'];
+        Cupon.findById({_id: id}).exec((err,data)=>{
+            if(err || !data ){
+                return res.status(404).send({status: 'error', message: 'No se ha encontrado el cupon.'});
+            }else{
+                return res.status(200).send({status: 'success', data:data});
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+
+}
 
 module.exports = {
     registerCupon,
     getCupons,
-    deleteCupon
+    deleteCupon,
+    getCupon
 };

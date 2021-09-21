@@ -11,10 +11,6 @@ import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 })
 export class CreateCuponComponent implements OnInit {
 
-  public client : any = {
-    gender: ''
-  };
-
   public cupon : any;
   public token;
   public loading_btn:boolean;

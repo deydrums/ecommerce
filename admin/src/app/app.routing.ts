@@ -5,6 +5,7 @@ import { EditClientComponent } from './components/clients/edit-client/edit-clien
 import { IndexClientsComponent } from './components/clients/index-clients/index-clients.component';
 import { CreateCuponComponent } from './components/cupon/create-cupon/create-cupon.component';
 import { IndexCuponComponent } from './components/cupon/index-cupon/index-cupon.component';
+import { UpdateCuponComponent } from './components/cupon/update-cupon/update-cupon.component';
 import { IndexComponent } from "./components/index/index.component";
 import { LoginComponent } from './components/login/login.component';
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
@@ -27,6 +28,8 @@ const appRoute: Routes = [
         {path: 'product/inventory/:id', component: InventoryProductComponent, canActivate:[AdminGuard]},
 
         {path: 'cupon/create', component: CreateCuponComponent, canActivate:[AdminGuard]},
+        {path: 'cupon/:id', component: UpdateCuponComponent, canActivate:[AdminGuard]},
+
         {path: 'cupon', component: IndexCuponComponent, canActivate:[AdminGuard]},
 
     ]},
