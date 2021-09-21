@@ -23,4 +23,9 @@ export class CuponService {
     let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
     return this._http.get(this.url+'cupon/'+filter,{headers:headers});
   }
+
+  deleteCupon(id:any,token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.delete(this.url+'cupon/'+id,{headers:headers});
+  }
 }
