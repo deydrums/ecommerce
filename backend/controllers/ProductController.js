@@ -281,6 +281,40 @@ const getInventoryAdmin = async(req,res = response)=>{
     }
 
 }
+
+
+/*________________________________________________________
+ * 
+ *  ----------------DELETE INVENTORY ADMIN-----------------
+ * _______________________________________________________
+ */
+
+const deleteInventoryAdmin = async(req,res = response)=>{
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    try {
+        let id = req.params['id']; 
+        let inventory = await Inventory.findByIdAndRemove({_id:id});
+        let product = await Product.findById({_id:inventory.product});
+        let new_stock = parseInt(product.stock )- parseInt(inventory.amount);
+        let productupdated = await Product.findByIdAndUpdate({_id:inventory.product},{
+            stock: new_stock,
+        });
+        res.status(201).json({
+            ok: true,
+            message: "Inventario eliminado",
+            data:productupdated
+        })
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     registerProduct,
     getProductsAdmin,
@@ -288,5 +322,6 @@ module.exports = {
     getProductByIdAdmin,
     updateProduct,
     deleteProduct,
-    getInventoryAdmin
+    getInventoryAdmin,
+    deleteInventoryAdmin
 };

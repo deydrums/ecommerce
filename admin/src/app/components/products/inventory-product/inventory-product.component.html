@@ -49,7 +49,45 @@
                   <td>{{item.admin.name}} {{item.admin.surname}}</td>
                   <td>{{item.amount}}</td>
                   <td>{{item.supplier}}</td>
+                  <td>
+                    <button 
+                      class="btn btn-danger btn-sm"
+                      type="button" 
+                      data-toggle="modal" 
+                      [attr.data-target]="'#delete-'+item._id" 
+                    >
+                      <i class="fw-normal cxi-delete"></i>
+                    </button>
+
+
+
+                                      <!-- Launch vertically centered modal -->
+                  <div class="modal fade" id="delete-{{item._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Eliminar inventario</h4>
+                          <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+                           
   
+                        </div>
+                        <div class="modal-body">
+                          <p class="fs-sm">Deseas eliminar al producto del proveedor "{{item.supplier}}" permanentemente?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                          <button *ngIf="!loading_btn" class="btn btn-primary btn-sm" (click)="delete(item._id)" type="button">Confirmar</button>
+                          <button *ngIf="loading_btn" type="button" class="btn btn-secondary btn-sm" disabled>
+                            <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                            Eliminando...
+                          </button>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  </td>
                 </tr>
               </tbody>
             </ng-container>

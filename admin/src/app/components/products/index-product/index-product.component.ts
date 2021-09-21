@@ -18,7 +18,7 @@ export class IndexProductComponent implements OnInit {
   public products: Array<any> = [];
   public url: string;
   public page = 1;
-  public pageSize = 4;
+  public pageSize = 10;
   public loading_btn: boolean = false;
 
   constructor(

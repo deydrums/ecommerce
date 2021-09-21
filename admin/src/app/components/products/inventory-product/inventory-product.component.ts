@@ -4,7 +4,8 @@ import { AdminService } from 'src/app/services/admin.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
-
+declare var jQuery:any;
+declare var $:any;
 @Component({
   selector: 'app-inventory-product',
   templateUrl: './inventory-product.component.html',
@@ -21,7 +22,7 @@ export class InventoryProductComponent implements OnInit {
   public loading: boolean;
   public url;
   public id;
-  public inventory: Array<any> = [];
+  public inventory: any = null;
 
 
   constructor(
@@ -73,4 +74,23 @@ export class InventoryProductComponent implements OnInit {
     )
   }
 
+  delete(id:any){
+    this.loading_btn = true;
+    this._productService.deleteInventoryAdmin(id, this.token).subscribe(
+      response => {
+        this._iziToastService.showMsg(response.message, "success");
+        $('#delete-'+id).modal('hide');
+        $('.modal-backdrop').removeClass('show');
+        this.getdata();
+        this.loading_btn = false;
+      },
+      error => {
+        this._iziToastService.showMsg(error.error.message, "error");
+        this.loading_btn = false;
+
+      }
+    )
+  }
+
 }
+
