@@ -31,7 +31,7 @@ app.use(express.urlencoded({extended:true}));
 app.use('/api/client', require('./routes/Client'));
 app.use('/api/admin', require('./routes/Admin'));
 app.use('/api/product', require('./routes/Product'));
-
+app.use('/api/cupon', require('./routes/Cupon'));
 //Escuchar peticiones
 app.listen(process.env.PORT ,()=>{
     console.log(`Servidor corriendo en puerto ${process.env.PORT}`)
