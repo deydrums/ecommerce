@@ -21,6 +21,10 @@ const updateConfig = async(req,res = response)=>{
     try {
 
         let data = req.body;
+        data = {
+            ...data,
+            categories: JSON.parse(data.categories)
+        }
         let config = await Config.findById({_id: process.env.CONFIG_ID});
 
         if(req.file.file_path){
@@ -58,6 +62,7 @@ const updateConfig = async(req,res = response)=>{
         // });
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             ok: false,
             message: 'Ha ocurrido un error, intenta de nuevo'

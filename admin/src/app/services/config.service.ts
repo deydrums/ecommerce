@@ -19,4 +19,23 @@ export class ConfigService {
     let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
     return this._http.get(this.url+'config',{headers:headers});
   }
+
+  update(data: any, file:any, token:any):Observable<any>{
+    
+    const headers = new HttpHeaders({'Authorization':token});
+    const formData = new FormData();
+    formData.append("title",data.title);
+    formData.append("serie", data.serie);
+    formData.append("correlative", data.correlative);
+    formData.append('categories', 
+      JSON.stringify(data.categories)
+    );
+    if(file){
+      formData.append("banner", file);
+    }
+    console.log(formData.get('categories'))
+    return this._http.put(this.url+'config',formData,{headers});
+  }
+  
+
 }

@@ -19,6 +19,8 @@ export class ConfigComponent implements OnInit {
   public url;
   public cat_title:any = '';
   public cat_icon:any = '';
+  public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
+  public file : any | File = undefined;
 
   constructor(
     private _configService: ConfigService,
@@ -42,7 +44,6 @@ export class ConfigComponent implements OnInit {
       response=>{
         this.config = response.data;
         this.loading = false;
-        console.log(this.config)
       },
       error=>{
         this.loading = false;
@@ -53,14 +54,35 @@ export class ConfigComponent implements OnInit {
 
   addCat(){
     if(this.cat_title && this.cat_icon){
-      console.log(uuidv1())
       this.config.categories.push({
         title: this.cat_title,
         icon: this.cat_icon,
         _id: uuidv1()
       })
+      this.cat_title = '';
+      this.cat_icon = '';
     }else{
       this._iziToastService.showMsg("Los datos de la categoria no son validos", "error");
+    }
+  }
+
+  update(configForm:any){
+    this.loading_btn = true;
+    if(configForm.valid){
+      this._configService.update(this.config, this.file,this.token).subscribe(
+        response=>{
+          this._iziToastService.showMsg(response.message, "success");
+          this.getConfig();
+          this.loading_btn = false;
+        },
+        error=>{
+          this._iziToastService.showMsg(error.error.message, "error");
+          this.loading_btn = false;
+        }
+      )
+    }else{
+      this._iziToastService.showMsg("Los datos del formulario no son correctos", "error");
+      this.loading_btn = false;
     }
   }
 
