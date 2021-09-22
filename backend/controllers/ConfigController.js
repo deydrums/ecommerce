@@ -58,7 +58,6 @@ const updateConfig = async(req,res = response)=>{
         // });
 
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             ok: false,
             message: 'Ha ocurrido un error, intenta de nuevo'
@@ -67,6 +66,28 @@ const updateConfig = async(req,res = response)=>{
 }
 
 
+/*________________________________________________________
+ * 
+ *  -------------------GET CONFIG ------------------------
+ * _______________________________________________________
+ */
+
+const getConfig = async(req,res = response)=>{
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    Config.findById({_id: process.env.CONFIG_ID}).exec((err,data)=>{
+        if(err || !data ){
+            return res.status(404).send({status: 'error', message: 'No se ha podido actualizar la configuracion.'});
+        }else{
+            return res.status(200).send({status: 'success', message: 'Configuracion de la tienda', data:data});
+        }
+    });
+
+}
+
 module.exports = {
     updateConfig,
+    getConfig
 };

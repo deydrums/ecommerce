@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import { CreateClientComponent } from './components/clients/create-client/create-client.component';
 import { EditClientComponent } from './components/clients/edit-client/edit-client.component';
 import { IndexClientsComponent } from './components/clients/index-clients/index-clients.component';
+import { ConfigComponent } from './components/config/config.component';
 import { CreateCuponComponent } from './components/cupon/create-cupon/create-cupon.component';
 import { IndexCuponComponent } from './components/cupon/index-cupon/index-cupon.component';
 import { UpdateCuponComponent } from './components/cupon/update-cupon/update-cupon.component';
@@ -31,6 +32,8 @@ const appRoute: Routes = [
         {path: 'cupon/:id', component: UpdateCuponComponent, canActivate:[AdminGuard]},
 
         {path: 'cupon', component: IndexCuponComponent, canActivate:[AdminGuard]},
+
+        {path: 'config', component: ConfigComponent, canActivate:[AdminGuard]},
 
     ]},
     {path: 'login', component: LoginComponent},

@@ -10,16 +10,17 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { updateConfig } = require('../controllers/ConfigController');
+ const { updateConfig, getConfig } = require('../controllers/ConfigController');
  const auth = require('../middlewares/authenticated');
  const { paramsValidator } = require('../middlewares/params-validator');
 
  const multiparty = require('connect-multiparty');
  const { filedata } = require('../middlewares/filedata');
  const path = multiparty({uploadDir: './uploads/config'});
+
  /*________________________________________________________
  * 
- *  ----------------CONFIG REGISTER------------------------
+ *  ----------------CONFIG UPPDATE------------------------
  * _______________________________________________________
  */
 
@@ -36,6 +37,20 @@
             paramsValidator
         ],
         updateConfig
+);
+
+ /*________________________________________________________
+ * 
+ *  ----------------CONFIG GET ---------------------------
+ * _______________________________________________________
+ */
+
+ router.get(
+    '/',
+    [
+        auth.authenticated,
+    ],
+    getConfig
 );
  
  module.exports = router;
