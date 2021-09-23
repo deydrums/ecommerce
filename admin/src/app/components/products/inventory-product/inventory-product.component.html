@@ -1,0 +1,99 @@
+<div class="content-wrapper">
+  <div class="content-header border-bottom ">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Productos</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a class="text-nowrap text-light font-italic" [routerLink]="['/panel/products']">Volver<i
+                  class="cxi-angle-right font-size-base align-middle ml-1"></i></a>
+            </li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  
+  <div class="card box-shadow-sm">
+    
+    <ng-container *ngIf="loading">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 text-center">
+            <!-- Custom size border spinner -->
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+              <span class="visually-hidden"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="!loading">
+      <div class="card-header" *ngIf ="product">
+        <h5 style="margin-bottom: 0px;">Inventario del producto:</h5>
+        <h6 class="mt-2" style="margin-bottom: 0px;">{{product.title}}</h6>
+      </div>
+      
+      <div class="card-header" *ngIf ="product">
+        <div class="row">
+          <div class="col-12">
+            <form class="form-inline" #inventoryForm = "ngForm" (ngSubmit)="registerInventory(inventoryForm)">
+              <label class="sr-only" for="inlineFormInputName2">Cantidad</label>
+              <input required type="number" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Cantidad" name ="amount" [(ngModel)]="newInventory.amount">
+              <label class="sr-only" for="inlineFormInputName2">Proveedor</label>
+              <input required type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Proveedor" name ="supplier" [(ngModel)]="newInventory.supplier">
+              <button type="submit" class="btn btn-primary mb-2">Guardar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    
+      <div class="card-body" *ngIf ="product">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="thead-dark">
+              <tr>
+                <th>Admin</th>
+                <th>Cantidad</th>
+                <th>Proveedor</th>
+                <th>Op.</th>
+              </tr>
+              </thead>
+                <ng-container *ngIf="inventory.length == 0 ">
+                  <tbody>
+                    <tr>
+                      <td colspan="4" class = "text-center">
+                        <span class="text-muted">No hay registros de inventario</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </ng-container>
+                <ng-container *ngIf="inventory.length > 0">
+                  <tbody *ngFor="let item of inventory">
+                    <tr>
+                      <td>{{item.admin.name}} {{item.admin.surname}}</td>
+                      <td>{{item.amount}}</td>
+                      <td>{{item.supplier}}</td>
+                      <td class="text-center">
+                        <button 
+                          class="btn btn-danger btn-sm"
+                          type="button" 
+                          (click)="delete(item._id, item.supplier, item.amount)"
+                        >
+                          <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </ng-container>
+          </table>
+        </div>
+      </div>
+    </ng-container>
+  
+  </div>
+</div>

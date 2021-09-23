@@ -1,0 +1,71 @@
+<div class="content-wrapper">
+  <div class="content-header border-bottom ">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Cupones</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a class="text-nowrap text-light font-italic" [routerLink]="['/panel/cupon']">Volver<i
+                  class="cxi-angle-right font-size-base align-middle ml-1"></i></a>
+            </li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  
+  <div class="m-0 row justify-content-center mt-5">
+    <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" class="col-sm-10">
+      <div class="card box-shadow-sm">
+        <div class="card-header">
+          <h5 style="margin-bottom: 0px;">Registro de cupon</h5>
+        </div>
+        <div class="card-body">
+    
+          <div class="row">
+            <div class="col-lg-3 col-md-6 form-group">
+              <label for="validationCustom01" class="form-label">Codigo</label>
+              <input class="form-control" type="text" placeholder="Codigo del cupon" name="code" [(ngModel)]="cupon.code"
+                required>
+            </div>
+           
+    
+            <div class="col-lg-3 col-md-6">
+              <label for="validationCustom01" class="form-label">Tipo</label>
+              <select class="form-control custom-select" name="type" [(ngModel)]="cupon.type" required>
+                <option value="" disabled selected>Seleccionar</option>
+                <option value="Porcentaje">Porcentaje</option>
+                <option value="Valor">Valor</option>
+              </select>
+            </div>
+    
+            <div class="col-lg-3 col-md-6 form-group">
+                <label for="validationCustom01" class="form-label">Valor</label>
+                <input class="form-control" type="number" placeholder="Valor del descuento" name="value" [(ngModel)]="cupon.value"
+                  required>
+            </div>
+    
+            <div class="col-lg-3 col-md-6 form-group">
+                <label for="validationCustom01" class="form-label">Limite</label>
+                <input class="form-control" type="number" placeholder="Limite maximo" name="limit" [(ngModel)]="cupon.limit"
+                  required>
+            </div>
+    
+          </div>
+        </div>
+        <div class="card-footer">
+          <button *ngIf="!loading_btn" class="btn btn-warning mr-3" type="submit">Guardar cupon</button>
+          <button *ngIf="loading_btn" type="button" class="btn btn-secondary mr-3" disabled>
+            <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+            Guardando...
+          </button>
+    
+          <a class="btn btn-primary" [routerLink]="['/panel/cupon']">Regresar</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

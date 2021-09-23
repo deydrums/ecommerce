@@ -1,0 +1,105 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header border-bottom ">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Productos</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a class="text-nowrap text-light font-italic" [routerLink]="['/panel/products/create']">Registrar nuevo<i
+                  class="cxi-angle-right font-size-base align-middle ml-1"></i></a>
+            </li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  <div class="card box-shadow-sm">
+    <div class="card-header">
+      <h5 style="margin-bottom: 0px;">Filtro de productos</h5>
+    </div>
+
+    <div class="card-header">
+      <form class="form-inline pt-2">
+        <div class="input-group mb-3 mr-sm-4">
+          <div class="input-group-prepend">
+            <div class="input-group-text">Titulo</div>
+          </div>
+          <input class="form-control" (keyup)="filterProduct()" name="filter" [(ngModel)]="filter" type="text"
+            id="inline-form-input-name" placeholder="Escribe un titulo...">
+        </div>
+      </form>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>Imagen</th>
+              <th>Titulo</th>
+              <th>Stock</th>
+              <th>Precio</th>
+              <th>Categoria</th>
+              <th>Ventas</th>
+              <th>Op.</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="loading">
+            <tr>
+              <td class="text-center" colspan="7">
+                <!-- Custom size border spinner -->
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                  <span class="visually-hidden"></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <ng-container *ngIf="!loading">
+            <tbody
+              *ngFor="let product of products| slice: (page-1)*pageSize: (page-1)*pageSize + pageSize; let i = index">
+              <tr>
+                <td>
+                  <img style="width: 100px" [src]="url + 'product/getBanner/' + product.banner" alt="Square image">
+                </td>
+                <td>{{product.title}}</td>
+                <td>{{product.stock}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.nsales}}</td>
+
+                <td class="text-center">
+
+                  <div class="dropdown">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Opciones
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <button class="dropdown-item" type="button" [routerLink]="['/panel/product/',product._id]">Editar
+                        producto</button>
+                      <button class="dropdown-item" type="button"
+                        [routerLink]="['/panel/product/inventory/',product._id]">Inventario</button>
+                      <button class="dropdown-item" type="button" (click)="delete(product._id, product.title)">Eliminar Producto</button>
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+            </tbody>
+          </ng-container>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      <ngb-pagination [(page)]='page' [pageSize]='pageSize' [collectionSize]='products.length'>
+
+      </ngb-pagination>
+    </div>
+  </div>
+</div>

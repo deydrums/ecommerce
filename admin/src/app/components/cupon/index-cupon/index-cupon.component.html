@@ -1,0 +1,94 @@
+<div class="content-wrapper">
+  <div class="content-header border-bottom ">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Cupones</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a class="text-nowrap text-light font-italic" [routerLink]="['/panel/cupon/create']">Registrar nuevo<i
+                  class="cxi-angle-right font-size-base align-middle ml-1"></i></a>
+            </li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  
+  <div class="card box-shadow-sm">
+    <div class="card-header">
+      <h5 style="margin-bottom: 0px;">Filtro de cupones</h5>
+    </div>
+    <div class="card-header">
+      <form class="form-inline pt-2">
+        <div class="input-group mb-3 mr-sm-4">
+          <div class="input-group-prepend">
+            <div class="input-group-text">Codigo</div>
+          </div>
+          <input class="form-control" (keyup)="filterCupon()" name = "filter" [(ngModel)]="filter" type="text" id="inline-form-input-name" placeholder="Escribe un codigo...">
+        </div>
+      </form>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>Codigo</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>Limite</th>
+              <th>Op.</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="loading">
+              <tr>
+                <td class="text-center" colspan="5">
+                  <!-- Custom size border spinner -->
+                  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden"></span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <ng-container *ngIf="!loading">
+              <tbody *ngFor="let cupon of cupons| slice: (page-1)*pageSize: (page-1)*pageSize + pageSize; let i = index">
+                <tr>
+                  <td>{{i+1}}</td>
+                  <td>{{cupon.code}}</td>
+                  <td>{{cupon.type}}</td>
+                  <td>{{cupon.value}}</td>
+                  <td>{{cupon.limit}}</td>
+                  <td class="text-center">
+    
+                    <div class="dropdown">
+                      <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Opciones
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item" type="button" [routerLink] ="['/panel/cupon/',cupon._id]" >Editar cupon</button>
+                        <button class="dropdown-item" type="button" (click)="delete(cupon._id, cupon.code)" >Eliminar cupon</button>
+                      </div>
+                    </div>
+    
+                  </td>
+                </tr>
+              </tbody>
+            </ng-container>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      <ngb-pagination
+        [(page)]='page'
+        [pageSize]='pageSize'
+        [collectionSize] ='cupons.length'
+      >
+  
+      </ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <div class="content-header border-bottom ">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Clientes</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item">
+              <a class="text-nowrap text-light font-italic" [routerLink]="['/panel/clients']">Volver<i
+                  class="cxi-angle-right font-size-base align-middle ml-1"></i></a>
+            </li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <div class="m-0 row justify-content-center mt-5">
+    <form #updateForm="ngForm" (ngSubmit)="update(updateForm)" class="col-sm-10">
+      <div class="card box-shadow-sm">
+        <div class="card-header">
+          <h5 style="margin-bottom: 0px;">Actualizar cliente</h5>
+        </div>
+        <ng-container *ngIf="loading">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 text-center">
+                <!-- Custom size border spinner -->
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                  <span class="visually-hidden"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loading">
+          <div class="card-body" *ngIf = "client._id">
+    
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label for="validationCustom01" class="form-label">Nombres</label>
+                <input class="form-control" type="text" placeholder="Nombres completos" name="name" [(ngModel)]="client.name"
+                  required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="validationCustom01" class="form-label">Apellidos</label>
+                <input class="form-control" type="text" placeholder="Apellidos completos" name="surname"
+                  [(ngModel)]="client.surname" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="validationCustom01" class="form-label">Correo electrónico</label>
+                <input class="form-control" type="text" placeholder="Correo electrónico" name="email"
+                  [(ngModel)]="client.email" required>
+              </div>
+      
+              <div class="col-md-4 form-group">
+                <label for="validationCustom01" class="form-label">Telefono</label>
+                <input class="form-control" type="text" placeholder="Telefono" name="telephone" [(ngModel)]="client.telephone"
+                  required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="validationCustom01" class="form-label">Fecha nacimiento</label>
+                <input class="form-control" type="date" name="birthday" [(ngModel)]="client.birthday" required>
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="validationCustom01" class="form-label">DNI</label>
+                <input class="form-control" type="number" placeholder="DNI" name="dni" [(ngModel)]="client.dni" required>
+              </div>
+      
+              <div class="col-md-4">
+                <label for="validationCustom01" class="form-label">Genero</label>
+                <select class="form-control custom-select" name="gender" [(ngModel)]="client.gender" required>
+                  <option value="" disabled selected>Seleccionar</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Femenino">Femenino</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button *ngIf="!loading_btn" class="btn btn-primary mr-3" type="submit">Actualizar cliente</button>
+            <button *ngIf="loading_btn" type="button" class="btn btn-secondary mr-3" disabled>
+              <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+              Guardando...
+            </button>
+            <a class="btn btn-warning" [routerLink]="['/panel/clients']">Regresar</a>
+          </div>
+        </ng-container>
+        
+        
+      </div>
+    </form>
+  </div>
+</div>
