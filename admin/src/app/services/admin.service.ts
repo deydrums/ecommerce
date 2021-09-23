@@ -26,6 +26,12 @@ export class AdminService {
     return localStorage.getItem('token');
   }
 
+  renew(token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.get(this.url+'admin/token',{headers:headers});
+  }
+
+
   public isAuthenticated(allowRoles : string[]):boolean{
 
     const token = localStorage.getItem('token');
