@@ -4,7 +4,8 @@ import { ConfigService } from 'src/app/services/config.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { v1 as uuidv1 } from 'uuid';
-
+declare var jQuery:any;
+declare var $:any;
 @Component({
   selector: 'app-config',
   templateUrl: './config.component.html',
@@ -85,5 +86,42 @@ export class ConfigComponent implements OnInit {
       this.loading_btn = false;
     }
   }
+
+  fileChangeEvent(event:any) : void{
+    var file : any;
+    if(event.target.files && event.target.files[0]){
+      file = <File>event.target.files[0];
+    }else{
+      this._iziToastService.showMsg("No hay una imagen valida", "error");
+
+      $('#input-img').text('Seleccionar imagen');
+      this.imgSelect = 'assets/img/default.jpg';
+      this.file = undefined;
+    }
+
+    if(file?.size <= 4000000){
+      if(file?.type == 'image/png' || file?.type == 'image/webp' || file?.type == 'image/jpg' || file?.type == 'image/jpeg'){
+        const reader = new FileReader();
+        reader.onload = e => this.imgSelect = reader.result;
+        reader.readAsDataURL(file);
+        $('#input-img').text(file.name);
+        this.file = file;
+      }else{
+        this._iziToastService.showMsg("El formato debe de ser jpg, webp, jpg o jpeg", "error");
+
+        $('#input-img').text('Seleccionar imagen');
+        //this.imgSelect = this.url +'product/getBanner/' + this.product.banner;
+        this.file = undefined;
+      }
+    }else{
+      this._iziToastService.showMsg("La imagen no puede ser mayor a 4mb", "error");
+      
+      $('#input-img').text('Seleccionar imagen');
+      //this.imgSelect = this.url +'product/getBanner/' + this.product.banner;
+      this.file = undefined;
+    }
+    
+  }
+
 
 }

@@ -33,7 +33,6 @@ export class ConfigService {
     if(file){
       formData.append("banner", file);
     }
-    console.log(formData.get('categories'))
     return this._http.put(this.url+'config',formData,{headers});
   }
   
