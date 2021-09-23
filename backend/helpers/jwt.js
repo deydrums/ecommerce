@@ -18,7 +18,6 @@ const generateJWT = (user) => {
             email:user.email,
             role:user.rol,
         };
-        console.log(payload);
         jwt.sign(payload,process.env.SECRET_JWT_SEED,{
             expiresIn: process.env.TOKEN_EXPIRES_TIME
         },(err, token)=>{
@@ -26,7 +25,6 @@ const generateJWT = (user) => {
                 console.log(err);
                 reject('No se pudo generar el token');
             };
-
             resolve(token);
         });
     });
