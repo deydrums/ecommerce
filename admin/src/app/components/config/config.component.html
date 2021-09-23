@@ -70,6 +70,7 @@
       
                           <th>Categoria</th>
                           <th>Icono</th>
+                          <th>Op.</th>
       
                         </tr>
                       </thead>
@@ -79,6 +80,15 @@
                               <tr>
                                 <td>{{item.title}}</td>
                                 <td><i class={{item.icon}}></i></td>
+                                <td class="text-center">
+                                  <button 
+                                  class="btn btn-primary btn-sm"
+                                  type="button" 
+                                  (click) = "delete(item._id,item.title)" 
+                                >
+                                  <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                                </td>
                               </tr>
                           </tbody>
                       </ng-container>

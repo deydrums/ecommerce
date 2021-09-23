@@ -125,4 +125,7 @@ export class ConfigComponent implements OnInit {
   }
 
 
+  delete(id: any,title: any){
+    this.config.categories.splice(id, 1);
+  }
 }
