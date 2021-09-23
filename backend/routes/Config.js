@@ -10,7 +10,7 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { updateConfig, getConfig } = require('../controllers/ConfigController');
+ const { updateConfig, getConfig, getLogo } = require('../controllers/ConfigController');
  const auth = require('../middlewares/authenticated');
  const { paramsValidator } = require('../middlewares/params-validator');
 
@@ -53,4 +53,15 @@
     getConfig
 );
  
+/*________________________________________________________
+ * 
+ *  -----------OBTENER BANNER ADMIN ----------------------
+ * _______________________________________________________
+ */
+
+router.get(
+    '/getLogo/:filename',
+    getLogo
+)
+
  module.exports = router;

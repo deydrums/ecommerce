@@ -92,7 +92,36 @@ const getConfig = async(req,res = response)=>{
 
 }
 
+/*________________________________________________________
+ * 
+ *  -------------------GET LOGO - ------------------------
+ * _______________________________________________________
+ */
+
+const getLogo = async(req,res = response)=>{
+    try {
+        const filename = req.params.filename
+        const pathFile = './uploads/config/'+filename; 
+
+        fs.exists(pathFile, (exists)=>{
+            if(exists){
+                return res.sendFile(path.resolve(pathFile));
+            }else{
+                return res.sendFile(path.resolve('./uploads/default.jpg'));
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+
+}
+
 module.exports = {
     updateConfig,
-    getConfig
+    getConfig,
+    getLogo
 };

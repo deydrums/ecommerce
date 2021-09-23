@@ -44,6 +44,7 @@ export class ConfigComponent implements OnInit {
     this._configService.getConfig(this.token).subscribe(
       response=>{
         this.config = response.data;
+        this.imgSelect = this.url +'config/getLogo/' + response.data.banner;
         this.loading = false;
       },
       error=>{
@@ -110,14 +111,14 @@ export class ConfigComponent implements OnInit {
         this._iziToastService.showMsg("El formato debe de ser jpg, webp, jpg o jpeg", "error");
 
         $('#input-img').text('Seleccionar imagen');
-        //this.imgSelect = this.url +'product/getBanner/' + this.product.banner;
+        this.imgSelect = this.url +'config/getLogo/' + this.config.banner;
         this.file = undefined;
       }
     }else{
       this._iziToastService.showMsg("La imagen no puede ser mayor a 4mb", "error");
       
       $('#input-img').text('Seleccionar imagen');
-      //this.imgSelect = this.url +'product/getBanner/' + this.product.banner;
+      this.imgSelect = this.url +'config/getLogo/' + this.config.banner;
       this.file = undefined;
     }
     
