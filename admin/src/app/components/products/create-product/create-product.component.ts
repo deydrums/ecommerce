@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { ConfigService } from 'src/app/services/config.service';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -24,10 +25,9 @@ export class CreateProductComponent implements OnInit {
     description: 'Description'
   }
   public token;
-
+  public config:any;
   public file : any | File = undefined;
   public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
-  public config: any = {};
   public loading_btn:boolean;
 
   constructor(
@@ -35,15 +35,22 @@ export class CreateProductComponent implements OnInit {
     private _adminService: AdminService,
     private _iziToastService: IziToastService,
     private _router: Router,
+    private _configService: ConfigService
   ) { 
-    this.config = {
-      height: 500
-    }
+    this.config = {};
     this.token = this._adminService.getToken();
     this.loading_btn = false;
   }
 
   ngOnInit(): void {
+    this._configService.getConfigAll().subscribe(
+      response => {
+        this.config = response.data;
+      },
+      error => {
+        console.log(error)
+      }
+    );
   }
 
   create(createForm : any){

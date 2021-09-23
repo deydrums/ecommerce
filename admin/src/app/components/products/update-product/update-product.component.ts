@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { ConfigService } from 'src/app/services/config.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -20,11 +21,11 @@ export class UpdateProductComponent implements OnInit {
 
   public file : any | File = undefined;
   public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
-  public config: any = {};
   public loading_btn:boolean;
   public loading: boolean;
   public url;
   public id;
+  public config:any;
 
 
   constructor(
@@ -32,8 +33,10 @@ export class UpdateProductComponent implements OnInit {
     private _adminService: AdminService,
     private _iziToastService: IziToastService,
     private _router: Router,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _configService: ConfigService
   ) { 
+    this.config = {};
     this.token = this._adminService.getToken();
     this.loading_btn = false;
     this.url = global.url;
@@ -43,6 +46,14 @@ export class UpdateProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getdata()
+    this._configService.getConfigAll().subscribe(
+      response => {
+        this.config = response.data;
+      },
+      error => {
+        console.log(error)
+      }
+    );
   }
   
   getdata(){

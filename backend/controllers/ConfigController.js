@@ -120,8 +120,27 @@ const getLogo = async(req,res = response)=>{
 
 }
 
+/*________________________________________________________
+ * 
+ *  -------------------GET CONFIG ALL --------------------
+ * _______________________________________________________
+ */
+
+const getConfigAll = async(req,res = response)=>{
+
+    Config.findById({_id: process.env.CONFIG_ID}).exec((err,data)=>{
+        if(err || !data ){
+            return res.status(404).send({status: 'error', message: 'No se ha podido actualizar la configuracion.'});
+        }else{
+            return res.status(200).send({status: 'success', message: 'Configuracion de la tienda', data:data});
+        }
+    });
+
+}
+
 module.exports = {
     updateConfig,
     getConfig,
-    getLogo
+    getLogo,
+    getConfigAll
 };

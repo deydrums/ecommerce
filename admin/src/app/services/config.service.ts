@@ -36,5 +36,9 @@ export class ConfigService {
     return this._http.put(this.url+'config',formData,{headers});
   }
   
+  getConfigAll():Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this._http.get(this.url+'config/all',{headers:headers});
+  }
 
 }

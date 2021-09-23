@@ -10,7 +10,7 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { updateConfig, getConfig, getLogo } = require('../controllers/ConfigController');
+ const { updateConfig, getConfig, getLogo, getConfigAll } = require('../controllers/ConfigController');
  const auth = require('../middlewares/authenticated');
  const { paramsValidator } = require('../middlewares/params-validator');
 
@@ -63,5 +63,17 @@ router.get(
     '/getLogo/:filename',
     getLogo
 )
+
+ /*________________________________________________________
+ * 
+ *  ----------------CONFIG GET ---------------------------
+ * _______________________________________________________
+ */
+
+ router.get(
+    '/all',
+    getConfigAll
+);
+ 
 
  module.exports = router;
