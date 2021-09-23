@@ -94,7 +94,34 @@ const loginAdmin = async(req,res = response)=>{
     }
 }
 
+const renewToken = async(req,res = response)=>{
+
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    try {        
+        const admin = req.user;
+    
+        //Generar nuestro JWT
+        const token = await generateJWT(admin);
+    
+        res.json({
+            ok: true,
+            message: 'Nuevo token generado',
+            data:admin,
+            token
+        })
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     registerAdmin,
-    loginAdmin
+    loginAdmin,
+    renewToken
 };
