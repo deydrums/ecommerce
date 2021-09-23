@@ -1,6 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from './services/admin.service';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,8 @@ export class AppComponent implements OnInit, DoCheck {
   constructor (
     private _adminService: AdminService,
     private _router: Router,
+    private _iziToastService: IziToastService,
+
   ){
     this.isAuth = false;
     this.token = _adminService.getToken();
@@ -36,11 +39,14 @@ export class AppComponent implements OnInit, DoCheck {
         this.userLoged=response.data;
         localStorage.setItem('token',response.token);
         localStorage.setItem('_id', response.data._id);
-        this.isAuth =  this._adminService.isAuthenticated(['admin']);
       },
       error => {
-        console.log(error)
+        localStorage.removeItem('token');
+        localStorage.removeItem('_id');
+        this._iziToastService.showMsg('La sesión ha expirado', 'error');
+        this._router.navigate(['/login']);
       }
     )
+    this.isAuth =  this._adminService.isAuthenticated(['admin']);
   }
 }
