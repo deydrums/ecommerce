@@ -391,27 +391,6 @@ const addImgGallery = async(req,res = response)=>{
                 return res.status(200).send({status: 'success', message: 'Imagen subida.', data:newproduct});
             }
         }
-
-
-
-
-        // if(req.file.file_path){
-        //     if(req.file.file_ext != 'png' && req.file.file_ext != 'jpg' && req.file.file_ext != 'jpeg' && req.file.file_ext != 'webp'){
-        //         if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
-        //     }else{
-        //         if(product.banner !== undefined && product.banner !== 'undefined'){
-        //             fs.unlinkSync('uploads/products/'+product.banner)
-        //         }
-        //         data = {
-        //             ...data,
-        //             banner: req.file.file_name,
-        //         }
-        //     }
-        // }
-
-
-
-        
     } catch (error) {
         res.status(500).json({
             ok: false,
@@ -419,6 +398,43 @@ const addImgGallery = async(req,res = response)=>{
         })
     }
 }
+
+const deleteImgGallery = async(req,res = response)=>{
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    try {
+        const id = req.params['id'];
+        const data = req.body;
+
+        const product = await Product.findById({_id: id});
+        if(!product) {
+            if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
+            return res.status(404).send({status: 'error', message: 'Producto no encontrado.'});
+        }
+
+        const newproduct = await Product.findByIdAndUpdate({_id: id},{$pull: {gallery:{
+            _id:data._id
+        }}},{new:true});
+
+        fs.stat('uploads/gallery/'+data.imagen,(err)=>{
+            if(!err){
+                fs.unlinkSync('uploads/gallery/'+data.imagen);
+            }
+        })
+
+        return res.status(200).send({status: 'success', message: 'Imagen eliminada.', data:newproduct});
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 
 
 const getImg = async(req,res = response)=>{
@@ -453,5 +469,6 @@ module.exports = {
     deleteInventoryAdmin,
     registerInventoryAdmin,
     addImgGallery,
-    getImg
+    getImg,
+    deleteImgGallery
 };

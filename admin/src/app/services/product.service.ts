@@ -88,4 +88,9 @@ export class ProductService {
     return this._http.put(this.url+'product/addImgGallery/'+id,formData,{headers});
   }
 
+  deleteImgGallery(id:any, data: any, token:any):Observable<any>{
+    const headers = new HttpHeaders({'Authorization':token});
+    return this._http.put(this.url+'product/deleteImgGallery/'+id,data,{headers});
+  }
+
 }
