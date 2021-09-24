@@ -45,7 +45,7 @@
                     <div class="form-group row align-items-center">
                       <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Titulo</label>
                       <div class="col-md-9">
-                        <input class="form-control" type="text" id="text-input" placeholder="Titulo" required>
+                        <input class="form-control" type="text" id="text-input" placeholder="Titulo" required name="title_variety" [(ngModel)]="product.title_variety">
                       </div>
                     </div>
 
@@ -53,8 +53,8 @@
                       <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Variedades</label>
                       <div class="col-md-9">
                         <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Variedad">
-                            <button class="btn btn-primary" type="button">Agregar</button>
+                            <input class="form-control" type="text" placeholder="Variedad" name = "variety" [(ngModel)]="variety">
+                            <button class="btn btn-primary" type="button" (click)="addVariety()">Agregar</button>
                         </div>
                       </div>
                     </div>
@@ -67,8 +67,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                 
-                                    <th>Categoria</th>
-                                    <th>Icono</th>
+                                    <th>Titulo</th>
                                     <th>Op.</th>
                 
                                     </tr>
@@ -76,8 +75,19 @@
                 
                                 <ng-container *ngIf="product.varieties.length > 0">
                                     <tbody *ngFor="let item of product.varieties">
-                                        <tr>
-                
+                                        <tr>  
+                                          <td>
+                                            {{item.title}}
+                                          </td>
+                                          <td class="text-center">
+                                            <button 
+                                            class="btn btn-primary btn-sm"
+                                            type="button" 
+                                            (click) = "deleteVariety(item._id)" 
+                                          >
+                                            <i class="fas fa-trash"></i> Eliminar
+                                          </button>
+                                          </td>
                                         </tr>
                                     </tbody>
                                 </ng-container>

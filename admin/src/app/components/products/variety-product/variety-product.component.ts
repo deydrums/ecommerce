@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
+import { v1 as uuidv1 } from 'uuid';
 
 @Component({
   selector: 'app-variety-product',
@@ -16,6 +17,7 @@ export class VarietyProductComponent implements OnInit {
   public loading: boolean;
   public product: any = {};
   public id : any;
+  public variety: String;
 
   constructor(
     private _productService: ProductService,
@@ -27,6 +29,7 @@ export class VarietyProductComponent implements OnInit {
     this.token = this._adminService.getToken();
     this.loading_btn = false;
     this.loading = true;
+    this.variety = '';
   }
 
   ngOnInit(): void {
@@ -51,6 +54,24 @@ export class VarietyProductComponent implements OnInit {
         )      
       }
     )
+  }
+
+  addVariety(){
+    if(this.variety){
+      this.product.varieties.push({
+        title: this.variety,
+        _id: uuidv1()
+      })
+      console.log(this.product)
+      this.variety = '';
+    }else{
+      this._iziToastService.showMsg("La variedad no es valida", "error");
+    }
+
+  }
+
+  deleteVariety(id:any){
+    this.product.varieties.splice(id, 1);
   }
 
 }
