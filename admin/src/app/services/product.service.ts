@@ -39,6 +39,7 @@ export class ProductService {
 
 
   update(data: any, file: any, id:any, token:any):Observable<any>{
+    console.log(data)
     const headers = new HttpHeaders({'Authorization':token});
     const formData = new FormData();
     formData.append("title",data.title);
@@ -47,6 +48,11 @@ export class ProductService {
     formData.append("category", data.category);
     formData.append("content", data.content);
     formData.append("description", data.description);
+    if(data.title_variety){
+      formData.append("title_variety", data.title_variety);
+      formData.append('varieties',JSON.stringify(data.varieties)
+    );
+    }
     if(file){
       formData.append("banner", file);
     }

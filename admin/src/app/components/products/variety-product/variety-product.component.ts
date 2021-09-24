@@ -62,7 +62,6 @@ export class VarietyProductComponent implements OnInit {
         title: this.variety,
         _id: uuidv1()
       })
-      console.log(this.product)
       this.variety = '';
     }else{
       this._iziToastService.showMsg("La variedad no es valida", "error");
@@ -73,5 +72,26 @@ export class VarietyProductComponent implements OnInit {
   deleteVariety(id:any){
     this.product.varieties.splice(id, 1);
   }
+
+  updateProduct(){
+    this.loading_btn = true;
+    if(this.product.title_variety){
+      this._productService.update(this.product, undefined, this.id , this.token).subscribe(
+        response => {
+          this._iziToastService.showMsg(response.message, "success");
+          this.loading_btn = false;
+          this.getdata();
+        },
+        error => {
+          this._iziToastService.showMsg(error.error.message, "error");
+          this.loading_btn = false;
+        }
+      )
+    }else{
+      this._iziToastService.showMsg("Debe de colocar un titulo para la variedad", "error");
+      this.loading_btn = false;
+    }
+  }
+
 
 }

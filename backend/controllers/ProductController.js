@@ -166,6 +166,13 @@ const updateProduct = async(req,res = response)=>{
 
     try {
         let data = req.body;
+
+        if(data.title_variety){
+            data = {
+                ...data,
+                varieties: JSON.parse(data.varieties)
+            }
+        }
         let id = req.params['id']; 
         Product.findById(id).exec((err,product)=>{
             if(err || !data ){

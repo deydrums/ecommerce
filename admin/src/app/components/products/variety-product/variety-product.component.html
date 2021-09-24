@@ -109,7 +109,7 @@
             
                 </div>
                 <div class="card-footer">
-                  <button *ngIf="!loading_btn" class="btn btn-primary mr-3" type="submit">Guardar cambios</button>
+                  <button *ngIf="!loading_btn" type="button" class="btn btn-primary mr-3" (click)="updateProduct()">Guardar cambios</button>
                   <button *ngIf="loading_btn" type="button" class="btn btn-secondary mr-3" disabled>
                     <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
                     Guardando...
