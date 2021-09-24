@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  public user:any = {};
+
+  constructor(
+    private _iziToastService: IziToastService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  login(loginForm: any){
+    if(loginForm.valid){
+
+    }else{
+      this._iziToastService.showMsg("El formulario no es valido", "error");
+    }
   }
 
 }
