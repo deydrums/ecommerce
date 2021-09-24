@@ -13,11 +13,12 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
- const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct, deleteProduct, getInventoryAdmin, deleteInventoryAdmin, registerInventoryAdmin } = require('../controllers/ProductController');
+ const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct, deleteProduct, getInventoryAdmin, deleteInventoryAdmin, registerInventoryAdmin, addImgGallery } = require('../controllers/ProductController');
  
  const multiparty = require('connect-multiparty');
  const { filedata } = require('../middlewares/filedata');
  const path = multiparty({uploadDir: './uploads/products'});
+ const path_gallery = multiparty({uploadDir: './uploads/gallery'});
 
  /*________________________________________________________
  * 
@@ -164,5 +165,24 @@ router.post(
     ],
     registerInventoryAdmin
 );
+
+ /*________________________________________________________
+ * 
+ *  ----------------UPLOAD IMG GALLERY--------------------
+ * _______________________________________________________
+ */
+
+ 
+ router.put(
+    '/addImgGallery/:id',
+    [
+        auth.authenticated,
+        path_gallery,
+        filedata,
+    ],
+    addImgGallery
+);
+
+
 
  module.exports = router;

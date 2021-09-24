@@ -353,13 +353,73 @@ const registerInventoryAdmin = async(req,res = response)=>{
             data:inventory
         })
     } catch (error) {
-        console.log(error)
         res.status(500).json({
             ok: false,
             message: 'Ha ocurrido un error, intenta de nuevo'
         })
     }
 }
+
+const addImgGallery = async(req,res = response)=>{
+    if(!req.user ||req.user.role !== 'admin'){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    try {
+        const id = req.params['id'];
+        const data = req.body;
+
+        const product = await Product.findById({_id: id});
+        if(!product) {
+            if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
+            return res.status(404).send({status: 'error', message: 'Producto no encontrado.'});
+        }
+
+        if(!req.file.file_path){
+            return res.status(400).send({status: 'error', message: 'Imagen no enviada.'});
+        }
+
+        if(req.file.file_path){
+            if(req.file.file_ext != 'png' && req.file.file_ext != 'jpg' && req.file.file_ext != 'jpeg' && req.file.file_ext != 'webp'){
+                if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
+                return res.status(400).send({ok: false, status: 'error', message: 'La extension del archivo no es valida.'});
+            }else{
+                const newproduct = await Product.findByIdAndUpdate({_id: id},{$push:{gallery:{
+                    imagen: req.file.file_name,
+                    _id: data._id,
+                }}},{new:true})
+                return res.status(200).send({status: 'success', message: 'Imagen subida.', data:newproduct});
+            }
+        }
+
+
+
+
+        // if(req.file.file_path){
+        //     if(req.file.file_ext != 'png' && req.file.file_ext != 'jpg' && req.file.file_ext != 'jpeg' && req.file.file_ext != 'webp'){
+        //         if(req.file.file_path){fs.unlinkSync(req.file.file_path)}
+        //     }else{
+        //         if(product.banner !== undefined && product.banner !== 'undefined'){
+        //             fs.unlinkSync('uploads/products/'+product.banner)
+        //         }
+        //         data = {
+        //             ...data,
+        //             banner: req.file.file_name,
+        //         }
+        //     }
+        // }
+
+
+
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     registerProduct,
     getProductsAdmin,
@@ -369,5 +429,6 @@ module.exports = {
     deleteProduct,
     getInventoryAdmin,
     deleteInventoryAdmin,
-    registerInventoryAdmin
+    registerInventoryAdmin,
+    addImgGallery
 };
