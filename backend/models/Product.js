@@ -13,7 +13,9 @@ var ProductSchema = Schema({
     stock: {type: Number, required: true},
     nsales: {type: Number, default: 0, required: true},
     npoints: {type: Number, default: 0, required: true},
+    varieties: [{type: Object, required: false}],
     category: {type: String, required: true},
+    title_variety: {type: String, required: false},
     status: {type: String, default: 'edit', required: true},
     createdAt: {type: Date, default: Date.now, required:true}
 });

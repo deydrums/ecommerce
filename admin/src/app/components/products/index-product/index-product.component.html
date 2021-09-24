@@ -83,6 +83,8 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                       <button class="dropdown-item" type="button" [routerLink]="['/panel/product/',product._id]">Editar
                         producto</button>
+                        <button class="dropdown-item" type="button" [routerLink]="['/panel/product/varieties/',product._id]">Variedades</button>
+                        
                       <button class="dropdown-item" type="button"
                         [routerLink]="['/panel/product/inventory/',product._id]">Inventario</button>
                       <button class="dropdown-item" type="button" (click)="delete(product._id, product.title)">Eliminar Producto</button>
