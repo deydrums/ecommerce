@@ -420,6 +420,28 @@ const addImgGallery = async(req,res = response)=>{
     }
 }
 
+
+const getImg = async(req,res = response)=>{
+    try {
+        const filename = req.params.filename
+        const pathFile = './uploads/gallery/'+filename; 
+
+        fs.exists(pathFile, (exists)=>{
+            if(exists){
+                return res.sendFile(path.resolve(pathFile));
+            }else{
+                return res.sendFile(path.resolve('./uploads/default.jpg'));
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+
+}
 module.exports = {
     registerProduct,
     getProductsAdmin,
@@ -430,5 +452,6 @@ module.exports = {
     getInventoryAdmin,
     deleteInventoryAdmin,
     registerInventoryAdmin,
-    addImgGallery
+    addImgGallery,
+    getImg
 };

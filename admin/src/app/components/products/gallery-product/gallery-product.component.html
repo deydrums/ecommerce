@@ -102,7 +102,10 @@
                                     <tbody *ngFor="let item of product.gallery">
                                         <tr>  
                                           <td>
-                                            {{item.imagen}}
+                                            <p>
+                                              <img [src]="url + 'product/getImg/' + item.imagen" alt="" style="width: 80px;">
+                                              {{item.imagen}}
+                                            </p>
                                           </td>
                                           <td class="text-center">
                                             <button 
