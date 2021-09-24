@@ -4,6 +4,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
+import { v1 as uuidv1 } from 'uuid';
 declare var jQuery:any;
 declare var $:any;
 @Component({
@@ -72,7 +73,27 @@ export class GalleryProductComponent implements OnInit {
   }
 
   addImg(){
-
+    if(this.file){
+      this.loading_btn = true;
+      const data = {
+        banner: this.file,
+        _id: uuidv1(),
+      }
+      this._productService.addImgGallery(this.id,data,this.token).subscribe(
+        response => {
+          this._iziToastService.showMsg(response.message, "success");
+          this.loading_btn = false;
+          this.product = response.data;
+        },
+        error =>{
+          this._iziToastService.showMsg(error.error.message, "error");
+          this.loading_btn = false;
+        }
+      )
+    }else{
+      this._iziToastService.showMsg("Debe seleccionar una imagen", "error");
+      this.loading_btn = false;
+    }
   }
 
   fileChangeEvent(event:any) : void{

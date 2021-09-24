@@ -80,4 +80,12 @@ export class ProductService {
     return this._http.post(this.url+'product/registerInventoryAdmin',data,{headers});
   }
 
+  addImgGallery(id:any,data: any, token:any):Observable<any>{
+    const headers = new HttpHeaders({'Authorization':token});
+    const formData = new FormData();
+    formData.append("_id",data._id);
+    formData.append("banner", data.banner);
+    return this._http.put(this.url+'product/addImgGallery/'+id,formData,{headers});
+  }
+
 }
