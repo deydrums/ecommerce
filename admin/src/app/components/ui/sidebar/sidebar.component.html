@@ -25,31 +25,31 @@
                with font-awesome or any other icon font library -->
 
           <li class="nav-item">
-            <a [routerLink]="['/index']" class="nav-link">
+            <a [routerLink]="['/index']" class="nav-link" (click) = "linkClick()">
               <i class="nav-icon fas fa-th"></i> <p>Inicio</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a [routerLink]="['/panel/clients']" class="nav-link">
+            <a [routerLink]="['/panel/clients']" class="nav-link" (click) = "linkClick()">
               <i class="nav-icon fas fa-users"></i> <p>Clientes</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a [routerLink]="['/panel/products']" class="nav-link">
+            <a [routerLink]="['/panel/products']" class="nav-link" (click) = "linkClick()">
               <i class="nav-icon fas fa-box-open"></i> <p>Productos</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a [routerLink]="['/panel/cupon']" class="nav-link">
+            <a [routerLink]="['/panel/cupon']" class="nav-link" (click) = "linkClick()">
               <i class="nav-icon fas fa-ticket-alt"></i> <p>Cupones</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a [routerLink]="['/panel/config']" class="nav-link">
+            <a [routerLink]="['/panel/config']" class="nav-link" (click) = "linkClick()">
               <i class="nav-icon fas fa-cogs"></i> <p>Configuracion</p>
             </a>
           </li>
