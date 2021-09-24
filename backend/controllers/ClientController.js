@@ -310,10 +310,8 @@ const getClient = async(req,res = response) =>{
     if(!req.user){
         return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
     }
-
-    let id = req.params['id']; 
     
-    Client.findById(id).exec((err,data)=>{
+    Client.findById(req.user.sub).exec((err,data)=>{
         if(err || !data){
             return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
         }

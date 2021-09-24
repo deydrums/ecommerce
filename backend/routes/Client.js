@@ -139,7 +139,7 @@ router.get(
  */
 
 router.get(
-    '/getClient/:id',
+    '/getClient',
     auth.authenticated,
     getClient
 )
