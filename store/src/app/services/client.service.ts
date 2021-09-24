@@ -20,4 +20,9 @@ export class ClientService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this._http.post(this.url + 'client/login',user,{headers})
   }
+
+  getClient(id: any, token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.get(this.url+'client/getClient/'+id,{headers:headers});
+  }
 }

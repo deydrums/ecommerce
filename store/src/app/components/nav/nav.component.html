@@ -19,10 +19,19 @@
     <div class="d-flex align-items-center order-lg-3">
         <ul class="nav nav-tools flex-nowrap">
         <li class="nav-item d-lg-block d-none mb-0">
-            <a [routerLink]="['/login']" class="nav-tool">
-            <i class="cxi-profile nav-tool-icon"></i>
-            <span class="nav-tool-label">Iniciar sesión</span>
-            </a>
+            <ng-container *ngIf="!userlog">
+                <a [routerLink]="['/login']" class="nav-tool">
+                    <i class="cxi-profile nav-tool-icon"></i>
+                    <span class="nav-tool-label">Iniciar sesión</span>
+                </a>
+            </ng-container>
+            <ng-container *ngIf="userlog">
+                <a class="nav-tool">
+                    <i class="cxi-profile nav-tool-icon"></i>
+                    <span class="nav-tool-label">{{userlog.name}} {{userlog.surname}}</span>
+                </a>
+            </ng-container>
+
         </li>
         <li class="divider-vertical mb-0 d-lg-block d-none"></li>
         <li class="nav-item align-self-center mb-0">
