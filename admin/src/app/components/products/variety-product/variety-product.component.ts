@@ -75,7 +75,7 @@ export class VarietyProductComponent implements OnInit {
 
   updateProduct(){
     this.loading_btn = true;
-    if(this.product.title_variety){
+    if(this.product.title_variety && this.product.varieties.length > 0){
       this._productService.update(this.product, undefined, this.id , this.token).subscribe(
         response => {
           this._iziToastService.showMsg(response.message, "success");
@@ -88,7 +88,7 @@ export class VarietyProductComponent implements OnInit {
         }
       )
     }else{
-      this._iziToastService.showMsg("Debe de colocar un titulo para la variedad", "error");
+      this._iziToastService.showMsg("Debe colocar un titulo y una variedad", "error");
       this.loading_btn = false;
     }
   }
