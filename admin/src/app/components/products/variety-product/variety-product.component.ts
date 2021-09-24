@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
+import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 import { ProductService } from 'src/app/services/product.service';
 import { v1 as uuidv1 } from 'uuid';
@@ -18,6 +19,10 @@ export class VarietyProductComponent implements OnInit {
   public product: any = {};
   public id : any;
   public variety: String;
+  public url;
+  public imgSelect : any | ArrayBuffer = 'assets/img/default.jpg';
+
+
 
   constructor(
     private _productService: ProductService,
@@ -30,6 +35,8 @@ export class VarietyProductComponent implements OnInit {
     this.loading_btn = false;
     this.loading = true;
     this.variety = '';
+    this.url = global.url;
+
   }
 
   ngOnInit(): void {
@@ -45,6 +52,7 @@ export class VarietyProductComponent implements OnInit {
           response=>{
             this.product = response.data;
             this.loading = false;
+            this.imgSelect = this.url +'product/getBanner/' + response.data.banner;
           },
           error =>{
             this._iziToastService.showMsg(error.error.message, "error");
