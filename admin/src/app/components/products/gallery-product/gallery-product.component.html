@@ -66,10 +66,15 @@
                           <div class="custom-file">
                             <input type="file" class="custom-file-input" id="exampleInputFile" (change)= "fileChangeEvent($event)" style="cursor: pointer;">
                             <label class="custom-file-label" for="exampleInputFile" *ngIf ="file">{{file.name}}</label>
-                            <label class="custom-file-label" for="exampleInputFile" *ngIf ="!file"></label>
+                            <label class="custom-file-label" for="exampleInputFile" *ngIf ="!file">Elige una imagen</label>
                           </div>
                           <div class="input-group-append">
+                            <ng-container *ngIf= "!file">
+                            <button *ngIf="!loading_btn" class="btn btn-primary" type="button" disabled>Subir</button>
+                            </ng-container>
+                            <ng-container *ngIf ="file">
                             <button *ngIf="!loading_btn" class="btn btn-primary" type="button" (click)="addImg()">Subir</button>
+                            </ng-container>
                             <button *ngIf="loading_btn" type="button" class="btn btn-secondary" disabled>
                               <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
                               Subiendo...
