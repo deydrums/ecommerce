@@ -1,0 +1,136 @@
+<div class="content-wrapper">
+
+    <div class="content-header border-bottom ">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Productos</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item">
+                  <a class="text-nowrap text-light font-italic" [routerLink]="['/panel/products']">Volver<i
+                      class="cxi-angle-right font-size-base align-middle ml-1"></i></a>
+                </li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+    
+    <ng-container *ngIf="loading">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 text-center">
+            <!-- Custom size border spinner -->
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+              <span class="visually-hidden"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="!loading">
+    
+      <div class="m-0 row justify-content-center mt-5">
+        <div *ngIf ="product" class="col-sm-10">
+            <div class="card box-shadow-sm">
+                <div class="card-header">
+                  <h5 style="margin-bottom: 0px;">Geleria del producto</h5>
+                </div>
+            
+                <div class="card-body">
+                  <div style="max-width: 53rem;">
+
+                    <div class="row mb-5" >
+                      <div class="col-md-3">
+                        <img src="{{imgSelect}}" class="img-thumbnail rounded-0" alt="Square image">
+                      </div>
+                      <div class="col-md-9" >
+                        <div class="card" style="height: 100% !important; background-color: rgba(167, 167, 167, 0.068);">
+                          <div class="card-body">
+                            <h3 class="card-product-title text-truncate mb-2">
+                              {{product.title}}
+                            </h3>
+                            <p>{{product.description}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                      <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Nueva Imagen</label>
+                      <div class="col-md-9">
+                        <div class="input-group">
+                          <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="exampleInputFile" (change)= "fileChangeEvent($event)" style="cursor: pointer;">
+                            <label class="custom-file-label" for="exampleInputFile" *ngIf ="file">{{file.name}}</label>
+                            <label class="custom-file-label" for="exampleInputFile" *ngIf ="!file"></label>
+                          </div>
+                          <div class="input-group-append">
+                            <button *ngIf="!loading_btn" class="btn btn-primary" type="button" (click)="addImg()">Subir</button>
+                            <button *ngIf="loading_btn" type="button" class="btn btn-secondary" disabled>
+                              <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                              Subiendo...
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group row align-items-center">
+                        <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Lista de imagenes</label>
+                        <div class="col-md-9">
+                            <div class="table-responsive mt-3">
+                                <table class="table table-sm">
+                                <thead class="thead-dark">
+                                    <tr>
+                
+                                    <th>Titulo</th>
+                                    <th>Op.</th>
+                
+                                    </tr>
+                                </thead>
+                
+                                <ng-container *ngIf="product.gallery.length > 0">
+                                    <tbody *ngFor="let item of product.gallery">
+                                        <tr>  
+                                          <td>
+                                            {{item.title}}
+                                          </td>
+                                          <td class="text-center">
+                                            <button 
+                                            class="btn btn-primary btn-sm"
+                                            type="button" 
+                                            (click) = "deleteImg(item._id)" 
+                                          >
+                                            <i class="fas fa-trash"></i> Eliminar
+                                          </button>
+                                          </td>
+                                        </tr>
+                                    </tbody>
+                                </ng-container>
+                                <ng-container *ngIf="product.gallery.length == 0">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2"class = "text-center">
+                                                <span class="text-muted">No hay imagenes disponibles</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>  
+                                </ng-container>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                  </div>
+            
+                </div>
+              </div>        
+        </div>
+      </div>
+  
+    </ng-container>
+  </div>
