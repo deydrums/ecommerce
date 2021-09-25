@@ -10,7 +10,7 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin, getClientByIdAdmin, updateClientAdmin, deleteClientAdmin, getClient } = require('../controllers/ClientController');
+ const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin, getClientByIdAdmin, updateClientAdmin, deleteClientAdmin, getClient, renewToken } = require('../controllers/ClientController');
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
 
@@ -142,6 +142,18 @@ router.get(
     '/getClient',
     auth.authenticated,
     getClient
+)
+
+/*________________________________________________________
+ * 
+ *  ------------- Renew Token  ----------------------------
+ * _______________________________________________________
+ */
+
+router.get(
+    '/renew',
+    auth.authenticated,
+    renewToken
 )
 
  module.exports = router;

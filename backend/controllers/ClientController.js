@@ -320,6 +320,32 @@ const getClient = async(req,res = response) =>{
 
 }
 
+const renewToken = async(req,res = response)=>{
+
+    if(!req.user){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+
+    try {        
+        const client = req.user;
+        const user = await Client.findById({_id: client.sub});
+        //Generar nuestro JWT
+        const token = await generateJWT(user);
+    
+        res.json({
+            ok: true,
+            message: 'Nuevo token generado',
+            data:user,
+            token
+        })
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     registerClient,
     loginClient,
@@ -328,5 +354,6 @@ module.exports = {
     getClientByIdAdmin,
     updateClientAdmin,
     deleteClientAdmin,
-    getClient
+    getClient,
+    renewToken
 };
