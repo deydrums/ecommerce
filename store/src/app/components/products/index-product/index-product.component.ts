@@ -10,16 +10,45 @@ declare var $ : any;
 export class IndexProductComponent implements OnInit {
 
   public config: any;
+  public filter_cat;
+  public categories:any;
+
   constructor(
     private _clientService : ClientService
   ) { 
     this.config = {};
+    this.filter_cat = '';
   }
 
   ngOnInit(): void {
-
+    this.slider();
     this.getConfig();
+  }
 
+
+  getConfig() {
+    this._clientService.getConfig().subscribe(
+      response => {
+        this.config = response.data;
+        this.categories = response.data.categories;
+        console.log(this.config)
+      },
+      error => {
+        console.log(error)
+      }
+    );
+  }
+
+  search_cat(){
+    this.config.categories = this.categories;
+    const search = new RegExp(this.filter_cat, 'i');
+    this.config.categories = this.config.categories.filter(
+      (      item: { title: string; }) => search.test(item.title)
+    )
+  }
+
+
+  slider(){
     var slider : any = document.getElementById('slider');
     noUiSlider.create(slider, {
         start: [0, 1000],
@@ -40,20 +69,5 @@ export class IndexProductComponent implements OnInit {
         $('.cs-range-slider-value-max').val(values[1]);
     });
     $('.noUi-tooltip').css('font-size','11px');
-
-  }
-
-
-  getConfig() {
-    this._clientService.getConfig().subscribe(
-      response => {
-
-        this.config = response.data;
-        console.log(this.config)
-      },
-      error => {
-        console.log(error)
-      }
-    );
   }
 }
