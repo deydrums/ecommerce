@@ -43,13 +43,19 @@ export class AdminService {
     try {
       const helper = new JwtHelperService();
       var decodedToken = helper.decodeToken(token);      
+
+      if(helper.isTokenExpired(token)){
+        localStorage.clear();
+        return false;
+      }
+
       if(!decodedToken){
         console.log('No es valido');
-        localStorage.removeItem('token');
+        localStorage.clear();
         return false;
       }
     } catch (error) {
-      localStorage.removeItem('token');
+      localStorage.clear();
       return false;
     }
 
