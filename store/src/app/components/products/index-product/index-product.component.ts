@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ClientService } from 'src/app/services/client.service';
 declare var noUiSlider:any;
 declare var $ : any;
 @Component({
@@ -8,9 +9,16 @@ declare var $ : any;
 })
 export class IndexProductComponent implements OnInit {
 
-  constructor() { }
+  public config: any;
+  constructor(
+    private _clientService : ClientService
+  ) { 
+    this.config = {};
+  }
 
   ngOnInit(): void {
+
+    this.getConfig();
 
     var slider : any = document.getElementById('slider');
     noUiSlider.create(slider, {
@@ -35,4 +43,17 @@ export class IndexProductComponent implements OnInit {
 
   }
 
+
+  getConfig() {
+    this._clientService.getConfig().subscribe(
+      response => {
+
+        this.config = response.data;
+        console.log(this.config)
+      },
+      error => {
+        console.log(error)
+      }
+    );
+  }
 }

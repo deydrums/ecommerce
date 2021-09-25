@@ -41,6 +41,12 @@ export class ClientService {
     return this._http.put(this.url + 'client/updateClient/'+id,data,{headers})
   }
 
+    
+  getConfig():Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this._http.get(this.url+'config/all',{headers:headers});
+  }
+
   public isAuthenticated():boolean{
 
     const token = localStorage.getItem('token');
