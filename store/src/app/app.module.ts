@@ -12,6 +12,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { SidebarComponent } from './components/user/sidebar/sidebar.component';
+import { IndexProductComponent } from './components/products/index-product/index-product.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +21,8 @@ import { SidebarComponent } from './components/user/sidebar/sidebar.component';
     FooterComponent,
     LoginComponent,
     ProfileComponent,
-    SidebarComponent
+    SidebarComponent,
+    IndexProductComponent
   ],
   imports: [
     BrowserModule,

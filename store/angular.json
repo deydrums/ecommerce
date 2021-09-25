@@ -36,6 +36,9 @@
               "src/assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js",
               "src/assets/vendor/tiny-slider/dist/min/tiny-slider.js",
               "src/assets/js/theme.min.js",
+              "src/assets/js/nouislider.min.js",
+              "src/assets/js/simplebar.min.js",
+              "src/assets/js/smooth-scroll.polyfills.min.js",
               "src/assets/js/iziToast.min.js"
             ]
           },
