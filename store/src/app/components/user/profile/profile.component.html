@@ -32,38 +32,38 @@
         <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
           <h1 class="h2 mb-0">Mi perfil</h1>
         </div>
-        <form>
+        <form #updateForm = "ngForm" (ngSubmit) = "update(updateForm)">
           <div class="row pb-3">
             <div class="col-sm-6 form-group">
               <label for="ac-fn">Nombres</label>
-              <input type="text" id="ac-fn" class="form-control form-control-lg" name = "name" [(ngModel)]="client.name" placeholder="Ingresa tus nombres">
+              <input required type="text" id="ac-fn" class="form-control form-control-lg" name = "name" [(ngModel)]="client.name" placeholder="Ingresa tus nombres">
             </div>
             <div class="col-sm-6 form-group">
               <label for="ac-ln">Apellidos</label>
-              <input type="text" id="ac-ln" class="form-control form-control-lg" name = "surname" [(ngModel)]="client.surname" placeholder="Ingresa tus apellidos">
+              <input required type="text" id="ac-ln" class="form-control form-control-lg" name = "surname" [(ngModel)]="client.surname" placeholder="Ingresa tus apellidos">
             </div>
             <div class="col-sm-6 form-group">
               <label for="ac-email">Correo electrónico</label>
-              <input type="email" id="ac-email" class="form-control form-control-lg" name = "email" [(ngModel)]="client.email" placeholder="Ingresa tu correo electrónico">
+              <input required type="email" id="ac-email" class="form-control form-control-lg" name = "email" [(ngModel)]="client.email" placeholder="Ingresa tu correo electrónico">
             </div>
             <div class="col-sm-6 form-group">
               <label for="ac-phone">Telefono</label>
-              <input type="text" id="ac-phone" class="form-control form-control-lg" name = "telephone" [(ngModel)]="client.telephone" placeholder="Ingresa tu telefono">
+              <input required type="text" id="ac-phone" class="form-control form-control-lg" name = "telephone" [(ngModel)]="client.telephone" placeholder="Ingresa tu telefono">
             </div>
 
             <div class="col-sm-6 form-group">
               <label for="ac-phone">Fecha de nacimiento</label>
-              <input type="date" id="ac-phone" class="form-control form-control-lg" name = "birthday" [(ngModel)]="client.birthday">
+              <input required type="date" id="ac-phone" class="form-control form-control-lg" name = "birthday" [(ngModel)]="client.birthday">
             </div>
  
             <div class="col-sm-6 form-group">
               <label for="ac-phone">DNI</label>
-              <input type="number" id="ac-phone" class="form-control form-control-lg" name = "dni" [(ngModel)]="client.dni">
+              <input required type="number" id="ac-phone" class="form-control form-control-lg" name = "dni" [(ngModel)]="client.dni">
             </div>
 
             <div class="col-sm-6 form-group">
               <label for="ac-country">Genero</label>
-              <select id="ac-country" class="custom-select custom-select-lg" name = "gender" [(ngModel)]="client.gender">
+              <select id="ac-country" class="custom-select custom-select-lg" name = "gender" [(ngModel)]="client.gender" required>
                 <option value="" disabled selected>Seleccionar</option>
                 <option value="Masculino">Masculino</option>
                 <option value="Femenino">Femenino</option>

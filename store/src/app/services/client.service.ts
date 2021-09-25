@@ -35,4 +35,9 @@ export class ClientService {
     return this._http.get(this.url+'client/renew',{headers:headers});
   }
 
+  update(id:any, data:any, token:any):Observable<any>{
+    const headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.put(this.url + 'client/updateClient/'+id,data,{headers})
+  }
+
 }

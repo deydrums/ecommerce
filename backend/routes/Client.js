@@ -10,7 +10,7 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin, getClientByIdAdmin, updateClientAdmin, deleteClientAdmin, getClient, renewToken } = require('../controllers/ClientController');
+ const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin, getClientByIdAdmin, updateClientAdmin, deleteClientAdmin, getClient, renewToken, updateClient } = require('../controllers/ClientController');
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
 
@@ -155,5 +155,25 @@ router.get(
     auth.authenticated,
     renewToken
 )
+
+
+ /*________________________________________________________
+ * 
+ *  -------------CLIENT REGISTER ADMIN--------------------
+ * _______________________________________________________
+ */
+
+ router.put(
+    '/updateClient/:id',
+    [   
+        auth.authenticated,
+        check('name', 'El nombre no es valido').not().isEmpty(),
+        check('surname', 'El apellido no es valido').not().isEmpty(),
+        check('email', 'El email no es valido').isEmail(),
+        paramsValidator
+    ],
+    updateClient
+)
+
 
  module.exports = router;

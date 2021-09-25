@@ -347,6 +347,56 @@ const renewToken = async(req,res = response)=>{
     }
 }
 
+/*________________________________________________________
+ * 
+ *  ----------------CLIENT REGISTER-----------------------
+ * _______________________________________________________
+ */
+
+const updateClient = async(req,res = response)=>{
+    //Si no existe un usuario y si no es admin
+    if(!req.user){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+    const id = req.params['id'];
+    const params = req.body;
+
+    try {
+        //Buscar si existe el cliente
+        Client.findById(id).exec((err,data)=>{
+            if(err || !data){
+                return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
+            }
+            //Si existe el cliente, buscar que el email sea unico o que sea el mismo (No se actualizo)
+            Client.findOne({email: params.email.toLowerCase()},(err, data)=>{
+                if(err) {
+                    return res.status(500).send({message: 'Error al intentar actualizar datos'});
+                }
+        
+                if(data && data.email == params.email && data._id != id) {            
+                    return res.status(400).send({message: 'El email ya esta registrado.'});
+                }else{
+                    //Si el email es unico o es el mismo, actualizar el cliente
+                    Client.findByIdAndUpdate({_id: id},params,{new:true},(err,data)=>{
+                        if(err || !data){
+                            return res.status(500).send({status: 'error', message: "Error al actualizar usuario"}); 
+                        }
+                        //Devolver respuesta
+                        return res.status(200).send({status: 'success', message: 'Usuario actualizado', data:data});
+                    });
+                }
+            });
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     registerClient,
     loginClient,
@@ -356,5 +406,6 @@ module.exports = {
     updateClientAdmin,
     deleteClientAdmin,
     getClient,
-    renewToken
+    renewToken,
+    updateClient
 };

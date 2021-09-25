@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/services/client.service';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,8 @@ export class ProfileComponent implements OnInit {
   public loader: boolean;
 
   constructor(
-    private _clientService: ClientService
+    private _clientService: ClientService,
+    private _iziToastService: IziToastService
   ) {
     this.token = this._clientService.getToken();
     this.loading_btn = false;
@@ -27,13 +29,32 @@ export class ProfileComponent implements OnInit {
       response => {
         this.client = response.data;
         this.loader = false;
-        console.log(response)
       },
       error => {
         console.log(error)
         this.loader = false;
       }
     )
+  }
+
+  update(updateForm:any) {
+    this.loading_btn = true;
+    if(updateForm.valid){
+      this._clientService.update(this.client._id, updateForm.form.value, this.token).subscribe(
+        response => {
+          this._iziToastService.showMsg(response.message, "success");
+          this.client = response.data;
+          this.loading_btn = false;
+        },
+        error => {
+          this._iziToastService.showMsg(error.error.message, "error");
+          this.loading_btn = false;
+        }
+      )
+    }else{
+      this._iziToastService.showMsg("El formulario no es valido", "error");
+      this.loading_btn = false;
+    }
   }
 
 }
