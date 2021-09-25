@@ -4,6 +4,7 @@ const {response} = require('express');
 const Client = require('../models/Client');
 var bcrypt = require('bcryptjs');
 const { generateJWT } = require('../helpers/jwt');
+const { returnUser } = require('../helpers/returnUser');
 
 
 /*________________________________________________________
@@ -35,7 +36,7 @@ const registerClient = async(req,res = response)=>{
         res.status(201).json({
             ok: true,
             message: 'Registro de cliente exitoso',
-            data:client
+            data:returnUser(client)
         });
 
     } catch (error) {
@@ -81,7 +82,7 @@ const loginClient = async(req,res = response)=>{
         res.status(200).json({
             ok: true,
             message: 'Login correcto',
-            data:client,
+            data:returnUser(client),
             token: token
             //token
         });
@@ -315,7 +316,7 @@ const getClient = async(req,res = response) =>{
         if(err || !data){
             return res.status(404).send({status: 'error', message: 'No se ha encontrado el cliente.'});
         }
-        return res.status(200).send({status: 'success', data:data});
+        return res.status(200).send({status: 'success', data:returnUser(data)});
     });
 
 }
@@ -335,7 +336,7 @@ const renewToken = async(req,res = response)=>{
         res.json({
             ok: true,
             message: 'Nuevo token generado',
-            data:user,
+            data:returnUser(user),
             token
         })
     } catch (error) {
