@@ -31,7 +31,6 @@ export class IndexProductComponent implements OnInit {
       response => {
         this.config = response.data;
         this.categories = response.data.categories;
-        console.log(this.config)
       },
       error => {
         console.log(error)
