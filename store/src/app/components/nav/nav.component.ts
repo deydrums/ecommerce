@@ -1,4 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -12,20 +13,11 @@ export class NavComponent implements OnInit, DoCheck {
   public id;
   public userlog:any;
   constructor(
-    private _clientService : ClientService
+    private _clientService : ClientService,
+    private _router : Router
   ) { 
     this.token = localStorage.getItem('token');
     this.id = localStorage.getItem('_id');
-    // this._clientService.getClient(this.id, this.token).subscribe(
-    //   response => {
-    //     this.user = response.data;
-    //     localStorage.setItem('user_data', JSON.stringify(this.user));
-        
-    //   },
-    //   error => {
-    //     console.log(error)
-    //   }
-    // )
   }
 
   ngOnInit(): void {
@@ -41,5 +33,10 @@ export class NavComponent implements OnInit, DoCheck {
   }
 
 
+  logout(){
+    window.location.reload();
+    localStorage.clear();
+    this._router.navigate(["/"]);
+  }
 
 }
