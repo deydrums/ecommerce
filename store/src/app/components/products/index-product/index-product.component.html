@@ -204,7 +204,7 @@
 
 
           <!-- Product grid -->
-          <div class="col">
+          <div class="col" *ngIf="!loader">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3" data-filters-columns>
 
               <!-- Item -->
@@ -309,6 +309,13 @@
               </nav>
             </div>
           </div>
+
+          <div class="col m-0 row justify-content-center mt-3" *ngIf="loader">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+              <span class="visually-hidden"></span>
+            </div>
+          </div>
+
         </div>
       </section>
     
