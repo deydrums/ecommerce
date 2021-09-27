@@ -18,6 +18,7 @@ export class IndexProductComponent implements OnInit {
   public filter_product = '';
   public loader:boolean;
   public url: string;
+  public products_in : Array<any> = [];
 
   constructor(
     private _clientService : ClientService,
@@ -47,6 +48,7 @@ export class IndexProductComponent implements OnInit {
     this._clientService.getProducts(this.filter_product).subscribe(
       response => {
         this.products = response.data;
+        this.products_in = response.data;
         this.loader = false;
       },
       error =>{
@@ -99,4 +101,16 @@ export class IndexProductComponent implements OnInit {
     });
     $('.noUi-tooltip').css('font-size','11px');
   }
+
+
+  search_price(){
+    this.products = this.products_in;
+    const min = parseInt($('.cs-range-slider-value-min').val());
+    const max = parseInt($('.cs-range-slider-value-max').val());
+    this.products = this.products.filter((product)=>{
+      return product.price >= min &&
+        product.price <=max
+    })
+  }
+
 }
