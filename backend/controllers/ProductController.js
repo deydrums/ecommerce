@@ -458,6 +458,33 @@ const getImg = async(req,res = response)=>{
     }
 
 }
+
+
+
+/*________________________________________________________
+ * 
+ *  -----------LISTAR PRODUCTOS FILTRO --------------------
+ * _______________________________________________________
+ */
+
+const getProducts = async(req,res = response)=>{
+    try {
+        let filter = req.params['filter'];
+        Product.find({title: new RegExp(filter,'i')}).exec((err,data)=>{
+            if(err || !data ){
+                return res.status(404).send({status: 'error', message: 'No se han encontrado productos.'});
+            }
+            return res.status(200).send({status: 'success', data:data});
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     registerProduct,
     getProductsAdmin,
@@ -470,5 +497,6 @@ module.exports = {
     registerInventoryAdmin,
     addImgGallery,
     getImg,
-    deleteImgGallery
+    deleteImgGallery,
+    getProducts
 };

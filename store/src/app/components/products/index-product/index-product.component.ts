@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/services/client.service';
+import { global } from 'src/app/services/global';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 declare var noUiSlider:any;
 declare var $ : any;
 @Component({
@@ -12,19 +14,47 @@ export class IndexProductComponent implements OnInit {
   public config: any;
   public filter_cat;
   public categories:any;
+  public products : Array<any> = [];
+  public filter_product = '';
+  public loader:boolean;
+  public url: string;
 
   constructor(
-    private _clientService : ClientService
+    private _clientService : ClientService,
+    private _iziToastService: IziToastService,
+
   ) { 
     this.config = {};
     this.filter_cat = '';
+    this.loader = false;
+    this.url = global.url;
+
   }
 
   ngOnInit(): void {
     this.slider();
     this.getConfig();
+    this.getProducts();
+
   }
 
+  search(){
+    this.getProducts()
+  }
+
+  getProducts(){
+    this.loader = true;
+    this._clientService.getProducts(this.filter_product).subscribe(
+      response => {
+        this.products = response.data;
+        this.loader = false;
+      },
+      error =>{
+        console.log(error);
+        this.loader = false;
+      }
+    )
+  }
 
   getConfig() {
     this._clientService.getConfig().subscribe(

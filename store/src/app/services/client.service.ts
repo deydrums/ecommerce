@@ -47,6 +47,12 @@ export class ClientService {
     return this._http.get(this.url+'config/all',{headers:headers});
   }
 
+  getProducts(filter:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this._http.get(this.url+'product/getProducts/'+filter,{headers:headers});
+  }
+
+
   public isAuthenticated():boolean{
 
     const token = localStorage.getItem('token');
