@@ -126,10 +126,15 @@ export class IndexProductComponent implements OnInit {
   searchProductCat(){
     this.products = this.products_in;
     if(this.filter_cat_product == "Todos"){
-      this.products_in = this.products_in;
+      this.products = this.products_in;
     }else{
-      console.log(this.filter_cat_product)
       this.products = this.products.filter(item => item.category ==this.filter_cat_product);
     }
+  }
+
+  reset_products(){
+    this.filter_product='';
+    this.filter_cat_product = 'Todos';
+    this.getProducts();
   }
 }
