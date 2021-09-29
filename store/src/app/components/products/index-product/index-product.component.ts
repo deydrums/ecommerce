@@ -22,6 +22,8 @@ export class IndexProductComponent implements OnInit {
   public products_in : Array<any> = [];
   public filter_cat_product = 'Todos';
   public route_cat='';
+  public page = 1;
+  public pageSize = 6;
 
   constructor(
     private _clientService : ClientService,
