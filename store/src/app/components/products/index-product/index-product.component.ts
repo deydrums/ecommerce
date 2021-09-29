@@ -19,6 +19,7 @@ export class IndexProductComponent implements OnInit {
   public loader:boolean;
   public url: string;
   public products_in : Array<any> = [];
+  public filter_cat_product = 'Todos';
 
   constructor(
     private _clientService : ClientService,
@@ -113,4 +114,12 @@ export class IndexProductComponent implements OnInit {
     })
   }
 
+  searchProductCat(){
+    this.products = this.products_in;
+    if(this.filter_cat_product == "Todos"){
+      this.products_in = this.products_in;
+    }else{
+      this.products = this.products.filter(item => item.category ==this.filter_cat_product);
+    }
+  }
 }

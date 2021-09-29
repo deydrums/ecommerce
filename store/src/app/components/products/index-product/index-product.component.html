@@ -146,9 +146,18 @@
                         </div>
                       </div>
                       <ul class="cs-filter-list list-unstyled pr-3" style="height: 12rem;" data-simplebar data-simplebar-auto-hide="false">
+                        <li class="cs-filter-item" >
+                          <div class="custom-control custom-checkbox">
+                            <input type="radio" name ="group1" (change)="searchProductCat()" class="custom-control-input" id="blazers-todos" value="Todos" [(ngModel)]="filter_cat_product">
+                            <label for="blazers-todos" class="custom-control-label">
+                              <span class="cs-filter-item-text">Todos</span>
+                              <span class="pl-1 text-muted">(235)</span>
+                            </label>
+                          </div>
+                        </li>
                         <li class="cs-filter-item" *ngFor="let category of config.categories; let index = index">
                           <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="blazers-{{index}}">
+                            <input type="radio" name ="group1" (change)="searchProductCat()" class="custom-control-input" id="blazers-{{index}}" value="{{category.title}}"  [(ngModel)]="filter_cat_product">
                             <label for="blazers-{{index}}" class="custom-control-label">
                               <span class="cs-filter-item-text">{{category.title}}</span>
                               <span class="pl-1 text-muted">(235)</span>
