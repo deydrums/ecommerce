@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
@@ -20,10 +21,12 @@ export class IndexProductComponent implements OnInit {
   public url: string;
   public products_in : Array<any> = [];
   public filter_cat_product = 'Todos';
+  public route_cat='';
 
   constructor(
     private _clientService : ClientService,
     private _iziToastService: IziToastService,
+    private _route: ActivatedRoute
 
   ) { 
     this.config = {};
@@ -37,7 +40,12 @@ export class IndexProductComponent implements OnInit {
     this.slider();
     this.getConfig();
     this.getProducts();
-
+    this._route.params.subscribe(params => {
+      this.route_cat = params['category'];
+      if(this.route_cat){
+        this.filter_cat_product = this.route_cat
+      }
+    });
   }
 
   search(){
@@ -50,6 +58,7 @@ export class IndexProductComponent implements OnInit {
       response => {
         this.products = response.data;
         this.products_in = response.data;
+        this.searchProductCat()
         this.loader = false;
       },
       error =>{
@@ -119,6 +128,7 @@ export class IndexProductComponent implements OnInit {
     if(this.filter_cat_product == "Todos"){
       this.products_in = this.products_in;
     }else{
+      console.log(this.filter_cat_product)
       this.products = this.products.filter(item => item.category ==this.filter_cat_product);
     }
   }

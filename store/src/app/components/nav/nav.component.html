@@ -94,7 +94,7 @@
         <li class="nav-item dropdown">
             <a [routerLink]="['/products']" routerLinkActive="active"  class="nav-link dropdown-toggle" data-toggle="dropdown">Tienda</a>
             <ul class="dropdown-menu">
-            <li *ngFor = "let category of config.categories"><a style="cursor: pointer;" class="dropdown-item"> {{category.title}}  <i class="{{category.icon}}"></i></a> </li>
+            <li *ngFor = "let category of config.categories"><a [routerLink]="['/products/category/',category.title]" routerLinkActive="router-link-active"  style="cursor: pointer;" class="dropdown-item"> {{category.title}}  <i class="{{category.icon}}"></i></a> </li>
             </ul>
         </li>
         <li class="nav-item dropdown mega-dropdown">
