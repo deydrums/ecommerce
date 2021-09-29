@@ -46,7 +46,6 @@ export class NavComponent implements OnInit, DoCheck {
     this._clientService.getConfig().subscribe(
       response => {
         this.config = response.data;
-        console.log(this.config)
       },
       error => {
         console.log(error)

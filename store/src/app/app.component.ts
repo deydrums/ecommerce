@@ -37,8 +37,7 @@ export class AppComponent implements OnInit, DoCheck {
         localStorage.setItem('_id', response.data._id);
       },
       error => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('_id');
+        localStorage.clear();
         this._iziToastService.showMsg('La sesión ha expirado', 'error');
         this._router.navigate(['/login']);
       }
