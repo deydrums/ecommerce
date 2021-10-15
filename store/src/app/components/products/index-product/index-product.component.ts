@@ -25,6 +25,8 @@ export class IndexProductComponent implements OnInit {
   public page = 1;
   public pageSize = 6;
 
+  public sort_by = 'default';
+
   constructor(
     private _clientService : ClientService,
     private _iziToastService: IziToastService,
@@ -138,5 +140,29 @@ export class IndexProductComponent implements OnInit {
     this.filter_product='';
     this.filter_cat_product = 'Todos';
     this.getProducts();
+  }
+
+  order_by(){
+    if(this.sort_by == 'default'){
+      this.products = this.products_in;
+    }else if(this.sort_by == 'popularity'){
+      this.products.sort((a,b) =>{
+        if(a.nsales < b.nsales){
+          return 1;
+        }
+        if (a.nsales > b.nsales){
+          return -1;
+        }
+        return 0;
+      })
+    }else if(this.sort_by == 'des'){
+
+    }else if(this.sort_by == 'asc'){
+
+    }else if(this.sort_by == 'az'){
+
+    }else if(this.sort_by == 'za'){
+
+    }
   }
 }
