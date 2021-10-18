@@ -199,7 +199,7 @@
                 <div class="col pb-sm-2 mb-grid-gutter" *ngFor="let product of products | slice: (page-1)*pageSize: (page-1)*pageSize + pageSize; let i = index">
                   <div class="card card-product mx-auto">
                     <div class="card-product-img">
-                      <a href="shop-single.html" class="card-img-top">
+                      <a [routerLink]="['/products/',product.slug]" routerLinkActive="router-link-active"  class="card-img-top">
                         <img [src]="url + 'product/getBanner/' + product.banner" alt="Product image">
                       </a>
                       <div class="card-product-widgets-top">
@@ -217,7 +217,7 @@
                     </div>
                     <div class="card-body pb-2">
                       <h3 class="card-product-title text-truncate mb-2">
-                        <a href="shop-single.html" class="nav-link">{{product.title}}</a>
+                        <a  [routerLink]="['/products/',product.slug]" class="nav-link">{{product.title}}</a>
                       </h3>
                       <div class="d-flex align-items-center">
                         <span class="h5 d-inline-block mb-0">Q{{product.price}}</span>
