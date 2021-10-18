@@ -143,6 +143,7 @@ export class IndexProductComponent implements OnInit {
   }
 
   order_by(){
+    
     if(this.sort_by == 'default'){
       this.products = this.products_in;
     }else if(this.sort_by == 'popularity'){
@@ -156,13 +157,45 @@ export class IndexProductComponent implements OnInit {
         return 0;
       })
     }else if(this.sort_by == 'des'){
-
+      this.products.sort((a,b) =>{
+        if(a.price < b.price){
+          return 1;
+        }
+        if (a.price > b.price){
+          return -1;
+        }
+        return 0;
+      })
     }else if(this.sort_by == 'asc'){
-
+      this.products.sort((a,b) =>{
+        if(a.price > b.price){
+          return 1;
+        }
+        if (a.price < b.price){
+          return -1;
+        }
+        return 0;
+      })
     }else if(this.sort_by == 'az'){
-
+      this.products.sort((a,b) =>{
+        if(a.title > b.title){
+          return 1;
+        }
+        if (a.title < b.title){
+          return -1;
+        }
+        return 0;
+      })
     }else if(this.sort_by == 'za'){
-
+      this.products.sort((a,b) =>{
+        if(a.title < b.title){
+          return 1;
+        }
+        if (a.title > b.title){
+          return -1;
+        }
+        return 0;
+      })
     }
   }
 }
