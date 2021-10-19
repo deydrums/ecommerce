@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { global } from 'src/app/services/global';
+import { GuestService } from 'src/app/services/guest.service';
 declare var tns:any;
 declare var lightGallery:any;
 
@@ -9,10 +12,43 @@ declare var lightGallery:any;
 })
 export class ShowProductComponent implements OnInit {
 
-  constructor() { }
+  public slug:string;
+  public product: any;
+  public url: string;
+
+
+  constructor(
+    private _route: ActivatedRoute,
+    private _guestService: GuestService
+  ) {
+    this.slug = '';
+    this.product = [];
+    this.url = global.url;
+
+   }
 
   ngOnInit(): void {
 
+    this._route.params.subscribe(
+      params =>{
+        this.slug = params['slug'];
+        this._guestService.getProductBySlug(this.slug).subscribe(
+          response => {
+            this.product = response.data;
+            console.log(this.product)
+          },
+          error => {
+            console.log(error)
+          }
+        )
+      }
+    )
+
+    this.startTns();
+
+  }
+
+  startTns(): void {
     tns({
       container: '.cs-carousel-inner',
       controlsText: ['<i class="cxi-arrow-left"></i>', '<i class="cxi-arrow-right"></i>'],
@@ -65,7 +101,6 @@ export class ShowProductComponent implements OnInit {
         }
       }
     });
-
   }
 
 }
