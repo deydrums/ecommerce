@@ -49,19 +49,23 @@ export class ShowProductComponent implements OnInit {
   }
 
   startTns(): void {
-    tns({
-      container: '.cs-carousel-inner',
-      controlsText: ['<i class="cxi-arrow-left"></i>', '<i class="cxi-arrow-right"></i>'],
-      navPosition: "top",
-      controlsPosition: "top",
-      mouseDrag: !0,
-      speed: 600,
-      autoplayHoverPause: !0,
-      autoplayButtonOutput: !1,
-      navContainer: "#cs-thumbnails",
-      navAsThumbnails: true,
-      gutter: 15,
-    });
+
+    setTimeout(() => {
+      tns({
+        container: '.cs-carousel-inner',
+        controlsText: ['<i class="cxi-arrow-left"></i>', '<i class="cxi-arrow-right"></i>'],
+        navPosition: "top",
+        controlsPosition: "top",
+        mouseDrag: !0,
+        speed: 600,
+        autoplayHoverPause: !0,
+        autoplayButtonOutput: !1,
+        navContainer: "#cs-thumbnails",
+        navAsThumbnails: true,
+        gutter: 15,
+      });
+  
+    },500)
 
     var e = document.querySelectorAll(".cs-gallery");
     if (e.length){
