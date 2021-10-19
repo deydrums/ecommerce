@@ -28,8 +28,8 @@
 
             <!-- Product gallery item -->
             <a *ngFor="let gallery of product.gallery; let index = index" class="cs-gallery-item" href="{{url + 'product/getBanner/9f7OwEzt0oDtCmzbu55E1SQ0.webp'}}"
-              data-sub-html='<h6 class="text-light">Gallery image caption #1</h6>'>
-              <img class="rounded" [src]="url + 'product/getBanner/'+gallery.imagen" alt="Carousel image">
+              data-sub-html='<h6 class="text-light">Imagen</h6>'>
+              <img class="rounded" [src]="url + 'product/getImg/'+gallery.imagen" alt="Carousel image">
               <span class="cs-gallery-caption">Imagen #{{index + 1}}</span>
             </a>
 
@@ -38,7 +38,7 @@
           <!-- Product gallery thumbnails -->
           <div class="cs-thumbnails" id="cs-thumbnails">
             <button *ngFor="let gallery of product.gallery; let index = index" type="button" [attr.data-nav]="index">
-              <img  [src]="url + 'product/getBanner/'+gallery.imagen" alt="Thumbnail">
+              <img  [src]="url + 'product/getImg/'+gallery.imagen" alt="Thumbnail">
             </button>
           </div>
         </div>
