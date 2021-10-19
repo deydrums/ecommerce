@@ -485,6 +485,31 @@ const getProducts = async(req,res = response)=>{
     }
 }
 
+
+/*________________________________________________________
+ * 
+ *  -----------LISTAR PRODUCTOS FILTRO --------------------
+ * _______________________________________________________
+ */
+
+const getProductBySlug = async(req,res = response)=>{
+    try {
+        let slug = req.params['slug'];
+        Product.findOne({slug:slug}).exec((err,data)=>{
+            if(err || !data ){
+                return res.status(404).send({status: 'error', message: 'No se ha encontrado el producto.'});
+            }
+            return res.status(200).send({status: 'success', data:data});
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     registerProduct,
     getProductsAdmin,
@@ -498,5 +523,6 @@ module.exports = {
     addImgGallery,
     getImg,
     deleteImgGallery,
-    getProducts
+    getProducts,
+    getProductBySlug
 };
