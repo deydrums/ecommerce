@@ -616,8 +616,7 @@
           <div class="card-product-img">
             <div class="cs-carousel cs-controls-onhover">
               <a class="cs-carousel-inner">
-                <div><img class="card-img-top"
-                    src="https://createx.createx.studio/assets/img/ecommerce/shop/single/01.jpg" alt="Product image">
+                <div><img class="card-img-top" [src]="url + 'product/getBanner/' + product.banner" alt="Product image">
                 </div>
 
               </a>
@@ -638,55 +637,17 @@
           </div>
           <div class="card-body pb-2" style="background-color: white;">
             <h3 class="card-product-title text-truncate mb-2">
-              <a href="#" class="nav-link">Basic hooded sweatshirt in pink</a>
+              <a href="#" class="nav-link">{{product.title}}</a>
             </h3>
             <div class="d-flex align-items-center">
-              <span class="h5 d-inline-block text-danger mb-0">$15.50</span>
+              <span class="h5 d-inline-block text-danger mb-0">${{product.price}}</span>
               <del class="d-inline-block ml-2 pl-1 text-muted">$31.00</del>
             </div>
-            <div class="d-flex align-items-center mb-2 pb-1">
-              <div class="mt-n2">
-                <div class="custom-control cs-custom-size-option cs-custom-size-option-sm custom-control-inline">
-                  <input type="radio" class="custom-control-input" name="size-01" id="l-1" checked>
-                  <label for="l-1" class="cs-custom-option-label">L</label>
-                </div>
-                <div class="custom-control cs-custom-size-option cs-custom-size-option-sm custom-control-inline">
-                  <input type="radio" class="custom-control-input" name="size-01" id="m-1">
-                  <label for="m-1" class="cs-custom-option-label">M</label>
-                </div>
-                <div class="custom-control cs-custom-size-option cs-custom-size-option-sm custom-control-inline">
-                  <input type="radio" class="custom-control-input" name="size-01" id="s-1">
-                  <label for="s-1" class="cs-custom-option-label">S</label>
-                </div>
-              </div>
-              <div class="ml-auto">
-                <div class="custom-control cs-custom-color-option cs-custom-color-option-sm custom-control-inline">
-                  <input type="radio" class="custom-control-input" name="color-01" id="beige-1" value="Beige" checked>
-                  <label for="beige-1" class="cs-custom-option-label">
-                    <span class="cs-color-swatch" style="background-color: #dead9c;"></span>
-                  </label>
-                </div>
-                <div class="custom-control cs-custom-color-option cs-custom-color-option-sm custom-control-inline">
-                  <input type="radio" class="custom-control-input" name="color-01" id="blue-1" value="Blue">
-                  <label for="blue-1" class="cs-custom-option-label">
-                    <span class="cs-color-swatch" style="background-color: #7998d1;"></span>
-                  </label>
-                </div>
-                <div class="custom-control cs-custom-color-option cs-custom-color-option-sm custom-control-inline">
-                  <input type="radio" class="custom-control-input" name="color-01" id="white-1" value="White">
-                  <label for="white-1" class="cs-custom-option-label">
-                    <span class="cs-color-swatch" style="background-color: #f4f4f4;"></span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <button type="button" class="btn btn-primary btn-block">
-              <i class="cxi-cart align-middle mt-n1 mr-2"></i>
-              Add to cart
-            </button>
-          </div>
-          <div class="card-footer">
 
+            <button type="button" class="btn btn-primary btn-block mt-3 mb-4">
+              <i class="cxi-cart align-middle mt-n1 mr-2"></i>
+              Agregar al carrito
+            </button>
           </div>
         </div>
       </div>
