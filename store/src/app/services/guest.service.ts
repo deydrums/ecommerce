@@ -21,5 +21,10 @@ export class GuestService {
     return this._http.get(this.url+'product/getProductBySlug/'+slug,{headers:headers});
   }
 
+  getRecommendedProducts(category:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this._http.get(this.url+'product/getRecommendedProducts/'+category,{headers:headers});
+  }
+
 
 }

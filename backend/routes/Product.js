@@ -13,7 +13,7 @@
  const router = Router();
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
- const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct, deleteProduct, getInventoryAdmin, deleteInventoryAdmin, registerInventoryAdmin, addImgGallery, getImg, deleteImgGallery, getProducts, getProductBySlug } = require('../controllers/ProductController');
+ const { registerProduct, getProductsAdmin, getBanner, getProductByIdAdmin, updateProduct, deleteProduct, getInventoryAdmin, deleteInventoryAdmin, registerInventoryAdmin, addImgGallery, getImg, deleteImgGallery, getProducts, getProductBySlug, getRecommendedProducts } = require('../controllers/ProductController');
  
  const multiparty = require('connect-multiparty');
  const { filedata } = require('../middlewares/filedata');
@@ -233,4 +233,17 @@ router.get(
     getProductBySlug
 )
 
+/*________________________________________________________
+ * 
+ *  -----------LISTAR PRODUCTOS RECOMENDADOS -------------
+ * _______________________________________________________
+ */
+
+router.get(
+    '/getRecommendedProducts/:category?',
+    getRecommendedProducts
+)
+
  module.exports = router;
+
+ 

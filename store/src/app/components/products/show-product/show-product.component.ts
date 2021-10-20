@@ -15,6 +15,7 @@ export class ShowProductComponent implements OnInit {
   public slug:string;
   public product: any;
   public url: string;
+  public recProducts: Array<any>;
 
 
   constructor(
@@ -24,7 +25,7 @@ export class ShowProductComponent implements OnInit {
     this.slug = '';
     this.product = [];
     this.url = global.url;
-
+    this.recProducts = [];
    }
 
   ngOnInit(): void {
@@ -35,7 +36,14 @@ export class ShowProductComponent implements OnInit {
         this._guestService.getProductBySlug(this.slug).subscribe(
           response => {
             this.product = response.data;
-            console.log(this.product)
+            this._guestService.getRecommendedProducts(this.product.category).subscribe(
+              response => {
+                this.recProducts = response.data;
+              },
+              error => {
+                console.log(error)
+              }
+            )
           },
           error => {
             console.log(error)
@@ -71,39 +79,44 @@ export class ShowProductComponent implements OnInit {
           lightGallery(e[t], { selector: ".cs-gallery-item", download: !1, videojs: !0, youtubePlayerParams: { modestbranding: 1, showinfo: 0, rel: 0 }, vimeoPlayerParams: { byline: 0, portrait: 0 } });
         }
       }
+
+
+      tns({
+        container: '.cs-carousel-inner-two',
+        controlsText: ['<i class="cxi-arrow-left"></i>', '<i class="cxi-arrow-right"></i>'],
+        navPosition: "top",
+        controlsPosition: "top",
+        mouseDrag: !0,
+        speed: 600,
+        autoplayHoverPause: !0,
+        autoplayButtonOutput: !1,
+        nav: false,
+        controlsContainer: "#custom-controls-related",
+        responsive: {
+          0: {
+            items: 1,
+            gutter: 20
+          },
+          480: {
+            items: 2,
+            gutter: 24
+          },
+          700: {
+            items: 3,
+            gutter: 24
+          },
+          1100: {
+            items: 4,
+            gutter: 30
+          }
+        }
+      });
+
+
   
     },500)
 
-    tns({
-      container: '.cs-carousel-inner-two',
-      controlsText: ['<i class="cxi-arrow-left"></i>', '<i class="cxi-arrow-right"></i>'],
-      navPosition: "top",
-      controlsPosition: "top",
-      mouseDrag: !0,
-      speed: 600,
-      autoplayHoverPause: !0,
-      autoplayButtonOutput: !1,
-      nav: false,
-      controlsContainer: "#custom-controls-related",
-      responsive: {
-        0: {
-          items: 1,
-          gutter: 20
-        },
-        480: {
-          items: 2,
-          gutter: 24
-        },
-        700: {
-          items: 3,
-          gutter: 24
-        },
-        1100: {
-          items: 4,
-          gutter: 30
-        }
-      }
-    });
+
   }
 
 }
