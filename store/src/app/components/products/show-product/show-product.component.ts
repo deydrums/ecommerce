@@ -114,7 +114,7 @@ export class ShowProductComponent implements OnInit {
 
 
   
-    },500)
+    },1000)
 
 
   }
