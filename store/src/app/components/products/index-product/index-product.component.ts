@@ -215,7 +215,6 @@ export class IndexProductComponent implements OnInit {
       amount: 1,
       variety: product.varieties[0]?product.varieties[0].title:'default'
     }
-    console.log(data)
     this._clientService.addCart(data,this.token).subscribe(
       response => {
         this._iziToastService.showMsg(response.message, "success");
