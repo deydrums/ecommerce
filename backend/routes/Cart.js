@@ -21,6 +21,9 @@
  
  router.post(
     '/add',
+    [   
+        auth.authenticated,
+    ],
     addCart
 );
 

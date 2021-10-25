@@ -52,6 +52,10 @@ export class ClientService {
     return this._http.get(this.url+'product/getProducts/'+filter,{headers:headers});
   }
 
+  addCart(data:any,token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.post(this.url+'cart/add',data,{headers:headers});
+  }
 
   public isAuthenticated():boolean{
 

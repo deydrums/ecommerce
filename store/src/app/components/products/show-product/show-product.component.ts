@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ClientService } from 'src/app/services/client.service';
 import { global } from 'src/app/services/global';
 import { GuestService } from 'src/app/services/guest.service';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 declare var tns:any;
 declare var lightGallery:any;
 
@@ -16,16 +18,29 @@ export class ShowProductComponent implements OnInit {
   public product: any;
   public url: string;
   public recProducts: Array<any>;
+  public cartData: any;
+  public token: any;
+  public loading_btn:boolean;
+
 
 
   constructor(
     private _route: ActivatedRoute,
-    private _guestService: GuestService
+    private _guestService: GuestService,
+    private _iziToastService: IziToastService,
+    private _clientService : ClientService
   ) {
     this.slug = '';
+    this.token = this._clientService.getToken();
     this.product = [];
     this.url = global.url;
     this.recProducts = [];
+    this.cartData = {
+      variety: '',
+      amount: 1
+    };
+    this.loading_btn = false;
+
    }
 
   ngOnInit(): void {
@@ -117,6 +132,35 @@ export class ShowProductComponent implements OnInit {
     },1000)
 
 
+  }
+
+  addProduct() {
+    this.loading_btn = true;
+    if(this.cartData.variety){
+      if(this.cartData.amount <= this.product.stock){
+        const data = {
+          product: this.product._id,
+          amount: this.cartData.amount,
+          variety: this.cartData.variety
+        }
+        this._clientService.addCart(data,this.token).subscribe(
+          response => {
+            this._iziToastService.showMsg(response.message, "success");
+            this.loading_btn = false;
+          },
+          error => {
+            console.log(error)
+            this.loading_btn = false;
+          }
+        )
+      }else{
+        this._iziToastService.showMsg("La cantidad disponible es " + this.product.stock, "error");
+        this.loading_btn = false;
+      }
+    }else{
+      this._iziToastService.showMsg("Selecciona una "+this.product.title_variety, "error");
+      this.loading_btn = false;
+    }
   }
 
 }

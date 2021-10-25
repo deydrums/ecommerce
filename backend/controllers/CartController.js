@@ -17,9 +17,12 @@ const addCart = async(req,res = response)=>{
     if(!req.user){
         return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
     }
-        
+     
     try {
-        const data = req.body;
+        const data = {
+            ...req.body,
+            client: req.user.sub
+        };
         const reg = await Cart.create(data);
 
         res.status(201).json({
