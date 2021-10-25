@@ -15,6 +15,7 @@ export class NavComponent implements OnInit, DoCheck {
   public userlog:any;
   public config:any;
   public op_cart = false;
+  public cart : Array<any>;
   constructor(
     private _clientService : ClientService,
     private _router : Router
@@ -22,11 +23,12 @@ export class NavComponent implements OnInit, DoCheck {
     this.token = localStorage.getItem('token');
     this.id = localStorage.getItem('_id');
     this.config = {};
-
+    this.cart = [];
   }
 
   ngOnInit(): void {
     this.getConfig()
+    this.getCart()
   }
 
   ngDoCheck():void {
@@ -44,6 +46,16 @@ export class NavComponent implements OnInit, DoCheck {
     this._router.navigate(["/"]);
   }
 
+  getCart(){
+    this._clientService.getCart(this.token).subscribe(
+      response => {
+        this.cart = response.data;
+      },
+      error => {
+        console.log(error.error.message)
+      }
+    )
+  }
   getConfig() {
     this._clientService.getConfig().subscribe(
       response => {

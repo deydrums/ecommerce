@@ -49,6 +49,35 @@ const addCart = async(req,res = response)=>{
     }
 }
 
+
+/*________________________________________________________
+ * 
+ *  ----------------OBTENER CARRITO ---------------------
+ * _______________________________________________________
+ */
+
+const getCartClient = async(req,res = response)=>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+     
+    try {
+        const cart = await Cart.find({client: req.user.sub});
+        res.status(200).json({
+            ok: true,
+            data: cart
+        })
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
 module.exports = {
     addCart,
+    getCartClient
 };

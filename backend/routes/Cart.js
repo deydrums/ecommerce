@@ -8,7 +8,7 @@
  
 
  const {Router} = require('express');
- const { addCart } = require('../controllers/CartController');
+ const { addCart, getCartClient } = require('../controllers/CartController');
  const router = Router();
  const auth = require('../middlewares/authenticated');
 
@@ -26,5 +26,14 @@
     ],
     addCart
 );
+
+/*________________________________________________________
+ * 
+ *  ----------------OBTENER CARRITO ---------------------
+ * _______________________________________________________
+ */
+
+router.get('/',[auth.authenticated],getCartClient);
+
 
  module.exports = router;
