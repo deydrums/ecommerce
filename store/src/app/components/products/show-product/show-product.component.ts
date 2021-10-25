@@ -149,7 +149,7 @@ export class ShowProductComponent implements OnInit {
             this.loading_btn = false;
           },
           error => {
-            this._iziToastService.showMsg(error.error.message, "error");
+            error.error && this._iziToastService.showMsg(error.error.message, "error");
             this.loading_btn = false;
           }
         )

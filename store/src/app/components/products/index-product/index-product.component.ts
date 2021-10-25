@@ -24,6 +24,9 @@ export class IndexProductComponent implements OnInit {
   public route_cat='';
   public page = 1;
   public pageSize = 6;
+  public cartData: any;
+  public token;
+  public loading_btn:boolean;
 
   public sort_by = 'default';
 
@@ -37,7 +40,12 @@ export class IndexProductComponent implements OnInit {
     this.filter_cat = '';
     this.loader = false;
     this.url = global.url;
-
+    this.cartData = {
+      variety: '',
+      amount: 1
+    };
+    this.loading_btn = false;
+    this.token = this._clientService.getToken();
   }
 
   ngOnInit(): void {
@@ -198,4 +206,26 @@ export class IndexProductComponent implements OnInit {
       })
     }
   }
+
+
+  addProduct(product: any) {
+    this.loading_btn = true;
+    const data = {
+      product: product._id,
+      amount: 1,
+      variety: product.varieties[0]?product.varieties[0].title:'default'
+    }
+    console.log(data)
+    this._clientService.addCart(data,this.token).subscribe(
+      response => {
+        this._iziToastService.showMsg(response.message, "success");
+        this.loading_btn = false;
+      },
+      error => {
+        error.error && this._iziToastService.showMsg(error.error.message, "error");
+        this.loading_btn = false;
+      }
+    )
+  }
+
 }
