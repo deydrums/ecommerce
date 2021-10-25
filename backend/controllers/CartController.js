@@ -23,13 +23,22 @@ const addCart = async(req,res = response)=>{
             ...req.body,
             client: req.user.sub
         };
-        const reg = await Cart.create(data);
 
-        res.status(201).json({
-            ok: true,
-            message: 'Producto agregado al carrito',
-            data: reg
-        });
+        const cartClient = await Cart.find({client: req.user.sub, product: data.product});
+        if(cartClient.length == 0) {
+            const reg = await Cart.create(data);
+            res.status(201).json({
+                ok: true,
+                message: 'Producto agregado al carrito',
+                data: reg
+            });
+        }else if(cartClient.length >= 1) {
+            res.status(401).json({
+                ok: false,
+                message: 'El producto ya existe en el carrito',
+            });
+        }
+
 
     } catch (error) {
         console.log(error);
