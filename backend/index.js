@@ -33,6 +33,7 @@ app.use('/api/admin', require('./routes/Admin'));
 app.use('/api/product', require('./routes/Product'));
 app.use('/api/cupon', require('./routes/Cupon'));
 app.use('/api/config', require('./routes/Config'));
+app.use('/api/cart', require('./routes/Cart'));
 //Escuchar peticiones
 app.listen(process.env.PORT ,()=>{
     console.log(`Servidor corriendo en puerto ${process.env.PORT}`)
