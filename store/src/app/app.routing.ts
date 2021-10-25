@@ -1,5 +1,6 @@
 import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import { CartComponent } from './components/cart/cart.component';
 import { IndexComponent } from './components/index/index.component';
 import { LoginComponent } from './components/login/login.component';
 import { IndexProductComponent } from './components/products/index-product/index-product.component';
@@ -12,6 +13,7 @@ const appRoute: Routes = [
     {path: 'index', component: IndexComponent},
     {path: 'login', component: LoginComponent},
     {path: 'cuenta/perfil', component: ProfileComponent, canActivate:[AuthGuard]},
+    {path: 'carrito', component: CartComponent, canActivate:[AuthGuard]},
     {path: 'products', component: IndexProductComponent},
     {path: 'products/category/:category', component: IndexProductComponent},
     {path: 'products/:slug', component: ShowProductComponent},

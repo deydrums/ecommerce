@@ -15,6 +15,7 @@ import { SidebarComponent } from './components/user/sidebar/sidebar.component';
 import { IndexProductComponent } from './components/products/index-product/index-product.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ShowProductComponent } from './components/products/show-product/show-product.component';
+import { CartComponent } from './components/cart/cart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { ShowProductComponent } from './components/products/show-product/show-pr
     ProfileComponent,
     SidebarComponent,
     IndexProductComponent,
-    ShowProductComponent
+    ShowProductComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
+declare var $:any;
 
 @Component({
   selector: 'app-nav',
@@ -13,6 +14,7 @@ export class NavComponent implements OnInit, DoCheck {
   public id;
   public userlog:any;
   public config:any;
+  public op_cart = false;
   constructor(
     private _clientService : ClientService,
     private _router : Router
@@ -51,6 +53,16 @@ export class NavComponent implements OnInit, DoCheck {
         console.log(error)
       }
     );
+  }
+
+  op_modal(){
+    if(!this.op_cart){
+      this.op_cart = true;
+      $('#cart').addClass('show');
+    }else{
+      this.op_cart = false;
+      $('#cart').removeClass('show');
+    }
   }
 
 }
