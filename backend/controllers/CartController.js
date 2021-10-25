@@ -33,7 +33,7 @@ const addCart = async(req,res = response)=>{
                 data: reg
             });
         }else if(cartClient.length >= 1) {
-            res.status(401).json({
+            res.status(400).json({
                 ok: false,
                 message: 'El producto ya existe en el carrito',
             });
