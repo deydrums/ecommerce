@@ -64,7 +64,7 @@ const getCartClient = async(req,res = response)=>{
     }
      
     try {
-        const cart = await Cart.find({client: req.user.sub});
+        const cart = await Cart.find({client: req.user.sub}).populate('product');
         res.status(200).json({
             ok: true,
             data: cart

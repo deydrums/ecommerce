@@ -1,6 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
+import { global } from 'src/app/services/global';
 declare var $:any;
 
 @Component({
@@ -16,6 +17,9 @@ export class NavComponent implements OnInit, DoCheck {
   public config:any;
   public op_cart = false;
   public cart : Array<any>;
+  public url: string;
+
+
   constructor(
     private _clientService : ClientService,
     private _router : Router
@@ -24,6 +28,8 @@ export class NavComponent implements OnInit, DoCheck {
     this.id = localStorage.getItem('_id');
     this.config = {};
     this.cart = [];
+    this.url = global.url;
+
   }
 
   ngOnInit(): void {
@@ -50,6 +56,7 @@ export class NavComponent implements OnInit, DoCheck {
     this._clientService.getCart(this.token).subscribe(
       response => {
         this.cart = response.data;
+        console.log(this.cart)
       },
       error => {
         console.log(error.error.message)
