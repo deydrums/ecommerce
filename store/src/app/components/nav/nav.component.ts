@@ -90,6 +90,7 @@ export class NavComponent implements OnInit, DoCheck {
   }
 
   calcCart(){
+    this.sub = 0;
    this.cart.forEach(element =>{
     this.sub = this.sub + parseInt(element.product.price);
    }); 
@@ -101,6 +102,7 @@ export class NavComponent implements OnInit, DoCheck {
       response => {
         this._iziToastService.showMsg(response.message,'success')
         this.loading_btn = false;
+        this.getCart();
       },
       error => {
         this._iziToastService.showMsg(error.error.message,'error')
