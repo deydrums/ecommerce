@@ -2,6 +2,7 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { global } from 'src/app/services/global';
+import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
 declare var $:any;
 
 @Component({
@@ -19,10 +20,13 @@ export class NavComponent implements OnInit, DoCheck {
   public cart : Array<any>;
   public url: string;
   public sub: number;
+  public loading_btn:boolean;
+
 
   constructor(
     private _clientService : ClientService,
-    private _router : Router
+    private _router : Router,
+    private _iziToastService : IziToastService,
   ) { 
     this.token = localStorage.getItem('token');
     this.id = localStorage.getItem('_id');
@@ -30,6 +34,7 @@ export class NavComponent implements OnInit, DoCheck {
     this.cart = [];
     this.url = global.url;
     this.sub = 0;
+    this.loading_btn = false;
   }
 
   ngOnInit(): void {
@@ -88,6 +93,20 @@ export class NavComponent implements OnInit, DoCheck {
    this.cart.forEach(element =>{
     this.sub = this.sub + parseInt(element.product.price);
    }); 
+  }
+
+  removeProduct(id:any){
+    this.loading_btn = true;
+    this._clientService.deleteCart(id,this.token).subscribe(
+      response => {
+        this._iziToastService.showMsg(response.message,'success')
+        this.loading_btn = false;
+      },
+      error => {
+        this._iziToastService.showMsg(error.error.message,'error')
+        this.loading_btn = false;
+      }
+    )
   }
 
 

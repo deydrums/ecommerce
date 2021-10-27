@@ -52,6 +52,39 @@ const addCart = async(req,res = response)=>{
 
 /*________________________________________________________
  * 
+ *  ----------------AGREGAR CARRITO -----------------------
+ * _______________________________________________________
+ */
+
+const deleteCart = async(req,res = response)=>{
+
+    //Si no existe un usuario y si no es admin
+    if(!req.user){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+     
+    try {
+
+        const id = req.params['id'];
+        const reg = await Cart.findByIdAndRemove({_id:id})
+        res.status(200).json({
+            ok: true,
+            message: 'Producto eliminado del carrito',
+            data: reg
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
+
+/*________________________________________________________
+ * 
  *  ----------------OBTENER CARRITO ---------------------
  * _______________________________________________________
  */
@@ -79,5 +112,6 @@ const getCartClient = async(req,res = response)=>{
 
 module.exports = {
     addCart,
-    getCartClient
+    getCartClient,
+    deleteCart
 };

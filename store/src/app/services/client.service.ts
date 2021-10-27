@@ -62,6 +62,11 @@ export class ClientService {
     return this._http.get(this.url+'cart/',{headers:headers});
   }
 
+  deleteCart(id:any,token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.delete(this.url+'cart/'+id,{headers:headers});
+  }
+
   public isAuthenticated():boolean{
 
     const token = localStorage.getItem('token');

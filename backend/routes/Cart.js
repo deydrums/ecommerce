@@ -8,7 +8,7 @@
  
 
  const {Router} = require('express');
- const { addCart, getCartClient } = require('../controllers/CartController');
+ const { addCart, getCartClient, deleteCart } = require('../controllers/CartController');
  const router = Router();
  const auth = require('../middlewares/authenticated');
 
@@ -34,6 +34,14 @@
  */
 
 router.get('/',[auth.authenticated],getCartClient);
+
+/*________________________________________________________
+ * 
+ *  ----------------ELIMINAR CARRITO ---------------------
+ * _______________________________________________________
+ */
+
+router.delete('/:id',[auth.authenticated],deleteCart);
 
 
  module.exports = router;
