@@ -206,14 +206,14 @@
   <div class="cs-offcanvas-body">
     <!-- Item -->
     <div class="media p-4 border-bottom mx-n4" *ngFor="let item of cart">
-      <a href="shop-single.html" style="min-width: 80px;">
+      <a [routerLink]="['/products/' + item.product.slug]" style="min-width: 80px;">
         <img [src]="url + 'product/getBanner/' + item.product.banner" width="80" alt="Product thumb">
       </a>
       <div class="media-body pl-3">
         <div class="d-flex justify-content-between">
           <div class="pr-2">
             <h3 class="font-size-sm mb-3">
-              <a href="shop-single.html" class="nav-link font-weight-bold">{{item.product.title}}</a>
+              <a [routerLink]="['/products/' + item.product.slug]" class="nav-link font-weight-bold">{{item.product.title}}</a>
             </h3>
             <ul class="list-unstyled font-size-xs mt-n2 mb-2">
               <li class="mb-0"><span class="text-muted">{{item.product.title_variety}}</span> {{item.variety}}</li>
