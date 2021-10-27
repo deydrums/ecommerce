@@ -18,7 +18,7 @@ export class NavComponent implements OnInit, DoCheck {
   public op_cart = false;
   public cart : Array<any>;
   public url: string;
-
+  public sub: number;
 
   constructor(
     private _clientService : ClientService,
@@ -29,7 +29,7 @@ export class NavComponent implements OnInit, DoCheck {
     this.config = {};
     this.cart = [];
     this.url = global.url;
-
+    this.sub = 0;
   }
 
   ngOnInit(): void {
@@ -56,7 +56,7 @@ export class NavComponent implements OnInit, DoCheck {
     this._clientService.getCart(this.token).subscribe(
       response => {
         this.cart = response.data;
-        console.log(this.cart)
+        this.calcCart();
       },
       error => {
         console.log(error.error.message)
@@ -83,5 +83,12 @@ export class NavComponent implements OnInit, DoCheck {
       $('#cart').removeClass('show');
     }
   }
+
+  calcCart(){
+   this.cart.forEach(element =>{
+    this.sub = this.sub + parseInt(element.product.price);
+   }); 
+  }
+
 
 }
