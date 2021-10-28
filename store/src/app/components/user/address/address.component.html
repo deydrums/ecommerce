@@ -36,6 +36,47 @@
             <h1 class="h2 mb-0">Mis direcciones</h1>
           </div>
 
+          <form #registerForm = "ngForm" (ngSubmit) = "register(registerForm)">
+            <div class="row pb-3">
+                <div class="col-sm-12 form-group">
+                  <label for="ac-fn">Destinatario</label>
+                  <input required type="text" id="ac-fn" class="form-control form-control-lg" name = "receiver" [(ngModel)]="address.receiver" placeholder="Nombre del destinatario">
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="ac-ln">DNI</label>
+                    <input required type="text" id="ac-ln" class="form-control form-control-lg" name = "dni" [(ngModel)]="address.dni" placeholder="DNI">
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="ac-ln">ZIP</label>
+                    <input required type="text" id="ac-ln" class="form-control form-control-lg" name = "zip" [(ngModel)]="address.zip" placeholder="ZIP">
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="ac-ln">Ciudad</label>
+                    <input required type="text" id="ac-ln" class="form-control form-control-lg" name = "city" [(ngModel)]="address.city" placeholder="Ciudad">
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="ac-ln">Telefono</label>
+                    <input required type="text" id="ac-ln" class="form-control form-control-lg" name = "telephone" [(ngModel)]="address.telephone" placeholder="Telefono">
+                </div>
+                <div class="col-sm-12 form-group">
+                    <label for="ac-fn">Direccion</label>
+                    <textarea class="form-control form-control-lg" required name = "address" [(ngModel)]="address.address" placeholder="Direccion"></textarea>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <label for="ac-fn">Principal</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="ex-check-1" name = "principal" [(ngModel)]="address.principal">
+                        <label class="form-check-label" for="ex-check-1">Activar cuenta principal</label>
+                    </div>                
+                </div>
+            </div>
+            <button *ngIf="!loading_btn" type="submit" class="btn btn-primary btn-lg">&nbsp;Guardar&nbsp;</button>
+            <button *ngIf="loading_btn" type="button" class="btn btn-secondary btn-lg" disabled>
+              <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+              Guardando
+            </button>
+          </form>
+
         </div>
       </div>
     </section>
