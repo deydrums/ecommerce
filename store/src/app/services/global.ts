@@ -1,5 +1,6 @@
 import { environment } from "src/environments/environment";
 
 export var global = {
-    url: environment.API_URL
+    url: environment.API_URL,
+    url_backend: environment.URL
 }

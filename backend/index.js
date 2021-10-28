@@ -9,6 +9,24 @@ const cors = require('cors');
 //Ejecutar express
 const app = express();
 
+//Socket
+const server = require('http').createServer(app);
+const io = require('socket.io')(server,{
+    cors: {origin : '*'}
+});
+
+io.on('connection',function(socket){
+    
+    socket.on('delete-cart',function(data){
+        io.emit('new-cart',data);
+        console.log(data);
+    });
+
+    socket.on('add-cart-add',function(data){
+        io.emit('new-cart-add',data);
+        console.log(data);
+    });
+});
 //DDBB
 dbConnection();
 
@@ -35,7 +53,7 @@ app.use('/api/cupon', require('./routes/Cupon'));
 app.use('/api/config', require('./routes/Config'));
 app.use('/api/cart', require('./routes/Cart'));
 //Escuchar peticiones
-app.listen(process.env.PORT ,()=>{
+server.listen(process.env.PORT ,()=>{
     console.log(`Servidor corriendo en puerto ${process.env.PORT}`)
 });
 

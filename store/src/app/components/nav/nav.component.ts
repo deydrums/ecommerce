@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
+import { io } from "socket.io-client";
+
 declare var $:any;
 
 @Component({
@@ -21,6 +23,7 @@ export class NavComponent implements OnInit, DoCheck {
   public url: string;
   public sub: number;
   public loading_btn:boolean;
+  public socket;
 
 
   constructor(
@@ -35,6 +38,7 @@ export class NavComponent implements OnInit, DoCheck {
     this.url = global.url;
     this.sub = 0;
     this.loading_btn = false;
+    this.socket = io(global.url_backend);
   }
 
   ngOnInit(): void {
@@ -101,8 +105,8 @@ export class NavComponent implements OnInit, DoCheck {
     this._clientService.deleteCart(id,this.token).subscribe(
       response => {
         this._iziToastService.showMsg(response.message,'success')
+        this.socket.emit('delete-cart',{data:response.data});
         this.loading_btn = false;
-        this.getCart();
       },
       error => {
         this._iziToastService.showMsg(error.error.message,'error')
