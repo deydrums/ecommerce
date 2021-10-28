@@ -35,6 +35,9 @@ export class AddressComponent implements OnInit {
       this._clientService.registerAddress(this.address, this.token).subscribe(
         response => {
           this._iziToastService.showMsg(response.message, "success");
+          this.address = {
+            principal: false
+          }
           this.loading_btn = false;
         },
         error => {
