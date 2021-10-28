@@ -416,7 +416,10 @@ const registerAddress = async(req,res = response)=>{
         return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
     }
     try {
-        const data = req.body;
+        const data = {
+            ...req.body,
+            client: req.user.sub
+        }
         const address = await Address.create(data);
         res.status(201).json({
             ok: true,
@@ -424,6 +427,7 @@ const registerAddress = async(req,res = response)=>{
             data:address
         })
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             ok: false,
             message: 'Ha ocurrido un error, intenta de nuevo'
