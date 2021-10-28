@@ -10,7 +10,7 @@
  const {Router} = require('express');
  const { check } = require('express-validator');
  const router = Router();
- const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin, getClientByIdAdmin, updateClientAdmin, deleteClientAdmin, getClient, renewToken, updateClient } = require('../controllers/ClientController');
+ const { registerClient, loginClient, getClientsFilterAdmin, registerClientAdmin, getClientByIdAdmin, updateClientAdmin, deleteClientAdmin, getClient, renewToken, updateClient, registerAddress } = require('../controllers/ClientController');
  const { paramsValidator } = require('../middlewares/params-validator');
  const auth = require('../middlewares/authenticated');
 
@@ -175,5 +175,34 @@ router.get(
     updateClient
 )
 
+
+/****************************************************************************************************************
+ * DIRECCIONES
+*****************************************************************************************************************/
+
+
+
+/*________________________________________________________
+ * 
+ *  -----------------ADDRESS REGISTER---------------------
+ * _______________________________________________________
+ */
+router.post(
+    '/registerAddress',
+    [
+        auth.authenticated,
+        check('client', 'El cliente no es valido').not().isEmpty(),
+        check('receiver', 'El destinatario no es valido').not().isEmpty(),
+        check('dni', 'El dni no es valido').not().isEmpty(),
+        check('zip', 'El zip no es valido').not().isEmpty(),
+        check('address', 'La direccion no es valida').not().isEmpty(),
+        check('country', 'El pais no es valido').not().isEmpty(),
+        check('city', 'La ciudad no es valida').not().isEmpty(),
+        check('telephone', 'El telefono no es valido').not().isEmpty(),
+        check('principal', 'El principal no es valido').not().isEmpty(),
+        paramsValidator
+    ],
+    registerAddress
+);
 
  module.exports = router;

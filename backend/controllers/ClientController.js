@@ -2,6 +2,7 @@
 
 const {response} = require('express');
 const Client = require('../models/Client');
+const Address = require('../models/Address');
 var bcrypt = require('bcryptjs');
 const { generateJWT } = require('../helpers/jwt');
 const { returnUser } = require('../helpers/returnUser');
@@ -397,6 +398,40 @@ const updateClient = async(req,res = response)=>{
     }
 }
 
+/****************************************************************************************************************
+ * DIRECCIONES
+*****************************************************************************************************************/
+
+
+
+/*________________________________________________________
+ * 
+ *  -----------------ADDRESS REGISTER---------------------
+ * _______________________________________________________
+ */
+
+const registerAddress = async(req,res = response)=>{
+
+    if(!req.user){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+    try {
+        const data = req.body;
+       // const address = await Address.create(data);
+        res.status(201).json({
+            ok: true,
+            message: 'Direccion creada',
+            //data:address
+        })
+    } catch (error) {
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
+
 module.exports = {
     registerClient,
     loginClient,
@@ -407,5 +442,6 @@ module.exports = {
     deleteClientAdmin,
     getClient,
     renewToken,
-    updateClient
+    updateClient,
+    registerAddress
 };
