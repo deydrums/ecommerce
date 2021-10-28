@@ -15,17 +15,17 @@ const io = require('socket.io')(server,{
     cors: {origin : '*'}
 });
 
-io.on('connection',function(socket){
-    
-    socket.on('delete-cart',function(data){
+io.on('connection', (socket) => {
+    socket.on('delete-cart',(data) => {
         io.emit('new-cart',data);
     });
 
-    socket.on('add-cart-add',function(data){
+    socket.on('add-cart-add', (data) => {
         io.emit('new-cart-add',data);
-        console.log(data);
     });
-});
+})
+
+
 //DDBB
 dbConnection();
 
