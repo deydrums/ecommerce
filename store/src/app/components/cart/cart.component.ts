@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
+import { io } from "socket.io-client";
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,7 @@ export class CartComponent implements OnInit {
   public sub: number;
   public total: number;
   public loading_btn:boolean;
+  public socket;
 
   constructor(
     private _clientService : ClientService,
@@ -31,6 +33,7 @@ export class CartComponent implements OnInit {
     this.sub = 0;
     this.total = 0;
     this.loading_btn = false;
+    this.socket = io(global.url_backend);
   }
 
   ngOnInit(): void {
@@ -51,6 +54,7 @@ export class CartComponent implements OnInit {
   }
 
   calcCart(){
+    this.sub = 0;
     this.cart.forEach(element =>{
      this.sub = this.sub + parseInt(element.product.price);
      this.total = this.sub;
@@ -64,6 +68,7 @@ export class CartComponent implements OnInit {
       response => {
         this._iziToastService.showMsg(response.message,'success')
         this.loading_btn = false;
+        this.socket.emit('delete-cart',{data:response.data});
         this.getCart();
       },
       error => {

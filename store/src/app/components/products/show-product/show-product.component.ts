@@ -4,6 +4,8 @@ import { ClientService } from 'src/app/services/client.service';
 import { global } from 'src/app/services/global';
 import { GuestService } from 'src/app/services/guest.service';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
+import { io } from "socket.io-client";
+
 declare var tns:any;
 declare var lightGallery:any;
 
@@ -21,6 +23,7 @@ export class ShowProductComponent implements OnInit {
   public cartData: any;
   public token: any;
   public loading_btn:boolean;
+  public socket;
 
 
 
@@ -40,6 +43,7 @@ export class ShowProductComponent implements OnInit {
       amount: 1
     };
     this.loading_btn = false;
+    this.socket = io(global.url_backend);
 
    }
 
@@ -146,6 +150,7 @@ export class ShowProductComponent implements OnInit {
         this._clientService.addCart(data,this.token).subscribe(
           response => {
             this._iziToastService.showMsg(response.message, "success");
+            this.socket.emit('add-cart-add',{data:true});
             this.loading_btn = false;
           },
           error => {
