@@ -417,11 +417,11 @@ const registerAddress = async(req,res = response)=>{
     }
     try {
         const data = req.body;
-       // const address = await Address.create(data);
+        const address = await Address.create(data);
         res.status(201).json({
             ok: true,
             message: 'Direccion creada',
-            //data:address
+            data:address
         })
     } catch (error) {
         res.status(500).json({

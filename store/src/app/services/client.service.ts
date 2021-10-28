@@ -67,6 +67,12 @@ export class ClientService {
     return this._http.delete(this.url+'cart/'+id,{headers:headers});
   }
 
+  registerAddress(data:any):Observable<any>{
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this._http.post(this.url + 'client/registerAddress',data,{headers})
+  }
+
+
   public isAuthenticated():boolean{
 
     const token = localStorage.getItem('token');
