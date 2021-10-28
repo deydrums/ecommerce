@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddressComponent implements OnInit {
 
-  constructor() { }
+  public loading_btn:boolean;
+  public loader: boolean;
+
+  constructor() { 
+    this.loading_btn = false;
+    this.loader = true;
+  }
 
   ngOnInit(): void {
   }

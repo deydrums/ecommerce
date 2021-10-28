@@ -1,1 +1,44 @@
-<p>address works!</p>
+<main class="cs-page-wrapper">
+    <nav class="bg-secondary mb-3" aria-label="breadcrumb">
+      <div class="container">
+        <ol class="breadcrumb breadcrumb-alt mb-0">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/']" routerLinkActive="active" ><i class="cxi-home"></i></a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Perfil</li>
+        </ol>
+      </div>
+    </nav>
+  
+  
+    <section class="container pt-3 pt-lg-4 pb-5 pb-lg-6">
+      <div class="row pb-2 pb-lg-0">
+  
+        <!-- Account menu (sticky sidebar) -->
+        <aside class="col-xl-3 col-lg-4 pb-3 mb-4 mb-lg-0">
+          <div class="sidebar-sticky" data-sidebar-sticky-options='{
+                "topSpacing": 120,
+                "minWidth": 991
+              }'>
+            <app-sidebar></app-sidebar>
+          </div>
+        </aside>
+  
+        <div class="col-lg-8 ml-auto m-0 row justify-content-center mt-5" *ngIf="loader">
+          <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden"></span>
+          </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="col-lg-8 ml-auto" *ngIf="!loader">
+          <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
+            <h1 class="h2 mb-0">Mis direcciones</h1>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  
+  </main>
+  
