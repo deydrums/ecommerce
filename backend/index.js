@@ -19,7 +19,6 @@ io.on('connection',function(socket){
     
     socket.on('delete-cart',function(data){
         io.emit('new-cart',data);
-        console.log(data);
     });
 
     socket.on('add-cart-add',function(data){

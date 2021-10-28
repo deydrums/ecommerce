@@ -44,6 +44,9 @@ export class NavComponent implements OnInit, DoCheck {
   ngOnInit(): void {
     this.getConfig()
     this.getCart()
+    this.socket.on('new-cart', this.getCart.bind(this));
+    this.socket.on('new-cart-add', this.getCart.bind(this));
+
   }
 
   ngDoCheck():void {

@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { global } from 'src/app/services/global';
 import { IziToastService } from 'src/app/services/helpers/izi-toast.service';
+import { io } from "socket.io-client";
+
 declare var noUiSlider:any;
 declare var $ : any;
 @Component({
@@ -27,6 +29,7 @@ export class IndexProductComponent implements OnInit {
   public cartData: any;
   public token;
   public loading_btn:boolean;
+  public socket;
 
   public sort_by = 'default';
 
@@ -46,6 +49,8 @@ export class IndexProductComponent implements OnInit {
     };
     this.loading_btn = false;
     this.token = this._clientService.getToken();
+    this.socket = io(global.url_backend);
+
   }
 
   ngOnInit(): void {
@@ -218,6 +223,7 @@ export class IndexProductComponent implements OnInit {
     this._clientService.addCart(data,this.token).subscribe(
       response => {
         this._iziToastService.showMsg(response.message, "success");
+        this.socket.emit('add-cart-add',{data:true});
         this.loading_btn = false;
       },
       error => {
