@@ -444,6 +444,35 @@ const registerAddress = async(req,res = response)=>{
 }
 
 
+/*________________________________________________________
+ * 
+ *  -----------------ADDRESS REGISTER---------------------
+ * _______________________________________________________
+ */
+
+const getAddresses = async(req,res = response)=>{
+
+    if(!req.user){
+        return res.status(400).send({status: 'error', message: 'No puedes realizar esta accion.'});
+    }
+    try {
+
+        const adresses = await Address.find({client:req.user.sub});
+
+        res.status(201).json({
+            ok: true,
+            data:adresses
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            message: 'Ha ocurrido un error, intenta de nuevo'
+        })
+    }
+}
+
+
 module.exports = {
     registerClient,
     loginClient,
@@ -455,5 +484,6 @@ module.exports = {
     getClient,
     renewToken,
     updateClient,
-    registerAddress
+    registerAddress,
+    getAddresses
 };
