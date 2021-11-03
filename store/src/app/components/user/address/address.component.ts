@@ -48,6 +48,7 @@ export class AddressComponent implements OnInit {
       )
     }else{
       this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
+      this.loading_btn = false;
     }
   }
 

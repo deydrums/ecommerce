@@ -420,6 +420,14 @@ const registerAddress = async(req,res = response)=>{
             ...req.body,
             client: req.user.sub
         }
+
+        if(data.principal){
+            const adresses = await Address.find({client:req.user.sub});
+            adresses.forEach(async address =>{
+                await Address.findByIdAndUpdate({_id:address._id},{principal:false})
+            })
+        }
+        
         const address = await Address.create(data);
         res.status(201).json({
             ok: true,
