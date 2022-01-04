@@ -72,6 +72,10 @@ export class ClientService {
     return this._http.post(this.url + 'client/registerAddress',data,{headers})
   }
 
+  getAddresses(token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json', 'Authorization':token});
+    return this._http.get(this.url+'client/getAddresses',{headers:headers});
+  }
 
   public isAuthenticated():boolean{
 

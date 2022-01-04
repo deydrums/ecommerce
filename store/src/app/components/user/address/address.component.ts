@@ -27,6 +27,7 @@ export class AddressComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAddresses();
   }
 
   register(registerForm:any){
@@ -50,6 +51,17 @@ export class AddressComponent implements OnInit {
       this._iziToastService.showMsg("Los datos del formulario no son validos", "error");
       this.loading_btn = false;
     }
+  }
+
+  getAddresses(){
+    this._clientService.getAddresses(this.token).subscribe(
+      response =>{
+        console.log(response.data)
+      }, 
+      error =>{
+        console.log(error)
+      }
+    )
   }
 
 }
