@@ -457,7 +457,7 @@ const getAddresses = async(req,res = response)=>{
     }
     try {
 
-        const adresses = await Address.find({client:req.user.sub}).populate('client');
+        const adresses = await Address.find({client:req.user.sub}).populate('client').sort({createdAt: -1});
 
         res.status(201).json({
             ok: true,
