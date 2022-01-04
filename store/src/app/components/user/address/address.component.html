@@ -33,10 +33,10 @@
         <!-- Content -->
         <div class="col-lg-8 ml-auto" *ngIf="!loader">
           <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
-            <h1 class="h2 mb-0">Mis direcciones</h1>
+            <h1 class="h2 mb-0">Nueva direccion</h1>
           </div>
 
-          <form #registerForm = "ngForm" (ngSubmit) = "register(registerForm)">
+          <form #registerForm = "ngForm" (ngSubmit) = "register(registerForm)" class="mb-5">
             <div class="row pb-3">
                 <div class="col-sm-12 form-group">
                   <label for="ac-fn">Destinatario</label>
@@ -76,6 +76,35 @@
               Guardando
             </button>
           </form>
+
+          <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
+            <h1 class="h2 mb-0">Mis direcciones</h1>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="row" *ngFor="let address of addresses">
+                <div class="col-md-3 col-sm-4 mb-sm-0 mb-3">
+                  <h3 class="mb-2 fs-lg">{{address.receiver}}</h3>
+                  <span class="d-block mb-3 fs-sm text-muted">{{address.zip}}</span>
+                  <span class="badge badge-primary" *ngIf="address.principal">Direccion de envio</span>
+                </div>
+                <div class="col">
+                  <p class="mb-3">Vel velit pulvinar montes, sit rhoncus odio molestie. Venenatis nunc fames ut proin adipiscing sit. Etiam egestas elit varius a, vestibulum bibendum nibh sociis in. Ut facilisis sit eget cum fringilla. Dapibus mauris viverra est sed risus quam lacinia.</p>
+                  <div class="d-flex justify-content-end">
+                    <a class="nav-link me-3 p-0 fs-sm" href="#">
+                      <i class="ci-like me-2 fs-base align-middle mt-n1 text-success"></i>
+                      2
+                    </a>
+                    <a class="nav-link p-0 fs-sm" href="#">
+                      <i class="ci-dislike me-2 fs-base align-middle mt-n1 text-danger"></i>
+                      0
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>

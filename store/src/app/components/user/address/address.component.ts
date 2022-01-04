@@ -13,6 +13,7 @@ export class AddressComponent implements OnInit {
   public loader: boolean;
   public address:any;
   public token;
+  public addresses:Array<any>;
 
   constructor(
     private _clientService : ClientService,
@@ -24,6 +25,7 @@ export class AddressComponent implements OnInit {
       principal: false
     }
     this.token = this._clientService.getToken();
+    this.addresses = [];
   }
 
   ngOnInit(): void {
@@ -56,7 +58,7 @@ export class AddressComponent implements OnInit {
   getAddresses(){
     this._clientService.getAddresses(this.token).subscribe(
       response =>{
-        console.log(response.data)
+        this.addresses = response.data;
       }, 
       error =>{
         console.log(error)
